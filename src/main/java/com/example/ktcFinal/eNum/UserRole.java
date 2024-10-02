@@ -4,6 +4,6 @@ public enum UserRole {
     ADMIN,
     CUSTOMER,
     OWNER,
-    RIDER
+    DRIVER
 
 }

@@ -1,4 +1,4 @@
 package com.example.ktcFinal.user.dto;
 
-public class RiderDto {
+public class DriverDto {
 }
