@@ -53,20 +53,18 @@ spring:
 
   mvc:
     static-path-pattern: /static/**
+  web:
+    resources:
+      static-locations: file:media/,classpath:/static
+
   datasource:
     url: jdbc:sqlite:db.sqlite
     driver-class-name: org.sqlite.JDBC
-    username: sa
-    password: password
   jpa:
     hibernate:
-      ddl-auto: create-drop
-    database-platform: org.hibernate.community.dialect.SQLiteDialect
+      ddl-auto: update
     show-sql: true
-    defer-datasource-initialization: true
-  sql:
-    init:
-      mode: always
+    database-platform: org.hibernate.community.dialect.SQLiteDialect
 
 jwt:
   secret: v^K#V@igLXJrBvgY^%gKGy4-GsY51jrun:?C38FY?8h%]t_rd]E@nhL?de3tR>?

@@ -24,9 +24,12 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
 
 	// database
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -38,10 +41,27 @@ dependencies {
 	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
 	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 
+	// 이메일
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+	// Thymeleaf
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+	// WebSocket
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+
+	//oauth2
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
+
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
+
+	//Spring boot test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	//Spring security test
 	testImplementation 'org.springframework.security:spring-security-test'
+	//JUnit Platform Launcher
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
