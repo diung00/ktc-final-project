@@ -1,36 +1,32 @@
 package com.example.ChoiGangDeliveryApp.security.config;
 
+import com.example.ChoiGangDeliveryApp.user.dto.UserDto;
 import com.example.ChoiGangDeliveryApp.user.entity.UserEntity;
-import com.example.ChoiGangDeliveryApp.user.repo.UserRepository;
+import com.example.ChoiGangDeliveryApp.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
-import org.springframework.web.server.ResponseStatusException;
-
-import java.util.Optional;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
-// a utility class to get current user information from SecurityContext in Spring Security
+
 public class AuthenticationFacade {
-    private final UserRepository userRepository;
+
+    @Autowired
+    private UserService userService;
 
     public UserEntity getCurrentUserEntity() {
-        SecurityContext context = SecurityContextHolder.getContext();
-        Authentication authentication = context.getAuthentication();
-
-        String username = ((UserEntity) authentication.getPrincipal()).getUsername();
-
-        Optional<UserEntity> optionalUser = userRepository.findByUsername(username);
-        if (optionalUser.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof CustomUserDetails) {
+            CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
+            return userService.findByUsername(customUserDetails.getUsername());
         }
-        return optionalUser.get();
+        throw new UsernameNotFoundException("User not found");
     }
 
 }

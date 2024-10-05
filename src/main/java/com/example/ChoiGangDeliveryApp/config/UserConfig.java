@@ -21,7 +21,7 @@ public class UserConfig {
                 UserEntity admin = UserEntity.builder()
                         .username("admin")
                         .password(passwordEncoder.encode("12345"))
-                        .role(UserRole.ADMIN)
+                        .role(UserRole.ROLE_ADMIN)
                         .build();
                 userRepository.save(admin);
             }

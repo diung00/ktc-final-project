@@ -2,6 +2,8 @@ package com.example.ChoiGangDeliveryApp.config;
 
 import com.example.ChoiGangDeliveryApp.jwt.JwtTokenFilter;
 import com.example.ChoiGangDeliveryApp.jwt.JwtTokenUtils;
+import com.example.ChoiGangDeliveryApp.user.oAuth2.OAuth2SuccessHandler;
+import com.example.ChoiGangDeliveryApp.user.oAuth2.OAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +19,8 @@ import org.springframework.security.web.access.intercept.AuthorizationFilter;
 public class WebSecurityConfig {
     private final JwtTokenUtils jwtTokenUtils;
     private final UserDetailsService service;
+    private final OAuth2UserService oAuth2UserService;
+    private final OAuth2SuccessHandler oAuth2SuccessHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(
@@ -33,6 +37,8 @@ public class WebSecurityConfig {
                                     "/users/details",
                                     "/users/profile",
                                     "/users/get-user-info"
+
+
                             )
                             .authenticated();
                     auth.requestMatchers(
@@ -40,16 +46,23 @@ public class WebSecurityConfig {
                             )
                             .hasRole("ADMIN");
                     auth.requestMatchers(
-                                    "/shops/my-shop/**"
+                                    "/owners/**", "/restaurants/**", "/menu/**"
                             )
                             .hasRole("OWNER");
-                    auth.requestMatchers("/error", "/static/**", "/views/**", "/")
+                    auth.requestMatchers("/error", "/static/**", "/", "/oauth2/**")
                             .permitAll();
-                    auth.requestMatchers("/customers/**")
+                    auth.requestMatchers( "/customers/**")
                             .hasRole("CUSTOMER");
                 })
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
+                .oauth2Login(oauth2Login -> oauth2Login
+                        .loginPage("/users/login")
+                        .userInfoEndpoint(userInfo -> userInfo
+                                .userService(oAuth2UserService))
+                        .successHandler(oAuth2SuccessHandler)
+                        .permitAll()
                 )
                 .addFilterBefore(
                         new JwtTokenFilter(

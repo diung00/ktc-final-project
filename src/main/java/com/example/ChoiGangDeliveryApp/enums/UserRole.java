@@ -1,9 +1,9 @@
 package com.example.ChoiGangDeliveryApp.enums;
 
 public enum UserRole {
-    ADMIN,
-    CUSTOMER,
-    OWNER,
-    DRIVER
+    ROLE_ADMIN,
+    ROLE_CUSTOMER,
+    ROLE_OWNER,
+    ROLE_DRIVER
 
 }
