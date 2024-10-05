@@ -1,36 +1,45 @@
 package com.example.ChoiGangDeliveryApp.security.config;
 
+import com.example.ChoiGangDeliveryApp.enums.UserRole;
 import com.example.ChoiGangDeliveryApp.user.entity.UserEntity;
-import lombok.Getter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
 
-@Getter
+@Builder
+@NoArgsConstructor
 public class CustomUserDetails implements UserDetails {
-    private final UserEntity userEntity;
 
-    public CustomUserDetails(UserEntity userEntity) {
-        this.userEntity = userEntity;
+    private UserEntity user;
+
+    public CustomUserDetails (UserEntity user){
+        this.user = user;
+    }
+
+   public static CustomUserDetails fromEntity(UserEntity entity) {
+        return CustomUserDetails.builder()
+                .user(entity)
+                .build();
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        //Returns user permissions based on RoleUser enum
-        return Collections.singletonList(() -> userEntity.getRole().name());
+        return Collections.singleton(new SimpleGrantedAuthority(user.getRole().name()));
     }
 
     @Override
     public String getPassword() {
-        return userEntity.getPassword();
+        return user.getPassword();
 
     }
 
     @Override
     public String getUsername() {
-        return userEntity.getUsername();
+        return user.getUsername();
     }
 
     @Override
@@ -50,8 +59,9 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return userEntity.getRole() != null;
+        return user.getRole() != null;
     }
+
 
 
 }
