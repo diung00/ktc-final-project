@@ -15,7 +15,7 @@ import lombok.*;
 @AllArgsConstructor
 @Entity
 @Builder
-@Table(name = "user")
+@Table(name = "users")
 public class UserEntity extends BaseEntity {
     @Column(unique = true)
     private String username;
@@ -23,21 +23,27 @@ public class UserEntity extends BaseEntity {
     private String name;
     private String nickname;
     private Integer age;
+    private String address;
 
     @Column(unique = true)
     private String email;
     @Column(unique = true)
     private String phone;
-    private String address;
-    private String profileImgPath;
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
-    private String licenseNumber;
-    private String businessNumber;
 
-    @Enumerated(EnumType.STRING)
-    private ApprovalStatus approvalStatus;
+    @OneToOne
+    @JoinColumn(name = "driver_id")
+    private DriverEntity driver;
+
+    private String profileImgPath;
+
+
+
+
+
+
 
     private boolean emailVerified;
     private String rejectionReason;

@@ -30,7 +30,8 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers(
                                     "/users/login",
-                                    "/users/signup"
+                                    "/users/signup",
+                                    "/oauth2/**"
                             )
                             .anonymous();
                     auth.requestMatchers(
@@ -47,12 +48,12 @@ public class WebSecurityConfig {
                             )
                             .hasRole("ADMIN");
                     auth.requestMatchers(
-                                    "/owners/**", "/restaurants/**", "/menu/**"
+                                    "/owners/**", "/restaurants/**", "/menus/**"
                             )
                             .hasRole("OWNER");
-                    auth.requestMatchers("/error", "/static/**", "/", "/oauth2/**")
+                    auth.requestMatchers("/error", "/static/**", "/", "/map/show")
                             .permitAll();
-                    auth.requestMatchers( "/customers/**")
+                    auth.requestMatchers( "/customers/**", "/orders/create", "/orders/cancel")
                             .hasRole("CUSTOMER");
                 })
                 .sessionManagement(session -> session
