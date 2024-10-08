@@ -26,28 +26,28 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     private final JwtTokenUtils tokenUtils;
 
 
-    @Override
-    public void onAuthenticationSuccess(
-            HttpServletRequest request,
-            HttpServletResponse response,
-            Authentication authentication
-    ) throws IOException, ServletException {
-        OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
-
-        String provider = oAuth2User.getAttribute("provider");
-        String providerId = oAuth2User.getAttribute("id").toString();
-
-        String email = oAuth2User.getAttribute("email");
-        String username = String.format("{%s}%s", provider, email);
-
-            if (!userService.userExists(username)) {
-                userService.createUserByOAuth2(username, providerId, providerId);
-            }
-
-        UserDetails userDetails = (UserDetails) userService.loadUserByUsername(username);
-        String jwt = tokenUtils.generateToken(userDetails);
-        String targetUrl = String.format("http://localhost:8080/users/validate?token=%s", jwt);
-        getRedirectStrategy().sendRedirect(request, response, targetUrl);
-    }
+//    @Override
+//    public void onAuthenticationSuccess(
+//            HttpServletRequest request,
+//            HttpServletResponse response,
+//            Authentication authentication
+//    ) throws IOException, ServletException {
+//        OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
+//
+//        String provider = oAuth2User.getAttribute("provider");
+//        String providerId = oAuth2User.getAttribute("id").toString();
+//
+//        String email = oAuth2User.getAttribute("email");
+//        String username = String.format("{%s}%s", provider, email);
+//
+//            if (!userService.userExists(username)) {
+//                userService.createUserByOAuth2(username, providerId, providerId);
+//            }
+//
+//        UserDetails userDetails = (UserDetails) userService.loadUserByUsername(username);
+//        String jwt = tokenUtils.generateToken(userDetails);
+//        String targetUrl = String.format("http://localhost:8080/users/validate?token=%s", jwt);
+//        getRedirectStrategy().sendRedirect(request, response, targetUrl);
+//    }
 
 }

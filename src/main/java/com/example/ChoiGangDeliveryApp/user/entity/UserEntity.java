@@ -1,8 +1,10 @@
 package com.example.ChoiGangDeliveryApp.user.entity;
 
 import com.example.ChoiGangDeliveryApp.common.base.BaseEntity;
+import com.example.ChoiGangDeliveryApp.driver.entity.DriverEntity;
 import com.example.ChoiGangDeliveryApp.enums.ApprovalStatus;
 import com.example.ChoiGangDeliveryApp.enums.UserRole;
+import com.example.ChoiGangDeliveryApp.owner.restaurant.entity.RestaurantsEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -39,5 +41,10 @@ public class UserEntity extends BaseEntity {
 
     private boolean emailVerified;
     private String rejectionReason;
+
+
+    @OneToOne(mappedBy = "owner")
+    private RestaurantsEntity restaurant;
+
 
 }

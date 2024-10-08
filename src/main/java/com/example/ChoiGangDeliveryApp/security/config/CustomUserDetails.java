@@ -20,7 +20,7 @@ public class CustomUserDetails implements UserDetails {
         this.user = user;
     }
 
-   public static CustomUserDetails fromEntity(UserEntity entity) {
+    public static CustomUserDetails fromEntity(UserEntity entity) {
         return CustomUserDetails.builder()
                 .user(entity)
                 .build();

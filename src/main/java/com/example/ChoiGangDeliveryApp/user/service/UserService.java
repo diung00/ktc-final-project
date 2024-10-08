@@ -1,10 +1,13 @@
 package com.example.ChoiGangDeliveryApp.user.service;
 
+import com.example.ChoiGangDeliveryApp.common.file.FileService;
 import com.example.ChoiGangDeliveryApp.enums.UserRole;
 import com.example.ChoiGangDeliveryApp.jwt.JwtTokenUtils;
 import com.example.ChoiGangDeliveryApp.jwt.dto.JwtRequestDto;
 import com.example.ChoiGangDeliveryApp.jwt.dto.JwtResponseDto;
+import com.example.ChoiGangDeliveryApp.security.config.AuthenticationFacade;
 import com.example.ChoiGangDeliveryApp.security.config.CustomUserDetails;
+import com.example.ChoiGangDeliveryApp.user.dto.DeleteUserDto;
 import com.example.ChoiGangDeliveryApp.user.dto.UserCreateDto;
 import com.example.ChoiGangDeliveryApp.user.dto.UserDto;
 import com.example.ChoiGangDeliveryApp.user.entity.UserEntity;
@@ -25,10 +28,11 @@ import java.util.Optional;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class UserService implements UserDetailsService {
+public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenUtils jwtTokenUtils;
+    private final AuthenticationFacade authFacade;
 
     // class này chỉ dùng cho signup và login
     //sign up
@@ -48,6 +52,17 @@ public class UserService implements UserDetailsService {
                 .role(dto.getRole())
                 .build()));
     }
+    //gửi yêu cầu delete tới admin, nếu admin oke thì lấy userRepository.delere(user)
+//
+//    public void deleteUser(DeleteUserDto dto){
+//        UserEntity user = authFacade.getCurrentUserEntity();
+//
+//        if (!user.getPassword().equals(dto.getPassword())){
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "password is wrong");
+//        }
+//        user.setRole(UserRole.ROLE_DELETE);
+//
+//    }
 
 
 
@@ -66,45 +81,6 @@ public class UserService implements UserDetailsService {
         response.setToken(jwt);
         return response;
     }
-
-
-    public void createUserByOAuth2(String username, String password, String passCheck) {
-        if (userExists(username) || !password.equals(passCheck))
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-        UserEntity newUser = new UserEntity();
-        newUser.setUsername(username);
-        newUser.setPassword(passwordEncoder.encode(password));
-        newUser.setRole(UserRole.ROLE_CUSTOMER);
-        userRepository.save(newUser);
-    }
-
-
-    public boolean userExists(String username) {
-
-        return userRepository.existsByUsername(username);
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String username)
-            throws UsernameNotFoundException {
-        log.info("loadUserByUsername in UserService");
-        Optional<UserEntity> optionalUser =
-                userRepository.findByUsername(username);
-        if (optionalUser.isEmpty())
-            throw new UsernameNotFoundException(username);
-
-        return CustomUserDetails.fromEntity(optionalUser.get());
-    }
-
-    public UserEntity findByUsername(String username){
-        Optional<UserEntity> optionalUser = userRepository.findByUsername(username);
-        if (optionalUser.isPresent()){
-            UserEntity userEntity = optionalUser.get();
-            return userEntity;
-        }
-        return null;
-    }
-
 
 
 

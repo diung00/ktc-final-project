@@ -1,5 +1,6 @@
 package com.example.ChoiGangDeliveryApp.owner.restaurant.dto;
 
+import com.example.ChoiGangDeliveryApp.owner.restaurant.entity.RestaurantsEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,4 +23,19 @@ public class RestaurantDto {
     private String approvalStatus;
     private Long ownerId;
 
+    public static RestaurantDto fromEntity(RestaurantsEntity newRestaurant) {
+        return RestaurantDto.builder()
+                .id(newRestaurant.getId())
+                .name(newRestaurant.getName())
+                .address(newRestaurant.getAddress())
+                .phone(newRestaurant.getPhone())
+                .openingHours(newRestaurant.getOpeningHours())
+                .cuisineType(newRestaurant.getCuisineType().name())
+                .rating(newRestaurant.getRating())
+                .restImage(newRestaurant.getRestImage())
+                .description(newRestaurant.getDescription())
+                .approvalStatus(newRestaurant.getApprovalStatus().name())
+                .ownerId(newRestaurant.getOwner() != null ? newRestaurant.getOwner().getId() : null)
+                .build();
+    }
 }

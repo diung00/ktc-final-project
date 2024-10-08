@@ -35,6 +35,10 @@ public class RestaurantsEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private ApprovalStatus approvalStatus;
 
+    //Restaurant location
+    private double latitude;
+    private double longitude;
+
     //Menu
     @Builder.Default
     @OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY)
