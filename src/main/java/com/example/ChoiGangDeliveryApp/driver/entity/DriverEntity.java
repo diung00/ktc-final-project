@@ -15,8 +15,12 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "drivers")
 public class DriverEntity extends BaseEntity {
-    @OneToOne(fetch = FetchType.LAZY)
+
+    private String licenseNumber;
+
+    @OneToOne(mappedBy = "driver",fetch = FetchType.LAZY)
     private UserEntity user;
 
     @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL)

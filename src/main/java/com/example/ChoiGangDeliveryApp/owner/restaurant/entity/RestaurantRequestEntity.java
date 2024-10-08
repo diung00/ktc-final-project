@@ -7,15 +7,13 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 public class RestaurantRequestEntity extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "restaurant_id", nullable = false)
-    private RestaurantsEntity restaurant;
+    private RestaurantEntity restaurant;
 
     @Enumerated(EnumType.STRING)
     private RequestType requestType; // OPEN or CLOSE

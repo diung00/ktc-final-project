@@ -3,13 +3,15 @@ package com.example.ChoiGangDeliveryApp.order.entity;
 import com.example.ChoiGangDeliveryApp.common.base.BaseEntity;
 import com.example.ChoiGangDeliveryApp.driver.entity.DriverEntity;
 import com.example.ChoiGangDeliveryApp.enums.OrderStatus;
-import com.example.ChoiGangDeliveryApp.owner.restaurant.entity.RestaurantsEntity;
+import com.example.ChoiGangDeliveryApp.owner.restaurant.entity.RestaurantEntity;
 import com.example.ChoiGangDeliveryApp.user.entity.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -29,7 +31,11 @@ public class OrderEntity extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id")
-    private RestaurantsEntity restaurant; // restaurant where process this order
+    private RestaurantEntity restaurant;
+
+    @OneToMany(mappedBy = "order")
+    private List<MenuOrderEntity> menuOrders;
+
 
     private LocalDateTime orderDate;
 

@@ -1,6 +1,7 @@
 package com.example.ChoiGangDeliveryApp.user.oAuth2;
 
 import com.example.ChoiGangDeliveryApp.jwt.JwtTokenUtils;
+import com.example.ChoiGangDeliveryApp.security.config.CustomUserDetailsService;
 import com.example.ChoiGangDeliveryApp.user.entity.UserEntity;
 import com.example.ChoiGangDeliveryApp.user.repo.UserRepository;
 import com.example.ChoiGangDeliveryApp.user.service.UserService;
@@ -22,7 +23,7 @@ import java.io.IOException;
 @Component
 public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
-    private final UserService userService;
+    private final CustomUserDetailsService userService;
     private final JwtTokenUtils tokenUtils;
 
 
