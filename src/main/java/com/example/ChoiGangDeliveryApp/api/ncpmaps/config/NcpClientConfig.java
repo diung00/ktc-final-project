@@ -44,14 +44,15 @@ public class NcpClientConfig {
                 .requestInitializer(request -> {
                     HttpHeaders headers = request.getHeaders();
 
-                    // 1. Timestamps cho yêu cầu
+                    // 1. Timestamps
                     long timestamp = System.currentTimeMillis();
                     headers.add("x-ncp-apigw-timestamp", Long.toString(timestamp));
 
-                    // 2. Thêm AccessKey (sử dụng clientId hoặc clientSecret, tùy vào API yêu cầu)
-                    headers.add("x-ncp-iam-access-key", clientId); // hoặc có thể sử dụng một giá trị khác nếu cần
+                    // 2. AccessKey
+                    headers.add("x-ncp-iam-access-key", clientId);
 
-                    // 3. Tạo Signature
+                    // 3. Generate Signature
+                    // 현재시각 + 요청 URI, + 요청메서드
                     String signature = this.makeSignature(request.getMethod(),
                             request.getURI().getPath() + "?" + request.getURI().getQuery(), timestamp);
                     headers.add("x-ncp-apigw-signature-v2", signature);
