@@ -9,7 +9,9 @@ import com.example.ChoiGangDeliveryApp.security.config.CustomUserDetails;
 import com.example.ChoiGangDeliveryApp.user.dto.DeleteUserDto;
 import com.example.ChoiGangDeliveryApp.user.dto.UserCreateDto;
 import com.example.ChoiGangDeliveryApp.user.dto.UserDto;
+import com.example.ChoiGangDeliveryApp.user.entity.UserDeleteReasonEntity;
 import com.example.ChoiGangDeliveryApp.user.entity.UserEntity;
+import com.example.ChoiGangDeliveryApp.user.repo.UserDeleteReasonRepo;
 import com.example.ChoiGangDeliveryApp.user.repo.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +34,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenUtils jwtTokenUtils;
     private final AuthenticationFacade authFacade;
+    private final UserDeleteReasonRepo reasonRepository;
 
     // class này chỉ dùng cho signup và login
     //sign up
@@ -51,17 +54,7 @@ public class UserService {
                 .role(dto.getRole())
                 .build()));
     }
-    //gửi yêu cầu delete tới admin, nếu admin oke thì lấy userRepository.delere(user)
 
-    public void deleteUser(DeleteUserDto dto){
-       UserEntity user = authFacade.getCurrentUserEntity();
-
-       if (!user.getPassword().equals(dto.getPassword())){
-           throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "password is wrong");
-       }
-       user.setRole(UserRole.ROLE_DELETE);
-
-    }
 
 
 
@@ -79,6 +72,27 @@ public class UserService {
         JwtResponseDto response = new JwtResponseDto();
         response.setToken(jwt);
         return response;
+    }
+
+    //gửi yêu cầu delete tới admin, nếu admin oke thì lấy userRepository.delete(user)
+    public UserDto deleteUser(DeleteUserDto dto){
+        UserEntity user = authFacade.getCurrentUserEntity();
+
+        UserDeleteReasonEntity reason = new UserDeleteReasonEntity();
+
+        if (!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "password is wrong");
+        }
+        if (user.getRole().equals(UserRole.ROLE_DELETE)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "your delete request was sent");
+        }
+
+        user.setRole(UserRole.ROLE_DELETE);
+        reason.setReason(dto.getReason());
+
+        reasonRepository.save(reason);
+        userRepository.save(user);
+        return UserDto.fromEntity(user);
     }
 
 

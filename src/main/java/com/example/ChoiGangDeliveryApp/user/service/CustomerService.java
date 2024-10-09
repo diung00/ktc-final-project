@@ -1,6 +1,7 @@
 package com.example.ChoiGangDeliveryApp.user.service;
 
 import com.example.ChoiGangDeliveryApp.enums.CuisineType;
+import com.example.ChoiGangDeliveryApp.enums.UserRole;
 import com.example.ChoiGangDeliveryApp.jwt.JwtTokenUtils;
 import com.example.ChoiGangDeliveryApp.owner.menu.dto.MenuDto;
 import com.example.ChoiGangDeliveryApp.owner.menu.entity.MenuEntity;
@@ -10,9 +11,12 @@ import com.example.ChoiGangDeliveryApp.owner.restaurant.entity.RestaurantEntity;
 import com.example.ChoiGangDeliveryApp.owner.restaurant.repo.RestaurantRepository;
 import com.example.ChoiGangDeliveryApp.security.config.AuthenticationFacade;
 
+import com.example.ChoiGangDeliveryApp.user.dto.DeleteUserDto;
 import com.example.ChoiGangDeliveryApp.user.dto.UpdateAddressDto;
 import com.example.ChoiGangDeliveryApp.user.dto.UserDto;
+import com.example.ChoiGangDeliveryApp.user.entity.UserDeleteReasonEntity;
 import com.example.ChoiGangDeliveryApp.user.entity.UserEntity;
+import com.example.ChoiGangDeliveryApp.user.repo.UserDeleteReasonRepo;
 import com.example.ChoiGangDeliveryApp.user.repo.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -33,6 +37,9 @@ public class CustomerService {
     private final MenuRepository menuRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenUtils jwtTokenUtils;
+    UserDeleteReasonRepo reasonRepository;
+
+
 
 
     public UserDto customerUpdateAddress(UpdateAddressDto dto){

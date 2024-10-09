@@ -3,8 +3,10 @@ package com.example.ChoiGangDeliveryApp.user.controller;
 import com.example.ChoiGangDeliveryApp.jwt.JwtTokenUtils;
 import com.example.ChoiGangDeliveryApp.jwt.dto.JwtRequestDto;
 import com.example.ChoiGangDeliveryApp.jwt.dto.JwtResponseDto;
+import com.example.ChoiGangDeliveryApp.user.dto.DeleteUserDto;
 import com.example.ChoiGangDeliveryApp.user.dto.UserCreateDto;
 import com.example.ChoiGangDeliveryApp.user.dto.UserDto;
+import com.example.ChoiGangDeliveryApp.user.service.CustomerService;
 import com.example.ChoiGangDeliveryApp.user.service.UserService;
 import io.jsonwebtoken.Jwt;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +37,14 @@ public class UserController {
             JwtRequestDto dto
     ){
         return service.login(dto);
+    }
+
+    @PostMapping("delete")
+    public UserDto deleteUser(
+            @RequestBody
+            DeleteUserDto dto
+    ){
+        return service.deleteUser(dto);
     }
 
     @GetMapping("/validate")

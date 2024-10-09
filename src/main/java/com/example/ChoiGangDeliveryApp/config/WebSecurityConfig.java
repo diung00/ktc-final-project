@@ -37,8 +37,8 @@ public class WebSecurityConfig {
                     auth.requestMatchers(
                                     "/users/details",
                                     "/users/profile",
-                                    "/users/get-user-info"
-
+                                    "/users/get-user-info",
+                            "/users/delete"
 
                             )
                             .authenticated();
