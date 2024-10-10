@@ -47,8 +47,7 @@ public class RestaurantService {
         UserEntity currentUser = facade.getCurrentUserEntity();
 
         // check user role
-        if (!currentUser.getRole().equals(UserRole.ROLE_OWNER)
-                || !currentUser.getApprovalStatus().equals(ApprovalStatus.APPROVED))
+        if (!currentUser.getRole().equals(UserRole.ROLE_OWNER))
         {
             throw new IllegalStateException("User does not have permission to open a restaurant.");
         }

@@ -1,8 +1,6 @@
 package com.example.ChoiGangDeliveryApp.user.entity;
 
 import com.example.ChoiGangDeliveryApp.common.base.BaseEntity;
-import com.example.ChoiGangDeliveryApp.driver.entity.DriverEntity;
-import com.example.ChoiGangDeliveryApp.enums.ApprovalStatus;
 import com.example.ChoiGangDeliveryApp.enums.UserRole;
 import com.example.ChoiGangDeliveryApp.owner.restaurant.entity.RestaurantsEntity;
 import jakarta.persistence.*;
@@ -36,15 +34,16 @@ public class UserEntity extends BaseEntity {
     private String licenseNumber;
     private String businessNumber;
 
-    @Enumerated(EnumType.STRING)
-    private ApprovalStatus approvalStatus;
 
-    private boolean emailVerified;
+    private boolean emailVerified = false; //default is false
     private String rejectionReason;
 
 
     @OneToOne(mappedBy = "owner")
     private RestaurantsEntity restaurant;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private OwnerRoleRequest roleChangeRequest;
 
 
 }

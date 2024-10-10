@@ -49,7 +49,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         UserEntity newUser = new UserEntity();
         newUser.setUsername(username);
         newUser.setPassword(passwordEncoder.encode(password));
-        newUser.setRole(UserRole.ROLE_CUSTOMER);
+        newUser.setRole(UserRole.ROLE_USER);
         userRepository.save(newUser);
     }
 

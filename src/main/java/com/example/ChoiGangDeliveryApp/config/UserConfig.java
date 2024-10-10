@@ -41,7 +41,6 @@ public class UserConfig {
                         .role(UserRole.ROLE_OWNER)
                         .email("ownerTest1@example.com")
                         .emailVerified(true)
-                        .approvalStatus(ApprovalStatus.APPROVED)
                         .emailVerified(true)
                         .build();
                 userRepository.save(owner);
@@ -51,10 +50,9 @@ public class UserConfig {
                 UserEntity customerUser = UserEntity.builder()
                         .username("customerTest1")
                         .password(passwordEncoder.encode("12345"))
-                        .role(UserRole.ROLE_CUSTOMER)
+                        .role(UserRole.ROLE_USER)
                         .email("customerTest1@example.com")
                         .emailVerified(true)
-                        .approvalStatus(ApprovalStatus.APPROVED)
                         .build();
                 userRepository.save(customerUser);
             }
@@ -68,7 +66,6 @@ public class UserConfig {
                         .licenseNumber("11-850101-1234")
                         .email("driverTest1@example.com")
                         .emailVerified(true)
-                        .approvalStatus(ApprovalStatus.APPROVED)
                         .build();
                 userRepository.save(driverUser);
                 // Create DriverEntity object

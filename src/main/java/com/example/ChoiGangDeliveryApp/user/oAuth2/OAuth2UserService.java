@@ -43,7 +43,7 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
         log.info(attributes.toString());
 
         return new DefaultOAuth2User(
-                Collections.singleton(new SimpleGrantedAuthority("ROLE_CUSTOMER")),
+                Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")),
                 attributes,
                 nameAttribute
         );
