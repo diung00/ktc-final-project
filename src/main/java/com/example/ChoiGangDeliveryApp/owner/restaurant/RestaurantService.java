@@ -201,7 +201,12 @@ public class RestaurantService {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "User is not the owner of this restaurant.");
         }
 
-        // 4. create close request
+        // 4. Only approvalStatus is 'APPROVED' can create a close shop request.
+        if (!restaurant.getApprovalStatus().equals(ApprovalStatus.APPROVED)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Only restaurant status is approved can be closed");
+        }
+
+        // 5. create close request
         RestaurantRequestEntity request = RestaurantRequestEntity.builder()
                 .restaurant(restaurant)
                 .requestType(RequestType.CLOSE)
@@ -217,8 +222,6 @@ public class RestaurantService {
         // 7. save restaurant
         restaurantRepo.save(restaurant);
     }
-
-
 
 
 
