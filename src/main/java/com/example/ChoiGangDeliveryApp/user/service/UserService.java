@@ -332,6 +332,11 @@ public class UserService {
         if (optionalRequest.isPresent())
             throw new GlobalException(GlobalErrorCode.DUPLICATE_MANAGER_REQUEST);
 
+        // Check if the business number already exists in the system
+        Optional<UserEntity> userWithBusinessNum = userRepository.findByBusinessNumber(businessNumber);
+        if (userWithBusinessNum.isPresent()) {
+            throw new GlobalException(GlobalErrorCode.BUSINESS_NUMBER_ALREADY_EXISTS);
+        }
         // New request
         OwnerRoleRequest request = OwnerRoleRequest.builder()
                 .user(currentUser)
@@ -363,6 +368,11 @@ public class UserService {
         if (optionalRequest.isPresent()) {
             throw new GlobalException(GlobalErrorCode.DUPLICATE_DRIVER_REQUEST);
         }
+        // Check if the license number already exists for any user in UserEntity
+        Optional<UserEntity> userWithLicense = userRepository.findByLicenseNumber(licenseNumber);
+        if (userWithLicense.isPresent()) {
+            throw new GlobalException(GlobalErrorCode.LICENSE_NUMBER_ALREADY_EXISTS);
+        }
 
         DriverRoleRequest request = DriverRoleRequest.builder()
                 .user(currentUser)
@@ -371,9 +381,6 @@ public class UserService {
                 .build();
         driverRoleRequestRepository.save(request);
     }
-
-
-
 
 
 
