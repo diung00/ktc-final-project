@@ -1,6 +1,5 @@
 package com.example.ChoiGangDeliveryApp.owner.restaurant.dto;
 
-
 import com.example.ChoiGangDeliveryApp.owner.restaurant.entity.RestaurantsEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,22 +22,20 @@ public class RestaurantDto {
     private String description;
     private String approvalStatus;
     private Long ownerId;
-    private String ownerName;
 
-
-    public static RestaurantDto fromEntity(RestaurantsEntity entity) {
+    public static RestaurantDto fromEntity(RestaurantsEntity newRestaurant) {
         return RestaurantDto.builder()
-                .id(entity.getId())
-                .name(entity.getName())
-                .address(entity.getAddress())
-                .phone(entity.getPhone())
-                .openingHours(entity.getOpeningHours())
-                .cuisineType(entity.getCuisineType().name())
-                .rating(entity.getRating())
-                .restImage(entity.getRestImage())
-                .description(entity.getDescription())
-                .ownerName(entity.getOwner().getName())
+                .id(newRestaurant.getId())
+                .name(newRestaurant.getName())
+                .address(newRestaurant.getAddress())
+                .phone(newRestaurant.getPhone())
+                .openingHours(newRestaurant.getOpeningHours())
+                .cuisineType(newRestaurant.getCuisineType().name())
+                .rating(newRestaurant.getRating())
+                .restImage(newRestaurant.getRestImage())
+                .description(newRestaurant.getDescription())
+                .approvalStatus(newRestaurant.getApprovalStatus().name())
+                .ownerId(newRestaurant.getOwner() != null ? newRestaurant.getOwner().getId() : null)
                 .build();
     }
-
 }

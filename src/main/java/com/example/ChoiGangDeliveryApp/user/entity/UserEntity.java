@@ -4,7 +4,6 @@ import com.example.ChoiGangDeliveryApp.common.base.BaseEntity;
 import com.example.ChoiGangDeliveryApp.driver.entity.DriverEntity;
 import com.example.ChoiGangDeliveryApp.enums.ApprovalStatus;
 import com.example.ChoiGangDeliveryApp.enums.UserRole;
-
 import com.example.ChoiGangDeliveryApp.owner.restaurant.entity.RestaurantsEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -24,23 +23,21 @@ public class UserEntity extends BaseEntity {
     private String name;
     private String nickname;
     private Integer age;
-
+    private String address;
 
     @Column(unique = true)
     private String email;
     @Column(unique = true)
     private String phone;
-    private String address;
-    private String profileImgPath;
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
-    private String businessNumber;
-
     @OneToOne
     @JoinColumn(name = "driver_id")
     private DriverEntity driver;
+
+    private String profileImgPath;
 
     @Enumerated(EnumType.STRING)
     private ApprovalStatus approvalStatus;
@@ -51,7 +48,6 @@ public class UserEntity extends BaseEntity {
 
     @OneToOne(mappedBy = "owner")
     private RestaurantsEntity restaurant;
-
 
 
 }

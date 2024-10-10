@@ -32,7 +32,6 @@ public class OrderEntity extends BaseEntity {
     @JoinColumn(name = "restaurant_id")
     private RestaurantsEntity restaurant;
 
-
     @OneToMany(mappedBy = "order")
     private List<MenuOrderEntity> menuOrders;
 
