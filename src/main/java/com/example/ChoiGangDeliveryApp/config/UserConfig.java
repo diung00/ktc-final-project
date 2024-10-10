@@ -65,6 +65,7 @@ public class UserConfig {
                         .username("driverTest1")
                         .password(passwordEncoder.encode("12345"))
                         .role(UserRole.ROLE_DRIVER)
+                        .licenseNumber("11-850101-1234")
                         .email("driverTest1@example.com")
                         .emailVerified(true)
                         .approvalStatus(ApprovalStatus.APPROVED)

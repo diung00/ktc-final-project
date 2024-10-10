@@ -39,7 +39,6 @@ public class RestaurantService {
     private final FileService fileService;
     private final RestaurantRequestRepository restaurantRequestRepo;
 
-
     // Open Restaurant Request
     // Owner must fill some essential info for requesting to open a restaurant
     @Transactional
