@@ -42,7 +42,6 @@ public class WebSecurityConfig {
 
                             )
                             .authenticated();
-                    auth.requestMatchers("/restaurants/**").authenticated();
                     auth.requestMatchers(
                                     "/admin/**"
                             )

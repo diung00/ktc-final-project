@@ -1,8 +1,9 @@
 package com.example.ChoiGangDeliveryApp.enums;
 
 public enum ApprovalStatus {
-    PENDING,
+    OPEN_PENDING,
     APPROVED,
     DECLINED,
+    CLOSE_PENDING,
     CLOSED
 }

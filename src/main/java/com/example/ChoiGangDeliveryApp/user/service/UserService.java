@@ -10,11 +10,13 @@ import com.example.ChoiGangDeliveryApp.security.config.CustomUserDetails;
 import com.example.ChoiGangDeliveryApp.user.dto.DeleteUserDto;
 import com.example.ChoiGangDeliveryApp.user.dto.UserCreateDto;
 import com.example.ChoiGangDeliveryApp.user.dto.UserDto;
+
 import com.example.ChoiGangDeliveryApp.user.emailVerification.EmailService;
 import com.example.ChoiGangDeliveryApp.user.emailVerification.EmailVerificationToken;
 import com.example.ChoiGangDeliveryApp.user.entity.UserDeleteReasonEntity;
 import com.example.ChoiGangDeliveryApp.user.entity.UserEntity;
 import com.example.ChoiGangDeliveryApp.user.emailVerification.EmailVerificationTokenRepo;
+
 import com.example.ChoiGangDeliveryApp.user.repo.UserDeleteReasonRepo;
 import com.example.ChoiGangDeliveryApp.user.repo.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +38,7 @@ public class UserService {
     private final JwtTokenUtils jwtTokenUtils;
     private final AuthenticationFacade authFacade;
     private final UserDeleteReasonRepo reasonRepository;
+
     private final EmailVerificationTokenRepo emailVerificationTokenRepository;
     private final EmailService emailService;
 
@@ -57,6 +60,7 @@ public class UserService {
         // Gọi service gửi email để gửi mã xác thực đến email người dùng
         emailService.sendVerificationEmail(user.getEmail(), verifyCode);
     }
+
 
     // class này chỉ dùng cho signup và login
     //sign up
@@ -80,6 +84,7 @@ public class UserService {
         createEmailVerificationToken(newUser);
         return UserDto.fromEntity(newUser);
     }
+
 
 
 

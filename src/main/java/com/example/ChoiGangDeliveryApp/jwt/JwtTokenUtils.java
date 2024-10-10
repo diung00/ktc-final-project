@@ -16,8 +16,8 @@ import java.util.Date;
 @Slf4j
 @Component
 public class JwtTokenUtils {
-    private final Key signingKey;
-    private final JwtParser jwtParser;
+private final Key signingKey;
+private final JwtParser jwtParser;
 
     public JwtTokenUtils(
             @Value("${jwt.secret}")
