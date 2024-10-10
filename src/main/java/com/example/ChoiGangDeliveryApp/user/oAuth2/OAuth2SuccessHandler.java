@@ -2,9 +2,6 @@ package com.example.ChoiGangDeliveryApp.user.oAuth2;
 
 import com.example.ChoiGangDeliveryApp.jwt.JwtTokenUtils;
 import com.example.ChoiGangDeliveryApp.security.config.CustomUserDetailsService;
-import com.example.ChoiGangDeliveryApp.user.entity.UserEntity;
-import com.example.ChoiGangDeliveryApp.user.repo.UserRepository;
-import com.example.ChoiGangDeliveryApp.user.service.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

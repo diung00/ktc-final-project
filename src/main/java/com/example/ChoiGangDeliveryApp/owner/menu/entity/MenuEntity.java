@@ -3,12 +3,10 @@ package com.example.ChoiGangDeliveryApp.owner.menu.entity;
 import com.example.ChoiGangDeliveryApp.common.base.BaseEntity;
 import com.example.ChoiGangDeliveryApp.enums.MenuStatus;
 import com.example.ChoiGangDeliveryApp.order.entity.MenuOrderEntity;
-import com.example.ChoiGangDeliveryApp.order.entity.OrderEntity;
-import com.example.ChoiGangDeliveryApp.owner.restaurant.entity.RestaurantEntity;
+import com.example.ChoiGangDeliveryApp.owner.restaurant.entity.RestaurantsEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -20,7 +18,7 @@ import java.util.List;
 public class MenuEntity extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id")
-    private RestaurantEntity restaurant;
+    private RestaurantsEntity restaurant;
 
     // Menu information
     @Column(nullable = false, length = 50)

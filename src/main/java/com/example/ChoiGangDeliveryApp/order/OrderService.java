@@ -8,7 +8,7 @@ import com.example.ChoiGangDeliveryApp.order.dto.CancelOrderDto;
 import com.example.ChoiGangDeliveryApp.order.dto.OrderDto;
 import com.example.ChoiGangDeliveryApp.order.entity.OrderEntity;
 import com.example.ChoiGangDeliveryApp.order.repo.OrderRepository;
-import com.example.ChoiGangDeliveryApp.owner.restaurant.entity.RestaurantEntity;
+import com.example.ChoiGangDeliveryApp.owner.restaurant.entity.RestaurantsEntity;
 import com.example.ChoiGangDeliveryApp.owner.restaurant.repo.RestaurantRepository;
 import com.example.ChoiGangDeliveryApp.security.config.AuthenticationFacade;
 import com.example.ChoiGangDeliveryApp.user.entity.UserEntity;
@@ -34,7 +34,7 @@ public class OrderService {
     @Transactional
     public OrderDto createOrder (OrderDto dto){
         UserEntity user = authFacade.getCurrentUserEntity();
-        RestaurantEntity restaurant = restaurantRepository.findById(dto.getRestaurantId())
+        RestaurantsEntity restaurant = restaurantRepository.findById(dto.getRestaurantId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "not found restaurant"));
 
 

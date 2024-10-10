@@ -1,20 +1,17 @@
 package com.example.ChoiGangDeliveryApp.user.service;
 
 import com.example.ChoiGangDeliveryApp.enums.CuisineType;
-import com.example.ChoiGangDeliveryApp.enums.UserRole;
 import com.example.ChoiGangDeliveryApp.jwt.JwtTokenUtils;
 import com.example.ChoiGangDeliveryApp.owner.menu.dto.MenuDto;
 import com.example.ChoiGangDeliveryApp.owner.menu.entity.MenuEntity;
 import com.example.ChoiGangDeliveryApp.owner.menu.repo.MenuRepository;
 import com.example.ChoiGangDeliveryApp.owner.restaurant.dto.RestaurantDto;
-import com.example.ChoiGangDeliveryApp.owner.restaurant.entity.RestaurantEntity;
+import com.example.ChoiGangDeliveryApp.owner.restaurant.entity.RestaurantsEntity;
 import com.example.ChoiGangDeliveryApp.owner.restaurant.repo.RestaurantRepository;
 import com.example.ChoiGangDeliveryApp.security.config.AuthenticationFacade;
 
-import com.example.ChoiGangDeliveryApp.user.dto.DeleteUserDto;
 import com.example.ChoiGangDeliveryApp.user.dto.UpdateAddressDto;
 import com.example.ChoiGangDeliveryApp.user.dto.UserDto;
-import com.example.ChoiGangDeliveryApp.user.entity.UserDeleteReasonEntity;
 import com.example.ChoiGangDeliveryApp.user.entity.UserEntity;
 import com.example.ChoiGangDeliveryApp.user.repo.UserDeleteReasonRepo;
 import com.example.ChoiGangDeliveryApp.user.repo.UserRepository;
@@ -60,7 +57,7 @@ public class CustomerService {
             double userLat,
             double userLng
     ) {
-        List<RestaurantEntity> restaurants =
+        List<RestaurantsEntity> restaurants =
                 restaurantRepository.findNearbyRestaurants(userLat, userLng);
         return restaurants.stream()
                 .map(RestaurantDto::fromEntity)
@@ -72,7 +69,7 @@ public class CustomerService {
             double userLat,
             double userLng
     ){
-        List<RestaurantEntity> restaurants =
+        List<RestaurantsEntity> restaurants =
                 restaurantRepository.findByNameContainingAndWithin5km(name, userLat, userLng);
         return restaurants.stream()
                 .map(RestaurantDto::fromEntity)
@@ -85,7 +82,7 @@ public class CustomerService {
             double userLat,
             double userLng
     ) {
-        List<RestaurantEntity> restaurants =
+        List<RestaurantsEntity> restaurants =
                 restaurantRepository.findByCuisineTypeAndNearby(cuisineType, userLat, userLng);
         return restaurants.stream()
                 .map(RestaurantDto::fromEntity)
@@ -96,7 +93,7 @@ public class CustomerService {
     public RestaurantDto viewOneRestaurant(
             Long restaurantId
     ){
-        Optional<RestaurantEntity> restaurant =
+        Optional<RestaurantsEntity> restaurant =
                 restaurantRepository.findById(restaurantId);
         if (restaurant.isPresent()){
             return RestaurantDto.fromEntity(restaurant.get());
@@ -110,7 +107,7 @@ public class CustomerService {
             Long restaurantId
     ){
 
-        Optional<RestaurantEntity> restaurant =
+        Optional<RestaurantsEntity> restaurant =
                 restaurantRepository.findById(restaurantId);
         if (restaurant.isPresent()){
             List<MenuEntity> menus =

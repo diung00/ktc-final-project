@@ -19,16 +19,13 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "restaurants")
-public class RestaurantEntity extends BaseEntity {
+public class RestaurantsEntity extends BaseEntity {
     @OneToOne(fetch = FetchType.LAZY)
     private UserEntity owner;
     // Restaurant information
     private String name; //restaurant name
     private String address;
 
-    private double latitude;
-    private double longitude;
-    //restaurant address
     private String phone;
     private String openingHours;
     @Enumerated(EnumType.STRING)

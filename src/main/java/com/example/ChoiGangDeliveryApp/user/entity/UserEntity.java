@@ -39,11 +39,8 @@ public class UserEntity extends BaseEntity {
 
     private String profileImgPath;
 
-
-
-
-
-
+    @Enumerated(EnumType.STRING)
+    private ApprovalStatus approvalStatus;
 
     private boolean emailVerified;
     private String rejectionReason;
