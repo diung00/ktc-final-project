@@ -1,6 +1,7 @@
-package com.example.ChoiGangDeliveryApp.security.config;
+package com.example.ChoiGangDeliveryApp.security.service;
 
 import com.example.ChoiGangDeliveryApp.enums.UserRole;
+import com.example.ChoiGangDeliveryApp.security.config.CustomUserDetails;
 import com.example.ChoiGangDeliveryApp.user.entity.UserEntity;
 import com.example.ChoiGangDeliveryApp.user.repo.UserRepository;
 import lombok.RequiredArgsConstructor;

@@ -81,7 +81,6 @@ public class UserService {
         // Check if email is in Verification Email table
         EmailVerification verification = verificationRepository.findByEmail(dto.getEmail())
                 .orElseThrow(() -> new GlobalException(GlobalErrorCode.VERIFICATION_NOT_FOUND));
-
         //Check verification status.
         if (!verification.getStatus().equals(VerificationStatus.VERIFIED)) {
             throw new GlobalException(GlobalErrorCode.VERIFICATION_INVALID_STATUS);

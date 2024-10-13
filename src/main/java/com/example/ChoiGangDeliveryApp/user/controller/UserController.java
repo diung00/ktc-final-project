@@ -58,13 +58,7 @@ public class UserController {
         service.verifyEmail(email, code);
     }
 
-    @PostMapping("generateRandomNumber")
-    public String generateRandomNumber (
-            @RequestBody()
-            int len
-    ){
-        return service.generateRandomNumber(len);
-    }
+
 
     @PostMapping("signUpSendCode")
     public void signUpSendCode (

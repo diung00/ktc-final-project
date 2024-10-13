@@ -30,7 +30,10 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers(
                                     "/users/login",
-                                    "/users/signup"
+                                    "/users/signup",
+                            "users/sendVerifyCode",
+                            "users/verifyEmail",
+                            ""
                             )
                             .anonymous();
                     auth.requestMatchers(
