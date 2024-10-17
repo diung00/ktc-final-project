@@ -11,15 +11,13 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "email_verification_tokens")
+@Table(name = "email_verification")
 public class EmailVerification extends BaseEntity {
     private String email;
     private String verifyCode;
 
     @Enumerated(EnumType.STRING)
     private VerificationStatus status; //SENT, VERIFIED
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private UserEntity user;
+
 
 }

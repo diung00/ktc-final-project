@@ -10,7 +10,6 @@ import com.example.ChoiGangDeliveryApp.enums.VerificationStatus;
 import com.example.ChoiGangDeliveryApp.jwt.JwtTokenUtils;
 import com.example.ChoiGangDeliveryApp.jwt.dto.JwtRequestDto;
 import com.example.ChoiGangDeliveryApp.jwt.dto.JwtResponseDto;
-import com.example.ChoiGangDeliveryApp.owner.restaurant.dto.RestaurantDto;
 import com.example.ChoiGangDeliveryApp.security.config.AuthenticationFacade;
 import com.example.ChoiGangDeliveryApp.security.config.CustomUserDetails;
 import com.example.ChoiGangDeliveryApp.user.dto.PasswordChangeRequestDto;
@@ -30,12 +29,10 @@ import jakarta.mail.internet.MimeMessage;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.sql.model.jdbc.UpsertOperation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -44,7 +41,6 @@ import org.springframework.web.server.ResponseStatusException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Random;
 
@@ -63,29 +59,11 @@ public class UserService {
     private final DriverRoleRequestRepository driverRoleRequestRepository;
 
 
-    //First of all, user register
-    // User must be fill registerDto (username, pass, confirm-pass, email, address) to register
-    // Then create a new user with status is
-    //sign up
-
-    // Confirm the ID registered with the email address
-    public boolean userExists(String email) {
-        return userRepository.existsByEmail(email);
-    }
     @Transactional
     public UserDto createUser(UserCreateDto dto){
         //check if email is existing
         if (userRepository.existsByEmail(dto.getEmail()))
             throw new GlobalException(GlobalErrorCode.EMAIL_ALREADY_EXISTS);
-
-        // Check if email is in Verification Email table
-        EmailVerification verification = verificationRepository.findByEmail(dto.getEmail())
-                .orElseThrow(() -> new GlobalException(GlobalErrorCode.VERIFICATION_NOT_FOUND));
-
-        //Check verification status.
-        if (!verification.getStatus().equals(VerificationStatus.VERIFIED)) {
-            throw new GlobalException(GlobalErrorCode.VERIFICATION_INVALID_STATUS);
-        }
 
         //Check pass
         if (!dto.getPassword().equals(dto.getPassCheck()))
@@ -94,35 +72,24 @@ public class UserService {
         if (userRepository.existsByUsername(dto.getUsername()))
             throw new GlobalException(GlobalErrorCode.USERNAME_ALREADY_EXISTS);
 
-        //Create a new user
+        //Create a new user with role ROLE_INACTIVE
         UserEntity newUser = UserEntity.builder()
                 .username(dto.getUsername())
                 .email(dto.getEmail())
                 .password(passwordEncoder.encode(dto.getPassword()))
-                .role(UserRole.ROLE_USER)
+                .role(UserRole.ROLE_INACTIVE)
+                .emailVerified(false)
                 .build();
-        // Once the user is created, the email will be removed from the database (as they are no longer needed).
-        verificationRepository.deleteByEmail(dto.getEmail());
+        // save new user
+        userRepository.save(newUser);
+        // send verify email
+        sendVerifyCode(dto.getEmail());
 
         return UserDto.fromEntity(userRepository.save(newUser));
     }
-
-
-    //log in
-    // Generate json web token (jwt)
-    public JwtResponseDto login(JwtRequestDto dto){
-        UserEntity userEntity = userRepository.findByUsername(dto.getUsername())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
-
-        if (!passwordEncoder.matches(
-                dto.getPassword(),
-                userEntity.getPassword()))
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
-
-        String jwt = jwtTokenUtils.generateToken(CustomUserDetails.fromEntity(userEntity));
-        JwtResponseDto response = new JwtResponseDto();
-        response.setToken(jwt);
-        return response;
+    // Confirm the ID registered with the email address
+    public boolean userExists(String email) {
+        return userRepository.existsByEmail(email);
     }
 
     //Send verify code
@@ -169,30 +136,6 @@ public class UserService {
         // Save authentication code sending history
         verificationRepository.save(verification);
     }
-
-    public void verifyEmail(String email, String code) {
-        EmailVerification verification = verificationRepository.findByEmail(email)
-                .orElseThrow(() -> new GlobalException(GlobalErrorCode.VERIFICATION_NOT_FOUND));
-
-        if (!verification.getVerifyCode().equals(code)) {
-            // Check if the verify code sent to user email matches the verify code stored in the DB.
-            throw new GlobalException(GlobalErrorCode.VERIFICATION_CODE_MISMATCH);
-        } else if (!verification.getStatus().equals(VerificationStatus.SENT)) {
-            // If verify code is not appropriate
-            throw new GlobalException(GlobalErrorCode.VERIFICATION_INVALID_STATUS);
-        } else if (verification.getCreatedAt().isBefore(
-                LocalDateTime.now().minusMinutes(GlobalConstants.EMAIL_VERIFY_CODE_EXPIRE_SECOND))) {
-            // Verification time expired
-            throw new GlobalException(GlobalErrorCode.VERIFICATION_EXPIRED);
-        }
-        verification.setStatus(VerificationStatus.VERIFIED);
-        verificationRepository.save(verification);
-        UserEntity user = userRepository.findUserByEmail(email)
-                .orElseThrow(() -> new GlobalException(GlobalErrorCode.EMAIL_NOT_FOUND));
-        user.setEmailVerified(true);
-        userRepository.save(user);
-    }
-
     // Method to generate random number code
     public String generateRandomNumber(int len) {
         Random random = new Random();
@@ -203,27 +146,65 @@ public class UserService {
         return sb.toString();
     }
 
-    //Send verification code when registering
     @Transactional
-    public ResponseEntity<String> signUpSendCode(String email) {
-        if (userExists(email))
-            throw new GlobalException(GlobalErrorCode.EMAIL_ALREADY_EXISTS);
-        sendVerifyCode(email);
-        return ResponseEntity.ok("{}");
+    public void verifyEmail(String email, String code) {
+        EmailVerification verification = verificationRepository.findByEmail(email)
+                .orElseThrow(() -> new GlobalException(GlobalErrorCode.VERIFICATION_NOT_FOUND));
+
+        if (!verification.getVerifyCode().equals(code)) {
+            // Check if the verify code sent to user email matches the verify code stored in the DB.
+            throw new GlobalException(GlobalErrorCode.VERIFICATION_CODE_MISMATCH);
+        } else if (!verification.getStatus().equals(VerificationStatus.SENT)) {
+            // If verify code is not appropriate
+            throw new GlobalException(GlobalErrorCode.VERIFICATION_INVALID_STATUS);
+        }
+//        else if (verification.getCreatedAt().isBefore(
+//                LocalDateTime.now().minusMinutes(GlobalConstants.EMAIL_VERIFY_CODE_EXPIRE_SECOND))) {
+//            // Verification time expired
+//            throw new GlobalException(GlobalErrorCode.VERIFICATION_EXPIRED);
+//        }
+        verification.setStatus(VerificationStatus.VERIFIED);
+        log.info("Verifying email: {}", email);
+        log.info("Old Status: {}", verification.getStatus());
+        // find user by email and upgrade role from INACTIVE to ROLE_USER
+        UserEntity user = userRepository.findUserByEmail(email).orElseThrow(() -> new GlobalException(GlobalErrorCode.USER_NOT_FOUND));
+        user.setRole(UserRole.ROLE_USER);
+        user.setEmailVerified(true);
+        userRepository.save(user);
+        verificationRepository.deleteByEmail(email);
     }
+
+    //log in
+    // Generate json web token (jwt)
+    public JwtResponseDto login(JwtRequestDto dto){
+        UserEntity userEntity = userRepository.findByUsername(dto.getUsername())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
+
+        if (!passwordEncoder.matches(
+                dto.getPassword(),
+                userEntity.getPassword()))
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+
+        String jwt = jwtTokenUtils.generateToken(CustomUserDetails.fromEntity(userEntity));
+        JwtResponseDto response = new JwtResponseDto();
+        response.setToken(jwt);
+        return response;
+    }
+    //When users forgot their password. They can request to reset password
+    // step1 : input email, server send a code to their email.
     //This method verifies the code
     // and updates the user's password if the verification code is valid.
     @Transactional
-    public ResponseEntity<String> passwordSendCode(String email) {
+    public void passwordSendCode(String email) {
         //Check if any user has this email
         if (!userExists(email))
             throw new GlobalException(GlobalErrorCode.EMAIL_NOT_FOUND);
+        //send verify email
         sendVerifyCode(email);
-        return ResponseEntity.ok("{}");
     }
-    //reset password
+    //step 2: input code to reset password
     @Transactional
-    public ResponseEntity<String> resetPassword(PasswordChangeRequestDto requestDto) {
+    public void resetPassword(PasswordChangeRequestDto requestDto) {
         String email = requestDto.getEmail();
         String code = requestDto.getCode();
         String newPassword = requestDto.getNewPassword();
@@ -245,8 +226,6 @@ public class UserService {
         userRepository.save(user);
 
         verificationRepository.deleteByEmail(email);
-
-        return ResponseEntity.ok("Success");
     }
     // Change password method
     @Transactional

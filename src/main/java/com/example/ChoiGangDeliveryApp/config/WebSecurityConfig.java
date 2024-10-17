@@ -30,15 +30,21 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers(
                                     "/users/login",
-                                    "/users/signup"
+                                    "/users/signup",
+                            "/users/signup/send-code",
+                            "/users/signup/verify",
+                            "/users/request-password-reset",
+                            "/users/reset-password"
                             )
                             .anonymous();
                     auth.requestMatchers(
-                                    "/users/details",
+                                    "/users/get-my-profile",
                                     "/users/profile",
-                                    "/users/get-user-info"
-
-
+                                    "/users/get-user-info",
+                            "/users/change-password",
+                            "/users/upload-profile-image",
+                            "/users/request-owner-role",
+                            "/users/request-driver-role"
                             )
                             .authenticated();
                     auth.requestMatchers("/restaurants/**").authenticated();
@@ -52,8 +58,9 @@ public class WebSecurityConfig {
                             .hasRole("OWNER");
                     auth.requestMatchers("/error", "/static/**", "/", "/oauth2/**")
                             .permitAll();
+
                     auth.requestMatchers( "/customers/**")
-                            .hasRole("CUSTOMER");
+                            .hasRole("USER");
                 })
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
