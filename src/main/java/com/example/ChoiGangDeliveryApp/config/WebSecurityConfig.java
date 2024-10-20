@@ -53,7 +53,7 @@ public class WebSecurityConfig {
                             )
                             .hasRole("ADMIN");
                     auth.requestMatchers(
-                                    "/owners/**", "/restaurants/**", "/menu/**"
+                                    "/owners/**", "/restaurants/**", "/menus/**"
                             )
                             .hasRole("OWNER");
                     auth.requestMatchers("/error", "/static/**", "/", "/oauth2/**")
