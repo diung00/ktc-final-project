@@ -9,4 +9,6 @@ import java.util.Optional;
 
 public interface DriverRoleRequestRepository extends JpaRepository<DriverRoleRequest, Long> {
     Optional<DriverRoleRequest> findByUserAndStatus(UserEntity currentUser, ApprovalStatus approvalStatus);
+    Optional<DriverRoleRequest> findByUser(UserEntity user);
+
 }

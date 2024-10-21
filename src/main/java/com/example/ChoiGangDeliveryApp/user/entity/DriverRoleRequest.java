@@ -2,10 +2,7 @@ package com.example.ChoiGangDeliveryApp.user.entity;
 
 import com.example.ChoiGangDeliveryApp.common.base.BaseEntity;
 import com.example.ChoiGangDeliveryApp.enums.ApprovalStatus;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -20,7 +17,10 @@ public class DriverRoleRequest extends BaseEntity {
     private UserEntity user;
 
     private String licenseNumber;
+
+    @Enumerated(EnumType.STRING)
     private ApprovalStatus status;
+
     private String rejectionReason;
 
 }

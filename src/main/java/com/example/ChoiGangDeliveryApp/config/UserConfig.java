@@ -39,19 +39,71 @@ public class UserConfig {
                         .username("ownerTest1")
                         .password(passwordEncoder.encode("12345"))
                         .role(UserRole.ROLE_OWNER)
+                        .businessNumber("123412372023")
                         .email("ownerTest1@example.com")
                         .emailVerified(true)
+                        .build();
+                userRepository.save(owner);
+            }
+            if (!userRepository.existsByUsername("ownerTest2")) {
+                UserEntity owner = UserEntity.builder()
+                        .username("ownerTest2")
+                        .password(passwordEncoder.encode("12345"))
+                        .role(UserRole.ROLE_OWNER)
+                        .businessNumber("123456782024")
+                        .email("ownerTest2@example.com")
                         .emailVerified(true)
                         .build();
                 userRepository.save(owner);
             }
             // Create customer user for testing
-            if (!userRepository.existsByUsername("customerTest1")) {
+            if (!userRepository.existsByUsername("userTest1")) {
                 UserEntity customerUser = UserEntity.builder()
-                        .username("customerTest1")
+                        .username("userTest1")
                         .password(passwordEncoder.encode("12345"))
                         .role(UserRole.ROLE_USER)
-                        .email("customerTest1@example.com")
+                        .email("userTest1@example.com")
+                        .emailVerified(true)
+                        .build();
+                userRepository.save(customerUser);
+            }
+
+            if (!userRepository.existsByUsername("userTest2")) {
+                UserEntity customerUser = UserEntity.builder()
+                        .username("userTest2")
+                        .password(passwordEncoder.encode("12345"))
+                        .role(UserRole.ROLE_USER)
+                        .email("userTest2@example.com")
+                        .emailVerified(true)
+                        .build();
+                userRepository.save(customerUser);
+            }
+            if (!userRepository.existsByUsername("userTest3")) {
+                UserEntity customerUser = UserEntity.builder()
+                        .username("userTest3")
+                        .password(passwordEncoder.encode("12345"))
+                        .role(UserRole.ROLE_USER)
+                        .email("userTest3@example.com")
+                        .emailVerified(true)
+                        .build();
+                userRepository.save(customerUser);
+            }
+            if (!userRepository.existsByUsername("userTest4")) {
+                UserEntity customerUser = UserEntity.builder()
+                        .username("userTest4")
+                        .password(passwordEncoder.encode("12345"))
+                        .role(UserRole.ROLE_USER)
+                        .email("userTest4@example.com")
+                        .emailVerified(true)
+                        .build();
+                userRepository.save(customerUser);
+            }
+            if (!userRepository.existsByUsername("userTest5")) {
+                UserEntity customerUser = UserEntity.builder()
+                        .username("userTest5")
+                        .password(passwordEncoder.encode("12345"))
+                        .role(UserRole.ROLE_USER)
+                        .email("userTest5@example.com")
                         .emailVerified(true)
                         .build();
                 userRepository.save(customerUser);
@@ -65,6 +117,24 @@ public class UserConfig {
                         .role(UserRole.ROLE_DRIVER)
                         .licenseNumber("11-850101-1234")
                         .email("driverTest1@example.com")
+                        .emailVerified(true)
+                        .build();
+                userRepository.save(driverUser);
+                // Create DriverEntity object
+                DriverEntity driver = new DriverEntity();
+                driver.setUser(driverUser);
+                driver.setDriverStatus(DriverStatus.AVAILABLE);
+
+                // save driver to DriverEntity database
+                driverRepository.save(driver);
+            }
+            if (!userRepository.existsByUsername("driverTest2")) {
+                UserEntity driverUser = UserEntity.builder()
+                        .username("driverTest2")
+                        .password(passwordEncoder.encode("12345"))
+                        .role(UserRole.ROLE_DRIVER)
+                        .licenseNumber("10-880711-1284")
+                        .email("driverTest2@example.com")
                         .emailVerified(true)
                         .build();
                 userRepository.save(driverUser);
