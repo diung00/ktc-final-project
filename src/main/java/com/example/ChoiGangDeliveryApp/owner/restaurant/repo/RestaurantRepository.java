@@ -11,12 +11,17 @@ public interface RestaurantRepository extends JpaRepository<RestaurantsEntity, L
 
 
     // tìm nhà hàng bằng tọa độ và bán kính 3km
-    @Query("SELECT r FROM RestaurantEntity r WHERE " +
+    @Query(value = "SELECT * FROM RestaurantsEntity r WHERE " +
             "(6371 * acos(cos(radians(:lat)) * cos(radians(r.latitude)) * " +
-            "cos(radians(r.longitude) - radians(:lng)) + sin(radians(:lat)) * sin(radians(r.latitude)))) <= :radius")
+            "cos(radians(r.longitude) - radians(:lng)) + sin(radians(:lat)) * sin(radians(r.latitude)))) <= :radius",
+            nativeQuery = true)
     List<RestaurantsEntity> findRestaurantsWithinRadius(@Param("lat") double latitude,
-                                                        @Param("lng") double longitude,
-                                                        @Param("radius") double radiusInKm);
+                                                       @Param("lng") double longitude,
+                                                       @Param("radius") double radiusInKm);
+
+
+
+
 
 
 }

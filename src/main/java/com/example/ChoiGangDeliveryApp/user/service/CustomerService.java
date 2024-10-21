@@ -2,6 +2,13 @@ package com.example.ChoiGangDeliveryApp.user.service;
 
 import com.example.ChoiGangDeliveryApp.api.ncpmaps.NaviService;
 import com.example.ChoiGangDeliveryApp.api.ncpmaps.dto.PointDto;
+import com.example.ChoiGangDeliveryApp.driver.entity.DriverEntity;
+import com.example.ChoiGangDeliveryApp.driver.repo.DriverRepository;
+import com.example.ChoiGangDeliveryApp.enums.OrderStatus;
+import com.example.ChoiGangDeliveryApp.enums.UserRole;
+import com.example.ChoiGangDeliveryApp.order.dto.OrderDto;
+import com.example.ChoiGangDeliveryApp.order.entity.OrderEntity;
+import com.example.ChoiGangDeliveryApp.order.repo.OrderRepository;
 import com.example.ChoiGangDeliveryApp.owner.menu.dto.MenuDto;
 import com.example.ChoiGangDeliveryApp.owner.restaurant.dto.RestaurantDto;
 import com.example.ChoiGangDeliveryApp.owner.restaurant.entity.RestaurantsEntity;
@@ -11,6 +18,7 @@ import com.example.ChoiGangDeliveryApp.security.config.AuthenticationFacade;
 import com.example.ChoiGangDeliveryApp.user.dto.UpdateAddressDto;
 import com.example.ChoiGangDeliveryApp.user.dto.UserDto;
 import com.example.ChoiGangDeliveryApp.user.entity.UserEntity;
+import com.example.ChoiGangDeliveryApp.user.repo.DriverRoleRequestRepository;
 import com.example.ChoiGangDeliveryApp.user.repo.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,7 +26,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.awt.*;
+import java.sql.Driver;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,6 +38,8 @@ public class CustomerService {
     private final AuthenticationFacade authFacade;
     private final NaviService naviService;
     private final RestaurantRepository restaurantRepository;
+    private final OrderRepository orderRepository;
+    private final DriverRepository driverRepository;
 
     public UserDto customerUpdateAddress(UpdateAddressDto dto){
         UserEntity userEntity = authFacade.getCurrentUserEntity();
@@ -53,8 +65,8 @@ public class CustomerService {
                 .collect(Collectors.toList());
     }
 
-   // xem một nhà hàng
 
+   // xem một nhà hàng
     public RestaurantDto getRestaurantById(Long restaurantId) {
         return restaurantRepository.findById(restaurantId)
                .map(RestaurantDto::fromEntity)
@@ -83,18 +95,6 @@ public class CustomerService {
                .map(MenuDto::fromEntity)
                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Restaurant not found"));
     }
-
-    // hủy đơn khi nhà hàng chưa chấp nhận đơn
-
-    /*public void cancelOrder(Long restaurantId, Long orderId){
-        UserEntity user = authFacade.getCurrentUserEntity();
-        user.
-    }*/
-
-
-
-
-
 
 
 }

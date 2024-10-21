@@ -1,10 +1,14 @@
 package com.example.ChoiGangDeliveryApp.user.entity;
 
 import com.example.ChoiGangDeliveryApp.common.base.BaseEntity;
+import com.example.ChoiGangDeliveryApp.driver.entity.DriverEntity;
 import com.example.ChoiGangDeliveryApp.enums.UserRole;
+import com.example.ChoiGangDeliveryApp.order.entity.OrderEntity;
 import com.example.ChoiGangDeliveryApp.owner.restaurant.entity.RestaurantsEntity;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 
 @Getter
@@ -35,6 +39,7 @@ public class UserEntity extends BaseEntity {
     private String businessNumber;
 
 
+    @Builder.Default
     private boolean emailVerified = false; //default is false
     private String rejectionReason;
 
@@ -45,5 +50,17 @@ public class UserEntity extends BaseEntity {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private OwnerRoleRequest roleChangeRequest;
 
+    @OneToMany(mappedBy = "user")
+    private List<OrderEntity> orders;
+
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_location_id")
+    private UserLocation userLocation;
+
+    //e Diu them
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "driver_id")
+    private DriverEntity driver;
 
 }

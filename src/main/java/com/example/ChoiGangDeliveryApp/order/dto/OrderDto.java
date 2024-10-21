@@ -1,6 +1,7 @@
 package com.example.ChoiGangDeliveryApp.order.dto;
 
 
+import com.example.ChoiGangDeliveryApp.order.entity.OrderEntity;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,4 +28,19 @@ public class OrderDto {
     @Size(max = 255)
     private String note;
 
+    public static OrderDto fromEntity(OrderEntity orderEntity) {
+        return OrderDto.builder()
+                .id(orderEntity.getId())
+                .driverId(orderEntity.getDriver() != null ? orderEntity.getDriver().getId() : null)
+                .userId(orderEntity.getUser() != null ? orderEntity.getUser().getId() : null)
+                .restaurantId(orderEntity.getRestaurant() != null ? orderEntity.getRestaurant().getId() : null)
+                .orderDate(orderEntity.getOrderDate())
+                .orderStatus(orderEntity.getOrderStatus().toString())
+                .totalMenuPrice(orderEntity.getTotalMenusPrice())
+                .shippingFee(orderEntity.getShippingFee())
+                .totalAmount(orderEntity.getTotalAmount())
+                .estimatedArrivalTime(orderEntity.getEstimatedArrivalTime())
+                .note(orderEntity.getNote())
+                .build();
+    }
 }
