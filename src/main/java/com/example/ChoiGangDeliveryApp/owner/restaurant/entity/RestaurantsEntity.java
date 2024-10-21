@@ -50,6 +50,10 @@ public class RestaurantsEntity extends BaseEntity {
     private final List<OrderEntity> orders = new ArrayList<>();
 
 
+    // diu add
+    @Builder.Default
+    @OneToMany(mappedBy = "restaurant")
+    private final List<RestaurantRequestEntity> restaurantRequests = new ArrayList<>();
 
 
 
