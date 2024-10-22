@@ -1,5 +1,6 @@
 package com.example.ChoiGangDeliveryApp.owner.menu;
 
+import com.example.ChoiGangDeliveryApp.owner.menu.dto.CreateMenuDto;
 import com.example.ChoiGangDeliveryApp.owner.menu.dto.MenuDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,12 +16,13 @@ public class MenuController {
     private final MenuService menuService;
 
     // CREATE MENU
-    @PostMapping("/create")
+    @PostMapping("/{restaurantId}/create")
     public ResponseEntity<MenuDto> createMenu(
+            @PathVariable("restaurantId") Long restaurantId,
             @RequestBody
-            MenuDto menuDto
+            CreateMenuDto dto
     ) {
-        MenuDto createdMenu = menuService.createMenu(menuDto);
+        MenuDto createdMenu = menuService.createMenu(restaurantId,dto);
         return ResponseEntity.ok(createdMenu);
     }
 
@@ -35,7 +37,7 @@ public class MenuController {
     }
 
     // VIEW ALL MENU BY RESTAURANT ID
-    @GetMapping("/restaurant/{restaurantId}")
+    @GetMapping("/restaurants/{restaurantId}")
     public ResponseEntity<List<MenuDto>> viewAllMenuByRestaurantId(
             @PathVariable Long restaurantId
     ) {
