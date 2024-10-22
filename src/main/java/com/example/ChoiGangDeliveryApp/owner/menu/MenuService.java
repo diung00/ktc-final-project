@@ -4,24 +4,18 @@ import com.example.ChoiGangDeliveryApp.common.exception.GlobalErrorCode;
 import com.example.ChoiGangDeliveryApp.common.exception.GlobalException;
 import com.example.ChoiGangDeliveryApp.common.file.FileService;
 import com.example.ChoiGangDeliveryApp.enums.ApprovalStatus;
-import com.example.ChoiGangDeliveryApp.enums.CuisineType;
-import com.example.ChoiGangDeliveryApp.enums.MenuStatus;
+import com.example.ChoiGangDeliveryApp.owner.menu.dto.CreateMenuDto;
 import com.example.ChoiGangDeliveryApp.owner.menu.dto.MenuDto;
 import com.example.ChoiGangDeliveryApp.owner.menu.entity.MenuEntity;
 import com.example.ChoiGangDeliveryApp.owner.menu.repo.MenuRepository;
-import com.example.ChoiGangDeliveryApp.owner.restaurant.RestaurantService;
-import com.example.ChoiGangDeliveryApp.owner.restaurant.entity.RestaurantRequestEntity;
 import com.example.ChoiGangDeliveryApp.owner.restaurant.entity.RestaurantsEntity;
 import com.example.ChoiGangDeliveryApp.owner.restaurant.repo.RestaurantRepository;
 import com.example.ChoiGangDeliveryApp.security.config.AuthenticationFacade;
 import com.example.ChoiGangDeliveryApp.user.entity.UserEntity;
-import com.example.ChoiGangDeliveryApp.user.repo.UserRepository;
-import com.fasterxml.classmate.types.ResolvedArrayType;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
@@ -43,9 +37,8 @@ public class MenuService {
 
     // CREATE
     @Transactional
-    public MenuDto createMenu(MenuDto menuDto) {
+    public MenuDto createMenu(Long restaurantId, CreateMenuDto dto) {
         UserEntity currentUser = facade.getCurrentUserEntity();
-        Long restaurantId = menuDto.getRestaurantId();
 
         //check restaurant status
         RestaurantsEntity restaurant = checkRestaurantStatus(restaurantId);
@@ -56,11 +49,11 @@ public class MenuService {
         }
 
         MenuEntity menuEntity = MenuEntity.builder()
-                .name(menuDto.getName())
-                .description(menuDto.getDescription())
-                .price(menuDto.getPrice())
-                .cuisineType(menuDto.getCuisineType())
-                .preparationTime(menuDto.getPreparationTime())
+                .name(dto.getName())
+                .description(dto.getDescription())
+                .price(dto.getPrice())
+                .cuisineType(dto.getCuisineType())
+                .preparationTime(dto.getPreparationTime())
                 .restaurant(restaurant)
                 .build();
 
@@ -122,8 +115,8 @@ public class MenuService {
     }
 
     // UPDATE
-    public MenuDto updateMenu(Long id, MenuDto menuDto) {
-        MenuEntity menuEntity = menuRepository.findById(id)
+    public MenuDto updateMenu(Long menuId, MenuDto menuDto) {
+        MenuEntity menuEntity = menuRepository.findById(menuId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Menu not found"));
 
         menuEntity.setName(menuDto.getName());

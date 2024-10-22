@@ -48,13 +48,14 @@ public class WebSecurityConfig {
                             "/users/owner-request-status"
                             )
                             .authenticated();
+                    auth.requestMatchers("/menus/**").authenticated();
                     auth.requestMatchers("/restaurants/**").authenticated();
                     auth.requestMatchers(
                                     "/admin/**"
                             )
                             .hasRole("ADMIN");
                     auth.requestMatchers(
-                                    "/owners/**", "/restaurants/**", "/menus/**"
+                                    "/owners/**", "/restaurants/**"
                             )
                             .hasRole("OWNER");
                     auth.requestMatchers("/error", "/static/**", "/", "/oauth2/**")
