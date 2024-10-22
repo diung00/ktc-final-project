@@ -1,6 +1,6 @@
 package com.example.ChoiGangDeliveryApp.security.config;
 
-import com.example.ChoiGangDeliveryApp.security.config.CustomUserDetailsService;
+import com.example.ChoiGangDeliveryApp.security.service.CustomUserDetailsService;
 import com.example.ChoiGangDeliveryApp.user.entity.UserEntity;
 import com.example.ChoiGangDeliveryApp.user.repo.UserRepository;
 import lombok.RequiredArgsConstructor;
