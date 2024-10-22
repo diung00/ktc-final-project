@@ -3,7 +3,6 @@ package com.example.ChoiGangDeliveryApp.common.exception;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
-import org.apache.coyote.http2.HpackDecoder;
 import org.springframework.http.HttpStatus;
 
 @Getter
@@ -40,7 +39,7 @@ public enum GlobalErrorCode {
     VERIFICATION_INVALID_STATUS(HttpStatus.BAD_REQUEST, "2004", "인증의 상태가 올바르지 않습니다."),
     VERIFICATION_EXPIRED(HttpStatus.BAD_REQUEST, "2005", "인증 코드가 만료되었습니다."),
     //request errors
-    NO_ROLE_REQUEST_FOUND(HttpStatus.NOT_FOUND, "3001", "요청을 찾을 수 없습니다."),
+    REQUEST_NOT_FOUND(HttpStatus.NOT_FOUND, "3001", "요청을 찾을 수 없습니다."),
     // restaurant errors
     RESTAURANT_NOT_FOUND(HttpStatus.NOT_FOUND, "4001", "레스토랑을 찾을 수 없습니다"),
     USER_DO_NOT_HAVE_PERMISSION(HttpStatus.FORBIDDEN, "4002","사용자는 이 레스토랑의 소유자가 아닙니다."),
