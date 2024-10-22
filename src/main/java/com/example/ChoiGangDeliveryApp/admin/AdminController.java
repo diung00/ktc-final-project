@@ -25,7 +25,7 @@ public class AdminController {
 
     @GetMapping("findUserById/{id}")
     public UserDto findUserById(
-            @RequestParam("id")
+            @PathVariable("id")
             Long id
     ) {
         return adminService.findUserById(id);
@@ -33,7 +33,7 @@ public class AdminController {
 
     @GetMapping("findByRole/{role}")
     public List<UserDto> findByRole(
-            @RequestParam("role")
+            @PathVariable("role")
             UserRole role
     ){
         return adminService.findByRole(role);
@@ -41,7 +41,7 @@ public class AdminController {
 
     @GetMapping("findPendingRequest/{approvalStatus}")
     public List<RestaurantRequestEntity> findPendingRequest(
-            @RequestParam("approvalStatus")
+            @PathVariable("approvalStatus")
             ApprovalStatus approvalStatus
     ){
         return adminService.findPendingRequest(approvalStatus);
@@ -49,7 +49,7 @@ public class AdminController {
 
     @PutMapping("approveOpenRestaurant/{requestId}")
     public ResponseEntity<String> approveOpenRestaurant(
-            @RequestParam("requestId")
+            @PathVariable("requestId")
             Long requestId
     ){
         adminService.approveOpenRestaurant(requestId);
@@ -66,7 +66,7 @@ public class AdminController {
 
     @PutMapping("approveCloseRestaurant/{id}")
     public ResponseEntity<String> approveCloseRestaurant(
-            @RequestParam("id")
+            @PathVariable("id")
             Long requestId
     ){
         adminService.approveCloseRestaurant(requestId);
