@@ -1,0 +1,513 @@
+{
+	"info": {
+		"_postman_id": "760e51ea-55a9-47df-b23b-0febf1fba393",
+		"name": "CHOI-GANG-DELIVERY-APP",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37757036"
+	},
+	"item": [
+		{
+			"name": "USER",
+			"item": [
+				{
+					"name": "sign - up",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"huongttt\",\r\n    \"password\": \"12345\",\r\n    \"passCheck\": \"12345\",\r\n    \"email\": \"huongttt.ueh@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/users/signup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "email verification",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/users/signup/verify?email=huongttt.ueh@gmail.com&code=186333",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"signup",
+								"verify"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "huongttt.ueh@gmail.com"
+								},
+								{
+									"key": "code",
+									"value": "186333"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login test 1",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"huongttt\",\r\n    \"password\": \"12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login test 2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"userTest1\",\r\n    \"password\": \"12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "request to reset password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/users/request-password-reset?email=huongttt.ueh@gmail.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"request-password-reset"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "huongttt.ueh@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reset password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"huongttt.ueh@gmail.com\",\r\n    \"code\": \"381157\",\r\n    \"newPassword\": \"123abc\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/users/reset-password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"reset-password"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "change password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJodW9uZ3R0dCIsImlhdCI6MTcyOTQ4NDAzMSwiZXhwIjoxNzMwMDg4ODMxfQ.dNt06RNe_b8uXKVYW4PMXLbETPIHxh-9CVY4eeZKhLvAl0mEkGEiNyTHkMsVxGYl",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"currentPassword\": \"123abc\",\r\n    \"newPassword\": \"12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/users/change-password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"change-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "upload profile image",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJodW9uZ3R0dCIsImlhdCI6MTcyOTQ4NDA2MiwiZXhwIjoxNzMwMDg4ODYyfQ.FUB065gwexhd0NmdD-DuK2FYeulG3C4xpIG-IQrpDrj55vzvNSmc6Lc-hHtS0Swl",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/teisspi/OneDrive/Pictures/icon/chicken2.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/users/upload-profile-image",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"upload-profile-image"
+							],
+							"query": [
+								{
+									"key": "image",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user view their profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJodW9uZ3R0dCIsImlhdCI6MTcyOTQ4NDA2MiwiZXhwIjoxNzMwMDg4ODYyfQ.FUB065gwexhd0NmdD-DuK2FYeulG3C4xpIG-IQrpDrj55vzvNSmc6Lc-hHtS0Swl",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/users/get-my-profile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"get-my-profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update profile info",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJodW9uZ3R0dCIsImlhdCI6MTcyOTQ4NDA2MiwiZXhwIjoxNzMwMDg4ODYyfQ.FUB065gwexhd0NmdD-DuK2FYeulG3C4xpIG-IQrpDrj55vzvNSmc6Lc-hHtS0Swl",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Huong Tran\",\r\n    \"nickname\": \"Huong\",\r\n    \"age\": \"30\",\r\n    \"phone\": \"01053234687\",\r\n    \"address\": \"경기도, 안산시, 본오동, 682-14\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/users/update-profile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"update-profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request Owner Role",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJodW9uZ3R0dCIsImlhdCI6MTcyOTQ4NDA2MiwiZXhwIjoxNzMwMDg4ODYyfQ.FUB065gwexhd0NmdD-DuK2FYeulG3C4xpIG-IQrpDrj55vzvNSmc6Lc-hHtS0Swl",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/users/request-owner-role?businessNumber=1234123452024",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"request-owner-role"
+							],
+							"query": [
+								{
+									"key": "businessNumber",
+									"value": "1234123452024"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request Driver Role",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyVGVzdDEiLCJpYXQiOjE3Mjk0ODQyMTEsImV4cCI6MTczMDA4OTAxMX0.joTFewA2gxjbamsH0NQ-hqg48gG_78vmDrhv_IP4nQuL0RfwBpf0dptQU-NWy8LL",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/users/request-driver-role?licenseNumber=11-891709-1234",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"request-driver-role"
+							],
+							"query": [
+								{
+									"key": "licenseNumber",
+									"value": "11-891709-1234"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View Owner Request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJodW9uZ3R0dCIsImlhdCI6MTcyOTQ4NDA2MiwiZXhwIjoxNzMwMDg4ODYyfQ.FUB065gwexhd0NmdD-DuK2FYeulG3C4xpIG-IQrpDrj55vzvNSmc6Lc-hHtS0Swl",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/users/owner-request-status",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"owner-request-status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View Driver Request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyVGVzdDEiLCJpYXQiOjE3Mjk0ODQyMTEsImV4cCI6MTczMDA4OTAxMX0.joTFewA2gxjbamsH0NQ-hqg48gG_78vmDrhv_IP4nQuL0RfwBpf0dptQU-NWy8LL",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/users/driver-request-status",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"driver-request-status"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "This secsion is test for users fuctions:\n\n- sign-up\n    \n- email verification\n    \n- sign-in\n    \n- reset password\n    \n- change password\n    \n- upload profile img\n    \n- update profile info\n    \n- view profile\n    \n- request to upgrade role to owner role\n    \n- request to upgrade role to driver\n    \n- view owner role request status\n    \n- view driver role request status"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "id",
+			"value": "1"
+		},
+		{
+			"key": "base_url",
+			"value": "https://postman-rest-api-learner.glitch.me/"
+		}
+	]
+}

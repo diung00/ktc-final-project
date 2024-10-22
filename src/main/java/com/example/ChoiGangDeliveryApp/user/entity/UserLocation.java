@@ -1,12 +1,14 @@
 package com.example.ChoiGangDeliveryApp.user.entity;
 
 import com.example.ChoiGangDeliveryApp.common.base.BaseEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,8 +16,6 @@ public class UserLocation extends BaseEntity {
     private double latitude;
     private double longitude;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @OneToOne(mappedBy = "userLocation", cascade = CascadeType.ALL)
     private UserEntity user;
-
 }

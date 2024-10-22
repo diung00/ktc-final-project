@@ -6,6 +6,8 @@ import com.example.ChoiGangDeliveryApp.owner.restaurant.entity.RestaurantsEntity
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 
 @Getter
 @Setter
@@ -34,16 +36,20 @@ public class UserEntity extends BaseEntity {
     private String licenseNumber;
     private String businessNumber;
 
-
+    @Builder.Default
     private boolean emailVerified = false; //default is false
-    private String rejectionReason;
-
 
     @OneToOne(mappedBy = "owner")
     private RestaurantsEntity restaurant;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private OwnerRoleRequest roleChangeRequest;
+    private OwnerRoleRequest ownerRoleRequest;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private DriverRoleRequest driverRoleRequest;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_location_id")
+    private UserLocation userLocation;
 
 
 }

@@ -38,13 +38,14 @@ public class WebSecurityConfig {
                             )
                             .anonymous();
                     auth.requestMatchers(
-                                    "/users/get-my-profile",
-                                    "/users/profile",
-                                    "/users/get-user-info",
-                            "/users/change-password",
-                            "/users/upload-profile-image",
+                                    "/users/get-my-profile", //view profile
+                                    "/users/update-profile", //update profile info
+                            "/users/change-password", //change password
+                            "/users/upload-profile-image", //upload profile image
                             "/users/request-owner-role",
-                            "/users/request-driver-role"
+                            "/users/request-driver-role",
+                            "/users/driver-request-status",
+                            "/users/owner-request-status"
                             )
                             .authenticated();
                     auth.requestMatchers("/restaurants/**").authenticated();

@@ -9,4 +9,5 @@ import java.util.Optional;
 
 public interface OwnerRoleRequestRepository extends JpaRepository<OwnerRoleRequest, Long> {
     Optional<OwnerRoleRequest> findByUserAndStatus(UserEntity currentUser, ApprovalStatus approvalStatus);
+    Optional<OwnerRoleRequest> findByUser(UserEntity user);
 }
