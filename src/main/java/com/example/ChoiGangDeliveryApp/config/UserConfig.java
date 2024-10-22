@@ -3,8 +3,10 @@ package com.example.ChoiGangDeliveryApp.config;
 import com.example.ChoiGangDeliveryApp.driver.entity.DriverEntity;
 import com.example.ChoiGangDeliveryApp.driver.repo.DriverRepository;
 import com.example.ChoiGangDeliveryApp.enums.ApprovalStatus;
+import com.example.ChoiGangDeliveryApp.enums.CuisineType;
 import com.example.ChoiGangDeliveryApp.enums.DriverStatus;
 import com.example.ChoiGangDeliveryApp.enums.UserRole;
+import com.example.ChoiGangDeliveryApp.owner.restaurant.entity.RestaurantsEntity;
 import com.example.ChoiGangDeliveryApp.user.entity.UserEntity;
 import com.example.ChoiGangDeliveryApp.user.repo.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -33,10 +35,37 @@ public class UserConfig {
                 userRepository.save(admin);
             }
 
+            // owner test
+            if (!userRepository.existsByUsername("ownerTest2")) {
+                UserEntity owner1 = UserEntity.builder()
+                        .username("ownerTest2")
+                        .password(passwordEncoder.encode("12345"))
+                        .role(UserRole.ROLE_OWNER)
+                        .email("ownerTest2@example.com")
+                        .emailVerified(true)
+                        .emailVerified(true)
+                        .build();
+                userRepository.save(owner1);
+                RestaurantsEntity restaurantTest = RestaurantsEntity.builder()
+                        .owner(owner1) // Liên kết với UserEntity (ownerTest)
+                        .name("Test Restaurant")
+                        .address("123 Test Street")
+                        .phone("123-456-7890")
+                        .openingHours("9:00 AM - 9:00 PM")
+                        .cuisineType(CuisineType.ASIAN_FOOD) // Ví dụ: loại ẩm thực là Italian
+                        .rating(4.5)
+                        .RestImage("restaurant_image.jpg")
+                        .description("A test restaurant for Italian cuisine.")
+                        .latitude(40.7128) // Đặt tọa độ ví dụ
+                        .longitude(-74.0060)
+                        .approvalStatus(ApprovalStatus.APPROVED) // Nếu có trạng thái duyệt
+                        .build();
+            }
+
             // Create owner user for testing
             if (!userRepository.existsByUsername("ownerTest1")) {
                 UserEntity owner = UserEntity.builder()
-                        .username("ownerTest1")
+                            .username("ownerTest1")
                         .password(passwordEncoder.encode("12345"))
                         .role(UserRole.ROLE_OWNER)
                         .businessNumber("123412372023")

@@ -36,7 +36,7 @@ public class OrderEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
-    private double totalMenusOrderPrice;
+    private double totalMenusPrice;
     private double shippingFee;
     private double totalAmount;
     private LocalDateTime estimatedArrivalTime;

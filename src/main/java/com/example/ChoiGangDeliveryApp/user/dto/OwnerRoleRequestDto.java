@@ -16,7 +16,7 @@ public class OwnerRoleRequestDto {
     private ApprovalStatus status;
     private String rejectionReason;
 
-    public OwnerRoleRequestDto fromEntity(OwnerRoleRequest request) {
+    public static OwnerRoleRequestDto fromEntity(OwnerRoleRequest request) {
         return OwnerRoleRequestDto.builder()
                 .businessNumber(request.getBusinessNumber())
                 .userRole(request.getUser().getRole())
