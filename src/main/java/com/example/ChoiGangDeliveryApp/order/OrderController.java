@@ -20,6 +20,13 @@ public class OrderController {
     ) {
         return orderService.createOrder(orderDto);
     }
+    @PutMapping("approve")
+    public OrderDto approveOrder(
+            @RequestBody
+            OrderDto orderDto
+    ){
+        return orderService.approveOrder(orderDto);
+    }
 
     @PutMapping("getDriver")
     public OrderDto getDriver(

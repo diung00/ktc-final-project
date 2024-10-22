@@ -16,6 +16,7 @@ import com.example.ChoiGangDeliveryApp.security.config.AuthenticationFacade;
 import com.example.ChoiGangDeliveryApp.user.entity.UserEntity;
 import com.example.ChoiGangDeliveryApp.user.repo.UserRepository;
 import com.example.ChoiGangDeliveryApp.user.service.UserService;
+import com.example.ChoiGangDeliveryApp.websocket.WebSocketService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,7 @@ public class OrderService {
     private final UserRepository userRepository;
     private final RestaurantRepository restaurantRepository;
     private final DriverRepository driverRepository;
+    private final WebSocketService webSocketService;
 
     // tạo một order, chưa có tài xế cho đơn này,
     // khi nào có tài xế thì setDriverId sau
@@ -53,7 +55,35 @@ public class OrderService {
                 .build();
         userRepository.save(userEntity);
         restaurantRepository.save(restaurant);
+        webSocketService.sendOrderStatusToUser(userEntity.getId().toString(),"Your order has been created");
+        webSocketService.sendOrderStatusToRestaurant(restaurant.getId().toString(),"New order!!!");
         return OrderDto.fromEntity(orderRepository.save(orderEntity));
+
+    }
+
+    //nhà hàng nhận đơn
+    public OrderDto approveOrder(OrderDto dto){
+        UserEntity userEntity = authFacade.getCurrentUserEntity();
+        if (userEntity.getRestaurant() == null) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You don't have any restaurant");
+        }
+
+        OrderEntity orderEntity = orderRepository.findById(dto.getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found"));
+
+        if (!orderEntity.getRestaurant().equals(userEntity.getRestaurant())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "This order does not belong to your restaurant");
+        }
+
+        if (!orderEntity.getOrderStatus().equals(OrderStatus.PAID)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Order cannot be approved in its current state");
+        }
+
+        orderEntity.setOrderStatus(OrderStatus.COOKING);
+        orderRepository.save(orderEntity);
+        webSocketService.sendOrderStatusToUser(orderEntity.getUser().getId().toString(), "Your order has been approved");
+
+        return OrderDto.fromEntity(orderEntity);
 
     }
 
@@ -76,6 +106,9 @@ public class OrderService {
         }
         orderEntity.setDriver(driverEntity);
         driverRepository.save(driverEntity);
+        webSocketService.sendOrderStatusToUser(userEntity.getId().toString(),"Catch order successfully!");
+        // notification for driver
+        webSocketService.sendOrderStatusToUser(orderEntity.getUser().getId().toString(),"Driver has caught your order!");
         return OrderDto.fromEntity(orderRepository.save(orderEntity));
     }
 
@@ -92,8 +125,10 @@ public class OrderService {
 
         if (orderToCancel.getOrderStatus().equals(OrderStatus.PAID)) {
             orderToCancel.setOrderStatus(OrderStatus.CANCELLED);
-
             orderRepository.save(orderToCancel);
+            webSocketService.sendOrderStatusToUser(user.getId().toString(),"Order has been cancelled");
+            webSocketService.sendOrderStatusToRestaurant(orderToCancel.getRestaurant().getId().toString(),"Order has been cancelled");
+
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Order cannot be cancelled in its current state");
         }
@@ -117,6 +152,8 @@ public class OrderService {
                 orderEntity.getOrderStatus().equals(OrderStatus.COOKING)) {
             orderEntity.setOrderStatus(OrderStatus.CANCELLED);
             orderRepository.save(orderEntity);
+            webSocketService.sendOrderStatusToUser(orderEntity.getUser().getId().toString(),"Your order has been cancelled");
+            webSocketService.sendOrderStatusToRestaurant(restaurant.getId().toString(),"Cancel order successfully");
         }else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Order cannot be cancelled");
         }
