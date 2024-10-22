@@ -663,6 +663,14 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "update delivery address",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
 				}
 			],
 			"description": "This secsion is test for users fuctions:\n\n- sign-up\n    \n- email verification\n    \n- sign-in\n    \n- reset password\n    \n- change password\n    \n- upload profile img\n    \n- update profile info\n    \n- view profile\n    \n- request to upgrade role to owner role\n    \n- request to upgrade role to driver\n    \n- view owner role request status\n    \n- view driver role request status"
@@ -1384,6 +1392,145 @@
 					"name": "RESTAURANT",
 					"item": [
 						{
+							"name": "SEARCH RESTAURANT",
+							"item": [
+								{
+									"name": "View all restaurant within a given radius",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJodW9uZ3R0dCIsImlhdCI6MTcyOTU5NDY3OCwiZXhwIjoxNzMwMTk5NDc4fQ.IadtrzOh0SdEuzlmwk_jeMz2wLqmxBuYGRhIVkw0xm22CUQ3Zl0xlxKWAjLwc-py",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8080/restaurants/within-radius",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"restaurants",
+												"within-radius"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "view restaurant by restId",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJodW9uZ3R0dCIsImlhdCI6MTcyOTU5NDY3OCwiZXhwIjoxNzMwMTk5NDc4fQ.IadtrzOh0SdEuzlmwk_jeMz2wLqmxBuYGRhIVkw0xm22CUQ3Zl0xlxKWAjLwc-py",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8080/restaurants/1",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"restaurants",
+												"1"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "view all restaurant within distance filtered by cuisine type",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJodW9uZ3R0dCIsImlhdCI6MTcyOTU5NDY3OCwiZXhwIjoxNzMwMTk5NDc4fQ.IadtrzOh0SdEuzlmwk_jeMz2wLqmxBuYGRhIVkw0xm22CUQ3Zl0xlxKWAjLwc-py",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8080/restaurants/within-radius/cuisine?cuisineType=KOREAN_FOOD",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"restaurants",
+												"within-radius",
+												"cuisine"
+											],
+											"query": [
+												{
+													"key": "cuisineType",
+													"value": "KOREAN_FOOD"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "get all restaurant within distance by menu name with keyword",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJodW9uZ3R0dCIsImlhdCI6MTcyOTU5NDY3OCwiZXhwIjoxNzMwMTk5NDc4fQ.IadtrzOh0SdEuzlmwk_jeMz2wLqmxBuYGRhIVkw0xm22CUQ3Zl0xlxKWAjLwc-py",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8080/restaurants/within-radius/menu?menuName=국수",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"restaurants",
+												"within-radius",
+												"menu"
+											],
+											"query": [
+												{
+													"key": "menuName",
+													"value": "국수"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
 							"name": "open restaurant",
 							"request": {
 								"auth": {
@@ -1646,7 +1793,229 @@
 				},
 				{
 					"name": "MENU",
-					"item": []
+					"item": [
+						{
+							"name": "create menu",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJodW9uZ3R0dCIsImlhdCI6MTcyOTU4NDc3NCwiZXhwIjoxNzMwMTg5NTc0fQ.8JvPIGPcJ7UukRBhLEi6jrVOq-0AfTXWhN0qzzRvOxG3-fcY3zDHtUDHNeTa62HW",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"막국수\",\r\n    \"price\": \"10000\",\r\n    \"description\": \"막구수\",\r\n    \"menuStatus\": \"AVAILABLE\",\r\n    \"preparationTime\": \"15\",\r\n    \"cuisineType\": \"KOREAN_FOOD\"\r\n\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/menus/1/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"menus",
+										"1",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create menu test 2",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "View menu by menu id",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJodW9uZ3R0dCIsImlhdCI6MTcyOTU4NDc3NCwiZXhwIjoxNzMwMTg5NTc0fQ.8JvPIGPcJ7UukRBhLEi6jrVOq-0AfTXWhN0qzzRvOxG3-fcY3zDHtUDHNeTa62HW",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/menus/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"menus",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "view all menus by restaurant id",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJodW9uZ3R0dCIsImlhdCI6MTcyOTU4NDc3NCwiZXhwIjoxNzMwMTg5NTc0fQ.8JvPIGPcJ7UukRBhLEi6jrVOq-0AfTXWhN0qzzRvOxG3-fcY3zDHtUDHNeTa62HW",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/menus/restaurants/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"menus",
+										"restaurants",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update menu",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJodW9uZ3R0dCIsImlhdCI6MTcyOTU4NDc3NCwiZXhwIjoxNzMwMTg5NTc0fQ.8JvPIGPcJ7UukRBhLEi6jrVOq-0AfTXWhN0qzzRvOxG3-fcY3zDHtUDHNeTa62HW",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"막국수\",\r\n    \"price\": \"9000\",\r\n    \"description\": \"막구수\",\r\n    \"menuStatus\": \"AVAILABLE\",\r\n    \"preparationTime\": \"15\",\r\n    \"cuisineType\": \"KOREAN_FOOD\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/menus/update/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"menus",
+										"update",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update menu img",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJodW9uZ3R0dCIsImlhdCI6MTcyOTU4NDc3NCwiZXhwIjoxNzMwMTg5NTc0fQ.8JvPIGPcJ7UukRBhLEi6jrVOq-0AfTXWhN0qzzRvOxG3-fcY3zDHtUDHNeTa62HW",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "image",
+											"type": "file",
+											"src": "/C:/Users/teisspi/OneDrive/Pictures/막국수.jpg"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:8080/menus/1/image",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"menus",
+										"1",
+										"image"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete menu",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJodW9uZ3R0dCIsImlhdCI6MTcyOTU4NDc3NCwiZXhwIjoxNzMwMTg5NTc0fQ.8JvPIGPcJ7UukRBhLEi6jrVOq-0AfTXWhN0qzzRvOxG3-fcY3zDHtUDHNeTa62HW",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/menus/delete/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"menus",
+										"delete",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				},
 				{
 					"name": "owner login test 2",

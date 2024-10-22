@@ -247,6 +247,7 @@ public class RestaurantService {
         double longitude = userLocationDto.getLongitude();
         List<RestaurantsEntity> restaurants = restaurantRepo.findRestaurantsWithinRadius(latitude, longitude, DISTANCE_2KM);
         return restaurants.stream()
+                .filter(restaurant -> restaurant.getApprovalStatus().equals(ApprovalStatus.APPROVED))
                 .map(RestaurantDto::fromEntity)
                 .collect(Collectors.toList());
     }
@@ -260,21 +261,28 @@ public class RestaurantService {
 
 
     // Get all restaurants within a given radius filtered by cuisine type
-    public List<RestaurantDto> getRestaurantsWithinRadiusByCuisineType(UserLocationDto userLocationDto, String cuisineType) {
+    public List<RestaurantDto> getRestaurantsWithinRadiusByCuisineType(
+            UserLocationDto userLocationDto,
+            CuisineType cuisineType
+    ) {
         double latitude = userLocationDto.getLatitude();
         double longitude = userLocationDto.getLongitude();
         List<RestaurantsEntity> restaurants = restaurantRepo.findRestaurantsWithinRadiusByCuisineType(latitude, longitude, DISTANCE_2KM, cuisineType);
         return restaurants.stream()
+                .filter(restaurant -> restaurant.getApprovalStatus().equals(ApprovalStatus.APPROVED))
                 .map(RestaurantDto::fromEntity)
                 .collect(Collectors.toList());
     }
 
-    //Get all restaurants within a given radius filter by menu name
+    //Get all restaurants within a given radius filter by menu name with keyword search
     public List<RestaurantDto> getAllRestaurantsWithin2KmByMenuName(UserLocationDto userLocationDto, String menuName) {
         double latitude = userLocationDto.getLatitude();
         double longitude = userLocationDto.getLongitude();
-        List<RestaurantsEntity> restaurants = restaurantRepo.findRestaurantsWithinRadiusByMenuName(latitude, longitude, DISTANCE_2KM, menuName);
+        List<RestaurantsEntity> restaurants = restaurantRepo
+                .findRestaurantsWithinRadiusByMenuNameContaining(latitude, longitude, DISTANCE_2KM, menuName);
+
         return restaurants.stream()
+                .filter(restaurant -> restaurant.getApprovalStatus().equals(ApprovalStatus.APPROVED))
                 .map(RestaurantDto::fromEntity)
                 .collect(Collectors.toList());
     }
