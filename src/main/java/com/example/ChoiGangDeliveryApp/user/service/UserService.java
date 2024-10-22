@@ -306,6 +306,28 @@ public class UserService {
         return UserDto.fromEntity(userRepository.save(currentUser));
     }
 
+    // Update user's delivery address
+    @Transactional
+    public UserDto updateUserDeliveryAddress(String newAddress) {
+        UserEntity currentUser = facade.getCurrentUserEntity();
+        currentUser.setAddress(newAddress);
+        if (newAddress != null) {
+            PointDto location = naviService.geoCoding(newAddress);
+
+            UserLocation userLocation = currentUser.getUserLocation();
+            if (userLocation == null) {
+                userLocation = new UserLocation();
+            }
+            userLocation.setLatitude(location.getLatitude());
+            userLocation.setLongitude(location.getLongitude());
+
+            userLocation.setUser(currentUser);
+            currentUser.setUserLocation(userLocation);
+            userLocationRepository.save(userLocation);
+        }
+        return UserDto.fromEntity(userRepository.save(currentUser));
+    }
+
 
     //View Profile
     public UserDto getMyProfile() {
@@ -411,5 +433,27 @@ public class UserService {
                 .rejectionReason(request.getRejectionReason())
                 .build();
     }
+
+    //get user location method
+    public UserLocationDto getUserLocation() {
+        // Get the current logged-in user entity
+        UserEntity currentUser = facade.getCurrentUserEntity();
+
+        // Get the user's location entity
+        UserLocation userLocation = currentUser.getUserLocation();
+
+        // If the user doesn't have a location set, handle it appropriately
+        if (userLocation == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User location not found");
+        }
+
+        // Map the UserLocation entity to the UserLocationDto
+        UserLocationDto userLocationDto = new UserLocationDto();
+        userLocationDto.setLatitude(userLocation.getLatitude());
+        userLocationDto.setLongitude(userLocation.getLongitude());
+
+        return userLocationDto;
+    }
+
 
 }

@@ -111,8 +111,12 @@ public class UserController {
                     .body(null);// 500 Internal Server Error if something goes wrong
         }
     }
-
-
+    // Update user's delivery address
+    @PutMapping("/update-address")
+    public ResponseEntity<UserDto> updateDeliveryAddress(@RequestParam String newAddress) {
+        UserDto updatedUser = service.updateUserDeliveryAddress(newAddress);
+        return ResponseEntity.ok(updatedUser);
+    }
 
     @PostMapping("/upload-profile-image")
     public ResponseEntity<String> uploadProfileImage (
