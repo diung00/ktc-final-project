@@ -2,16 +2,17 @@ package com.example.ChoiGangDeliveryApp.admin;
 
 import com.example.ChoiGangDeliveryApp.enums.ApprovalStatus;
 import com.example.ChoiGangDeliveryApp.enums.UserRole;
-import com.example.ChoiGangDeliveryApp.owner.restaurant.dto.RejectOpenRestaurantDto;
 import com.example.ChoiGangDeliveryApp.owner.restaurant.dto.RestaurantRequestDto;
 import com.example.ChoiGangDeliveryApp.owner.restaurant.entity.RestaurantRequestEntity;
 import com.example.ChoiGangDeliveryApp.user.dto.DriverRoleRequestDto;
 import com.example.ChoiGangDeliveryApp.user.dto.OwnerRoleRequestDto;
 import com.example.ChoiGangDeliveryApp.user.dto.UserDto;
-import lombok.Getter;
+import com.example.ChoiGangDeliveryApp.user.entity.DriverRoleRequest;
+import com.example.ChoiGangDeliveryApp.user.entity.OwnerRoleRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -45,14 +46,30 @@ public class AdminController {
     // view all owner role requests
     @GetMapping("/owner-requests")
     public ResponseEntity<List<OwnerRoleRequestDto>> getAllOwnerRoleRequests() {
-        return adminService.getAllOwnerRoleRequests();
+        List<OwnerRoleRequestDto> requestDtos = adminService.getAllOwnerRoleRequests();
+        return ResponseEntity.ok(requestDtos);
     }
 
     // view all driver role requests
     @GetMapping("/driver-requests")
     public ResponseEntity<List<DriverRoleRequestDto>> getAllDriverRoleRequests() {
-        return adminService.getAllDriverRoleRequests();
+        List<DriverRoleRequestDto> requestDtos = adminService.getAllDriverRoleRequests();
+        return ResponseEntity.ok(requestDtos);
     }
+    // view owner request by id
+    @GetMapping("/owner-requests/{id}")
+    public ResponseEntity<OwnerRoleRequest> getOwnerRoleRequestById(@PathVariable Long id) {
+        OwnerRoleRequest ownerRoleRequest = adminService.getOwnerRoleRequestById(id);
+        return ResponseEntity.ok(ownerRoleRequest);
+    }
+
+    // view driver request by id
+    @GetMapping("/driver-requests/{id}")
+    public ResponseEntity<DriverRoleRequest> getDriverRoleRequestById(@PathVariable Long id) {
+        DriverRoleRequest driverRoleRequest = adminService.getDriverRoleRequestById(id);
+        return ResponseEntity.ok(driverRoleRequest);
+    }
+
 
     // accept owner role request
     @PostMapping("/owner-requests/{requestId}/accept")
@@ -102,10 +119,18 @@ public class AdminController {
     }
 
     // Decline to open restaurant
-    @PostMapping("/restaurant-requests/decline/open")
-    public ResponseEntity<RestaurantRequestEntity> declineOpenRestaurant(@RequestBody RejectOpenRestaurantDto dto) {
-        RestaurantRequestEntity request = adminService.declineOpenRestaurant(dto);
-        return ResponseEntity.ok(request);
+    @PostMapping("/restaurant-requests/{requestId}/decline")
+    public ResponseEntity<RestaurantRequestDto> declineOpenRestaurant(
+            @PathVariable Long requestId,
+            @RequestBody String reason
+    ) {
+        try {
+            RestaurantRequestDto declinedRequest = adminService.declineOpenRestaurant(requestId, reason);
+            return ResponseEntity.ok(declinedRequest);
+        }
+        catch (ResponseStatusException ex) {
+            return ResponseEntity.status(ex.getStatusCode()).body(null);
+        }
     }
 
     // accept to close restaurant

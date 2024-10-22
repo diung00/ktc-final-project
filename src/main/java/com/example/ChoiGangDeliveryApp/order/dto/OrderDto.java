@@ -28,20 +28,20 @@ public class OrderDto {
     @Size(max = 255)
     private String note;
 
-    public static OrderDto fromEntity(OrderEntity entity) {
-        return OrderDto.builder()
-                .id(entity.getId())
-                .driverId(entity.getDriver().getId())
-                .userId(entity.getUser().getId())
-                .restaurantId(entity.getRestaurant().getId())
-                .orderDate(entity.getOrderDate())
-                .orderStatus(String.valueOf(entity.getOrderStatus()))
-                .totalMenuPrice(entity.getTotalMenusOrderPrice())
-                .shippingFee(entity.getShippingFee())
-                .totalAmount(entity.getTotalAmount())
-                .estimatedArrivalTime(entity.getEstimatedArrivalTime())
-                .note(entity.getNote())
-                .build();
-    }
+//    public static OrderDto fromEntity(OrderEntity entity) {
+//        return OrderDto.builder()
+//                .id(entity.getId())
+//                .driverId(entity.getDriver() != null ? entity.getDriver().getId() : null)
+//                .userId(entity.getUser() != null ? entity.getUser().getId() : null)
+//                .restaurantId(entity.getRestaurant() != null ? entity.getRestaurant().getId() : null)
+//                .orderDate(entity.getOrderDate())
+//                .orderStatus(String.valueOf(entity.getOrderStatus()))
+//                .totalMenuPrice(entity.getTotalMenusOrderPrice())
+//                .shippingFee(entity.getShippingFee())
+//                .totalAmount(entity.getTotalAmount())
+//                .estimatedArrivalTime(entity.getEstimatedArrivalTime())
+//                .note(entity.getNote())
+//                .build();
+//    }
 
 }

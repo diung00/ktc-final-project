@@ -1,0 +1,1742 @@
+{
+	"info": {
+		"_postman_id": "760e51ea-55a9-47df-b23b-0febf1fba393",
+		"name": "CHOI-GANG-DELIVERY-APP",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37757036"
+	},
+	"item": [
+		{
+			"name": "USER",
+			"item": [
+				{
+					"name": "sign - up",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"huongttt\",\r\n    \"password\": \"12345\",\r\n    \"passCheck\": \"12345\",\r\n    \"email\": \"huongttt.ueh@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/users/signup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "email verification",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/users/signup/verify?email=huongttt.ueh@gmail.com&code=570397",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"signup",
+								"verify"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "huongttt.ueh@gmail.com"
+								},
+								{
+									"key": "code",
+									"value": "570397"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login test 1",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"huongttt\",\r\n    \"password\": \"12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login test 2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"userTest1\",\r\n    \"password\": \"12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login test 3",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"userTest2\",\r\n    \"password\":\"12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "admin login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login test 2 Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"userTest1\",\r\n    \"password\": \"12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login test 2 Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"userTest1\",\r\n    \"password\": \"12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "request to reset password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/users/request-password-reset?email=huongttt.ueh@gmail.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"request-password-reset"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "huongttt.ueh@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reset password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"huongttt.ueh@gmail.com\",\r\n    \"code\": \"381157\",\r\n    \"newPassword\": \"123abc\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/users/reset-password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"reset-password"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "change password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJodW9uZ3R0dCIsImlhdCI6MTcyOTQ4NDAzMSwiZXhwIjoxNzMwMDg4ODMxfQ.dNt06RNe_b8uXKVYW4PMXLbETPIHxh-9CVY4eeZKhLvAl0mEkGEiNyTHkMsVxGYl",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"currentPassword\": \"123abc\",\r\n    \"newPassword\": \"12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/users/change-password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"change-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "upload profile image",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJodW9uZ3R0dCIsImlhdCI6MTcyOTU3MTQxOCwiZXhwIjoxNzMwMTc2MjE4fQ.Z98yk2eGjtErsuuK-Ej1Yc32yQIq_LBp0cOAQjCSPbxKVldrulFqukmzdAbRGNUO",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/teisspi/OneDrive/Pictures/icon/chicken2.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/users/upload-profile-image",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"upload-profile-image"
+							],
+							"query": [
+								{
+									"key": "image",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user view their profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJodW9uZ3R0dCIsImlhdCI6MTcyOTU3MTQxOCwiZXhwIjoxNzMwMTc2MjE4fQ.Z98yk2eGjtErsuuK-Ej1Yc32yQIq_LBp0cOAQjCSPbxKVldrulFqukmzdAbRGNUO",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/users/get-my-profile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"get-my-profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update profile info",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJodW9uZ3R0dCIsImlhdCI6MTcyOTU3MTQxOCwiZXhwIjoxNzMwMTc2MjE4fQ.Z98yk2eGjtErsuuK-Ej1Yc32yQIq_LBp0cOAQjCSPbxKVldrulFqukmzdAbRGNUO",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Huong Tran\",\r\n    \"nickname\": \"Huong\",\r\n    \"age\": \"30\",\r\n    \"phone\": \"01053234687\",\r\n    \"address\": \"경기도, 안산시, 본오동, 682-14\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/users/update-profile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"update-profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request Owner Role",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJodW9uZ3R0dCIsImlhdCI6MTcyOTU3MTQxOCwiZXhwIjoxNzMwMTc2MjE4fQ.Z98yk2eGjtErsuuK-Ej1Yc32yQIq_LBp0cOAQjCSPbxKVldrulFqukmzdAbRGNUO",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/users/request-owner-role?businessNumber=1234123452024",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"request-owner-role"
+							],
+							"query": [
+								{
+									"key": "businessNumber",
+									"value": "1234123452024"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request Driver Role",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyVGVzdDEiLCJpYXQiOjE3Mjk1NzE1ODYsImV4cCI6MTczMDE3NjM4Nn0.iyTkjy6jXMs2iiABVZY-uSrmZFMLmMX11ba30kmdZz5iqGfs8AbANuBb_ud1ZYRA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/users/request-driver-role?licenseNumber=11-891709-1234",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"request-driver-role"
+							],
+							"query": [
+								{
+									"key": "licenseNumber",
+									"value": "11-891709-1234"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request owner role test 2",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyVGVzdDIiLCJpYXQiOjE3Mjk1NzM0ODEsImV4cCI6MTczMDE3ODI4MX0.xDysObx6J64TSBUHeZ6-em_ReGw4Eou-EHOr7NA8uZLgZvtX9__LREeZkaF9LkfM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/users/request-owner-role?businessNumber=1234123452022",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"request-owner-role"
+							],
+							"query": [
+								{
+									"key": "businessNumber",
+									"value": "1234123452022"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request driver role test 2",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyVGVzdDIiLCJpYXQiOjE3Mjk1NzM0ODEsImV4cCI6MTczMDE3ODI4MX0.xDysObx6J64TSBUHeZ6-em_ReGw4Eou-EHOr7NA8uZLgZvtX9__LREeZkaF9LkfM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/users/request-driver-role?licenseNumber=11-891709-2345",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"request-driver-role"
+							],
+							"query": [
+								{
+									"key": "licenseNumber",
+									"value": "11-891709-2345"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View Owner Request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJodW9uZ3R0dCIsImlhdCI6MTcyOTU3MTQxOCwiZXhwIjoxNzMwMTc2MjE4fQ.Z98yk2eGjtErsuuK-Ej1Yc32yQIq_LBp0cOAQjCSPbxKVldrulFqukmzdAbRGNUO",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/users/owner-request-status",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"owner-request-status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View Driver Request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyVGVzdDEiLCJpYXQiOjE3Mjk1NzE1ODYsImV4cCI6MTczMDE3NjM4Nn0.iyTkjy6jXMs2iiABVZY-uSrmZFMLmMX11ba30kmdZz5iqGfs8AbANuBb_ud1ZYRA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/users/driver-request-status",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"driver-request-status"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "This secsion is test for users fuctions:\n\n- sign-up\n    \n- email verification\n    \n- sign-in\n    \n- reset password\n    \n- change password\n    \n- upload profile img\n    \n- update profile info\n    \n- view profile\n    \n- request to upgrade role to owner role\n    \n- request to upgrade role to driver\n    \n- view owner role request status\n    \n- view driver role request status"
+		},
+		{
+			"name": "ADMIN",
+			"item": [
+				{
+					"name": "VIEW USERS",
+					"item": [
+						{
+							"name": "VIEW ALL USER",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcyOTU3MTg3MywiZXhwIjoxNzMwMTc2NjczfQ.f5EIa9eVlkyLy3XhpJZqgTB3H-__QPt-qNDmnBURCmqDQbg67fQTnbh1p7a0ZqbO",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/admin/users",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "view user by id",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcyOTU3MTg3MywiZXhwIjoxNzMwMTc2NjczfQ.f5EIa9eVlkyLy3XhpJZqgTB3H-__QPt-qNDmnBURCmqDQbg67fQTnbh1p7a0ZqbO",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/admin/users/3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"users",
+										"3"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": "",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "view user by ROLE_USER",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcyOTU3MTg3MywiZXhwIjoxNzMwMTc2NjczfQ.f5EIa9eVlkyLy3XhpJZqgTB3H-__QPt-qNDmnBURCmqDQbg67fQTnbh1p7a0ZqbO",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/admin/users/role/ROLE_USER",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"users",
+										"role",
+										"ROLE_USER"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "view user by ROLE_OWNER",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcyOTU3MTg3MywiZXhwIjoxNzMwMTc2NjczfQ.f5EIa9eVlkyLy3XhpJZqgTB3H-__QPt-qNDmnBURCmqDQbg67fQTnbh1p7a0ZqbO",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/admin/users/role/ROLE_OWNER",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"users",
+										"role",
+										"ROLE_OWNER"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "View user by ROLE_DRIVER",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcyOTU3MTg3MywiZXhwIjoxNzMwMTc2NjczfQ.f5EIa9eVlkyLy3XhpJZqgTB3H-__QPt-qNDmnBURCmqDQbg67fQTnbh1p7a0ZqbO",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/admin/users/role/ROLE_DRIVER",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"users",
+										"role",
+										"ROLE_DRIVER"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "View users by ROLE_INACTIVE",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcyOTU3MTg3MywiZXhwIjoxNzMwMTc2NjczfQ.f5EIa9eVlkyLy3XhpJZqgTB3H-__QPt-qNDmnBURCmqDQbg67fQTnbh1p7a0ZqbO",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/admin/users/role/ROLE_INACTIVE",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"users",
+										"role",
+										"ROLE_INACTIVE"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "view user by ROLE_USER Copy",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcyOTU3MTg3MywiZXhwIjoxNzMwMTc2NjczfQ.f5EIa9eVlkyLy3XhpJZqgTB3H-__QPt-qNDmnBURCmqDQbg67fQTnbh1p7a0ZqbO",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/admin/users/role/ROLE_USER",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"users",
+										"role",
+										"ROLE_USER"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "ADMIN PROCESS UPGRADE ROLE REQUESTS",
+					"item": [
+						{
+							"name": "View all owner request",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcyOTU3MTg3MywiZXhwIjoxNzMwMTc2NjczfQ.f5EIa9eVlkyLy3XhpJZqgTB3H-__QPt-qNDmnBURCmqDQbg67fQTnbh1p7a0ZqbO",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/admin/owner-requests",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"owner-requests"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "View all driver request",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcyOTU3MTg3MywiZXhwIjoxNzMwMTc2NjczfQ.f5EIa9eVlkyLy3XhpJZqgTB3H-__QPt-qNDmnBURCmqDQbg67fQTnbh1p7a0ZqbO",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/admin/driver-requests",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"driver-requests"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "view owner request by id",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcyOTU3MTg3MywiZXhwIjoxNzMwMTc2NjczfQ.f5EIa9eVlkyLy3XhpJZqgTB3H-__QPt-qNDmnBURCmqDQbg67fQTnbh1p7a0ZqbO",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/admin/owner-requests/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"owner-requests",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "view driver request by id",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcyOTU3MTg3MywiZXhwIjoxNzMwMTc2NjczfQ.f5EIa9eVlkyLy3XhpJZqgTB3H-__QPt-qNDmnBURCmqDQbg67fQTnbh1p7a0ZqbO",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/admin/driver-requests/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"driver-requests",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "accept owner request",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcyOTU3MTg3MywiZXhwIjoxNzMwMTc2NjczfQ.f5EIa9eVlkyLy3XhpJZqgTB3H-__QPt-qNDmnBURCmqDQbg67fQTnbh1p7a0ZqbO",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/admin/owner-requests/1/accept",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"owner-requests",
+										"1",
+										"accept"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "accept driver request",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcyOTU3MTg3MywiZXhwIjoxNzMwMTc2NjczfQ.f5EIa9eVlkyLy3XhpJZqgTB3H-__QPt-qNDmnBURCmqDQbg67fQTnbh1p7a0ZqbO",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/admin/driver-requests/1/accept",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"driver-requests",
+										"1",
+										"accept"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "decline owner role request",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcyOTU3NjI1NCwiZXhwIjoxNzMwMTgxMDU0fQ.-yXjoEbgriMIlUJiTQnyWfD3s308ZzTeTIfsuBhW9Waw6Q1zBxemSzGm8iaYVkBc",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"reason\": \"decline test\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/admin/owner-requests/2/decline",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"owner-requests",
+										"2",
+										"decline"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "decline driver role request",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcyOTU3NjI1NCwiZXhwIjoxNzMwMTgxMDU0fQ.-yXjoEbgriMIlUJiTQnyWfD3s308ZzTeTIfsuBhW9Waw6Q1zBxemSzGm8iaYVkBc",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"reason\": \"decline test\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/admin/driver-requests/2/decline",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"driver-requests",
+										"2",
+										"decline"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "ADMIN PROCESS RESTAURANT REQUESTS",
+					"item": [
+						{
+							"name": "view all restaurants requests",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcyOTU3NjI1NCwiZXhwIjoxNzMwMTgxMDU0fQ.-yXjoEbgriMIlUJiTQnyWfD3s308ZzTeTIfsuBhW9Waw6Q1zBxemSzGm8iaYVkBc",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/admin/restaurant-requests/pending",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"restaurant-requests",
+										"pending"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "view restaurant request by id",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcyOTU3NjI1NCwiZXhwIjoxNzMwMTgxMDU0fQ.-yXjoEbgriMIlUJiTQnyWfD3s308ZzTeTIfsuBhW9Waw6Q1zBxemSzGm8iaYVkBc",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/admin/restaurant-requests/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"restaurant-requests",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "accept to open restaurant",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcyOTU3NjI1NCwiZXhwIjoxNzMwMTgxMDU0fQ.-yXjoEbgriMIlUJiTQnyWfD3s308ZzTeTIfsuBhW9Waw6Q1zBxemSzGm8iaYVkBc",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/admin/restaurant-requests/3/approve/open",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"restaurant-requests",
+										"3",
+										"approve",
+										"open"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "decline open restarant request",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcyOTU3NjI1NCwiZXhwIjoxNzMwMTgxMDU0fQ.-yXjoEbgriMIlUJiTQnyWfD3s308ZzTeTIfsuBhW9Waw6Q1zBxemSzGm8iaYVkBc",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"reason\": \"test\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/admin/restaurant-requests/2/decline",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"restaurant-requests",
+										"2",
+										"decline"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "accept to close restaurant",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcyOTU3NjI1NCwiZXhwIjoxNzMwMTgxMDU0fQ.-yXjoEbgriMIlUJiTQnyWfD3s308ZzTeTIfsuBhW9Waw6Q1zBxemSzGm8iaYVkBc",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/admin/restaurant-requests/4/approve/close",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"restaurant-requests",
+										"4",
+										"approve",
+										"close"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "bearer"
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "OWNER",
+			"item": [
+				{
+					"name": "RESTAURANT",
+					"item": [
+						{
+							"name": "open restaurant",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJodW9uZ3R0dCIsImlhdCI6MTcyOTU3NzMzNywiZXhwIjoxNzMwMTgyMTM3fQ.beo1n9hPh71SgI1MbU1fELVdvmZ29j0KS445EZXpbK14l5w5szagybc3KE1TWx5S",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"대궐막구수\",\r\n    \"address\": \"경기 안산시 상록구 이호로 24 1층 (본오동)\",\r\n    \"phone\": \"031-417-1555\",\r\n    \"openingHours\": \"10:50 ~ 21:00\",\r\n    \"cuisineType\": \"KOREAN_FOOD\",\r\n    \"description\": \"막국수 집\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/restaurants/open",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"restaurants",
+										"open"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update restaurant image",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJodW9uZ3R0dCIsImlhdCI6MTcyOTU3NzMzNywiZXhwIjoxNzMwMTgyMTM3fQ.beo1n9hPh71SgI1MbU1fELVdvmZ29j0KS445EZXpbK14l5w5szagybc3KE1TWx5S",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "image",
+											"type": "file",
+											"src": "/C:/Users/teisspi/OneDrive/Pictures/unnamed.jpg"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:8080/restaurants/1/update-image",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"restaurants",
+										"1",
+										"update-image"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update restaurant info",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJodW9uZ3R0dCIsImlhdCI6MTcyOTU3NzMzNywiZXhwIjoxNzMwMTgyMTM3fQ.beo1n9hPh71SgI1MbU1fELVdvmZ29j0KS445EZXpbK14l5w5szagybc3KE1TWx5S",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"대궐막구수\",\r\n    \"address\": \"경기 안산시 상록구 이호로 24 1층 (본오동)\",\r\n    \"phone\": \"031-417-1555\",\r\n    \"openingHours\": \"10:50 ~ 21:00\",\r\n    \"cuisineType\": \"KOREAN_FOOD\",\r\n    \"description\": \"막국수 집\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/restaurants/1/update-info",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"restaurants",
+										"1",
+										"update-info"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "view all requests",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJodW9uZ3R0dCIsImlhdCI6MTcyOTU3NzMzNywiZXhwIjoxNzMwMTgyMTM3fQ.beo1n9hPh71SgI1MbU1fELVdvmZ29j0KS445EZXpbK14l5w5szagybc3KE1TWx5S",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/restaurants/my-requests",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"restaurants",
+										"my-requests"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "open restaurant test 2",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJvd25lclRlc3QxIiwiaWF0IjoxNzI5NTc4MzQxLCJleHAiOjE3MzAxODMxNDF9.d99dsCZqd_eCGFlXUEhGktveWz2z6VK97W_Z1M3uHGuCB8uqgBZy7YDhZFcqiRRW",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": " {\r\n    \"name\": \"test name\",\r\n    \"address\": \"경기 안산시 상록구 이호로 24 2층 (본오동)\",\r\n    \"phone\": \"031-417-1578\",\r\n    \"openingHours\": \"10:50 ~ 21:00\",\r\n    \"cuisineType\": \"KOREAN_FOOD\",\r\n    \"description\": \"test\"\r\n  }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/restaurants/open",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"restaurants",
+										"open"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "open restaurant test 3",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJvd25lclRlc3QyIiwiaWF0IjoxNzI5NTc4NzkyLCJleHAiOjE3MzAxODM1OTJ9.U6MHYMgwzkaS7-KPQ-AkSfKhYZOVQjGWxr7eHyfADBnPq1zcDGAh-vUdMBgMeMLD",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"test name\",\r\n    \"address\": \"경기 안산시 상록구 이호로 24 3층 (본오동)\",\r\n    \"phone\": \"031-417-15123\",\r\n    \"openingHours\": \"10:50 ~ 21:00\",\r\n    \"cuisineType\": \"KOREAN_FOOD\",\r\n    \"description\": \"test\"\r\n  }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/restaurants/open",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"restaurants",
+										"open"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "close request",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJvd25lclRlc3QyIiwiaWF0IjoxNzI5NTc4NzkyLCJleHAiOjE3MzAxODM1OTJ9.U6MHYMgwzkaS7-KPQ-AkSfKhYZOVQjGWxr7eHyfADBnPq1zcDGAh-vUdMBgMeMLD",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/restaurants/3/close",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"restaurants",
+										"3",
+										"close"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "MENU",
+					"item": []
+				},
+				{
+					"name": "owner login test 2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"ownerTest2\",\r\n    \"password\": \"12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "owner login test 1",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"ownerTest1\",\r\n    \"password\": \"12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "id",
+			"value": "1"
+		},
+		{
+			"key": "base_url",
+			"value": "https://postman-rest-api-learner.glitch.me/"
+		}
+	]
+}

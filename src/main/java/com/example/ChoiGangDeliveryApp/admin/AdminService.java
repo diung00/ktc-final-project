@@ -2,11 +2,9 @@ package com.example.ChoiGangDeliveryApp.admin;
 
 import com.example.ChoiGangDeliveryApp.common.exception.GlobalErrorCode;
 import com.example.ChoiGangDeliveryApp.common.exception.GlobalException;
-import com.example.ChoiGangDeliveryApp.driver.repo.DriverRepository;
 import com.example.ChoiGangDeliveryApp.enums.ApprovalStatus;
 import com.example.ChoiGangDeliveryApp.enums.RequestType;
 import com.example.ChoiGangDeliveryApp.enums.UserRole;
-import com.example.ChoiGangDeliveryApp.owner.restaurant.dto.RejectOpenRestaurantDto;
 import com.example.ChoiGangDeliveryApp.owner.restaurant.dto.RestaurantRequestDto;
 import com.example.ChoiGangDeliveryApp.owner.restaurant.entity.RestaurantRequestEntity;
 import com.example.ChoiGangDeliveryApp.owner.restaurant.entity.RestaurantsEntity;
@@ -27,7 +25,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -77,21 +74,18 @@ public class AdminService {
 
     //VIEW ALL REQUESTS
     //owner role requests
-    public ResponseEntity<List<OwnerRoleRequestDto>> getAllOwnerRoleRequests() {
+    public List<OwnerRoleRequestDto> getAllOwnerRoleRequests() {
         List<OwnerRoleRequest> requests = ownerRoleRequestRepository.findAll();
-        List<OwnerRoleRequestDto> requestDtos = requests.stream()
+        return requests.stream()
                 .map(OwnerRoleRequestDto::fromEntity)
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(requestDtos);
     }
     //driver role requests
-    @GetMapping("/driver-requests")
-    public ResponseEntity<List<DriverRoleRequestDto>> getAllDriverRoleRequests() {
+    public List<DriverRoleRequestDto> getAllDriverRoleRequests() {
         List<DriverRoleRequest> requests = driverRoleRequestRepository.findAll();
-        List<DriverRoleRequestDto> requestDtos = requests.stream()
+        return requests.stream()
                 .map(DriverRoleRequestDto::fromEntity)
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(requestDtos);
     }
 
     //VIEW REQUEST BY ID
@@ -218,25 +212,30 @@ public class AdminService {
 
     //DECLINE OPEN RESTAURANT REQUEST
     //từ chối mở nhà hàng và nói lí do
-    public RestaurantRequestEntity declineOpenRestaurant(RejectOpenRestaurantDto dto){
-        Optional<RestaurantRequestEntity> optionalRequest =
-                restaurantRequestRepository.findById(dto.getRequestId());
+    public RestaurantRequestDto declineOpenRestaurant(Long requestId, String reason){
+        Optional<RestaurantRequestEntity> optionalRequest = restaurantRequestRepository.findById(requestId);
         if (optionalRequest.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
+
         RestaurantRequestEntity request = optionalRequest.get();
+
         if (request.getRequestType().equals(RequestType.OPEN)) {
             request.setStatus(ApprovalStatus.DECLINED);
-            request.setRejectionReason(dto.getRejectReason());
+            request.setRejectionReason(reason);
 
             RestaurantsEntity restaurant = request.getRestaurant();
             restaurant.setApprovalStatus(ApprovalStatus.DECLINED);
+
+            // Save the updated entities
             restaurantRepository.save(restaurant);
             restaurantRequestRepository.save(request);
-        }else {
+
+            // Return the DTO created from the updated entity
+            return RestaurantRequestDto.fromEntity(request);
+        } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
-        return request;
     }
 
     //ACCEPT TO CLOSE A RESTAURANT
