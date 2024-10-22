@@ -9,6 +9,7 @@ import com.example.ChoiGangDeliveryApp.enums.RequestType;
 import com.example.ChoiGangDeliveryApp.enums.UserRole;
 import com.example.ChoiGangDeliveryApp.owner.restaurant.dto.RestaurantDto;
 import com.example.ChoiGangDeliveryApp.owner.restaurant.dto.RestaurantOpenDto;
+import com.example.ChoiGangDeliveryApp.owner.restaurant.dto.RestaurantRequestDto;
 import com.example.ChoiGangDeliveryApp.owner.restaurant.dto.RestaurantUpdateDto;
 import com.example.ChoiGangDeliveryApp.owner.restaurant.entity.RestaurantRequestEntity;
 import com.example.ChoiGangDeliveryApp.owner.restaurant.entity.RestaurantsEntity;
@@ -29,6 +30,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -222,11 +224,40 @@ public class RestaurantService {
         restaurantRepo.save(restaurant);
     }
 
+    // VIEW ALL REQUESTS BY OWNER
+    public List<RestaurantRequestDto> getMyRequests() {
+        UserEntity currentUser = facade.getCurrentUserEntity();
+        RestaurantsEntity restaurant = currentUser.getRestaurant();
+        if (restaurant == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User does not have a restaurant.");
+        }
+        List<RestaurantRequestEntity> requests = restaurantRequestRepo.findByRestaurant(restaurant);
+        return requests.stream()
+                .map(RestaurantRequestDto::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+    // GET ALL RESTAURANTS WITHIN A GIVEN RADIUS
+    public List<RestaurantDto> getRestaurantsWithinRadius(double latitude, double longitude, double distance) {
+        List<RestaurantsEntity> restaurants = restaurantRepo.findRestaurantsWithinRadius(latitude, longitude, distance);
+        return restaurants.stream()
+                .map(RestaurantDto::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+    //GET A SPECIFIC RESTAURANT BY ID
+    public RestaurantDto getRestaurantById(Long restaurantId) {
+        RestaurantsEntity restaurant = restaurantRepo.findById(restaurantId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Restaurant not found"));
+        return RestaurantDto.fromEntity(restaurant);
+    }
 
 
-
-
-
-
-
+    // Get all restaurants within a given radius filtered by cuisine type
+    public List<RestaurantDto> getRestaurantsWithinRadiusByCuisineType(double latitude, double longitude, double distance, String cuisineType) {
+        List<RestaurantsEntity> restaurants = restaurantRepo.findRestaurantsWithinRadiusByCuisineType(latitude, longitude, distance, cuisineType);
+        return restaurants.stream()
+                .map(RestaurantDto::fromEntity)
+                .collect(Collectors.toList());
+    }
 }
