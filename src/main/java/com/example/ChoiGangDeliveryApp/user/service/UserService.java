@@ -389,7 +389,7 @@ public class UserService {
     public OwnerRoleRequestDto viewOwnerRoleRequestStatus() {
         UserEntity currentUser = facade.getCurrentUserEntity();
         OwnerRoleRequest request = ownerRoleRequestRepository.findByUser(currentUser)
-                .orElseThrow(() -> new GlobalException(GlobalErrorCode.NO_ROLE_REQUEST_FOUND));
+                .orElseThrow(() -> new GlobalException(GlobalErrorCode.REQUEST_NOT_FOUND));
 
         return OwnerRoleRequestDto.builder()
                 .businessNumber(request.getBusinessNumber())
@@ -402,7 +402,7 @@ public class UserService {
     public DriverRoleRequestDto viewDriverRoleRequestStatus() {
         UserEntity currentUser = facade.getCurrentUserEntity();
         DriverRoleRequest request = driverRoleRequestRepository.findByUser(currentUser)
-                .orElseThrow(() -> new GlobalException(GlobalErrorCode.NO_ROLE_REQUEST_FOUND));
+                .orElseThrow(() -> new GlobalException(GlobalErrorCode.REQUEST_NOT_FOUND));
 
         return DriverRoleRequestDto.builder()
                 .licenseNumber(request.getLicenseNumber())

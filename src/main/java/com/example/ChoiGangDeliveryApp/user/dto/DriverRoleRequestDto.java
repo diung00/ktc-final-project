@@ -17,7 +17,7 @@ public class DriverRoleRequestDto {
     private ApprovalStatus status;
     private String rejectionReason;
 
-    public DriverRoleRequestDto fromEntity(DriverRoleRequest request) {
+    public static DriverRoleRequestDto fromEntity(DriverRoleRequest request) {
         return DriverRoleRequestDto.builder()
                 .licenseNumber(request.getLicenseNumber())
                 .userRole(request.getUser().getRole())

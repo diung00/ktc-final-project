@@ -16,6 +16,7 @@ import com.example.ChoiGangDeliveryApp.owner.restaurant.entity.RestaurantsEntity
 import com.example.ChoiGangDeliveryApp.owner.restaurant.repo.RestaurantRepository;
 import com.example.ChoiGangDeliveryApp.owner.restaurant.repo.RestaurantRequestRepository;
 import com.example.ChoiGangDeliveryApp.security.config.AuthenticationFacade;
+import com.example.ChoiGangDeliveryApp.user.dto.UserLocationDto;
 import com.example.ChoiGangDeliveryApp.user.entity.UserEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -238,8 +239,13 @@ public class RestaurantService {
     }
 
     // GET ALL RESTAURANTS WITHIN A GIVEN RADIUS
-    public List<RestaurantDto> getRestaurantsWithinRadius(double latitude, double longitude, double distance) {
-        List<RestaurantsEntity> restaurants = restaurantRepo.findRestaurantsWithinRadius(latitude, longitude, distance);
+    private static final double DISTANCE_2KM = 2.0;
+
+    public List<RestaurantDto> getRestaurantsWithinRadius(
+            UserLocationDto userLocationDto) {
+        double latitude = userLocationDto.getLatitude();
+        double longitude = userLocationDto.getLongitude();
+        List<RestaurantsEntity> restaurants = restaurantRepo.findRestaurantsWithinRadius(latitude, longitude, DISTANCE_2KM);
         return restaurants.stream()
                 .map(RestaurantDto::fromEntity)
                 .collect(Collectors.toList());
@@ -254,10 +260,24 @@ public class RestaurantService {
 
 
     // Get all restaurants within a given radius filtered by cuisine type
-    public List<RestaurantDto> getRestaurantsWithinRadiusByCuisineType(double latitude, double longitude, double distance, String cuisineType) {
-        List<RestaurantsEntity> restaurants = restaurantRepo.findRestaurantsWithinRadiusByCuisineType(latitude, longitude, distance, cuisineType);
+    public List<RestaurantDto> getRestaurantsWithinRadiusByCuisineType(UserLocationDto userLocationDto, String cuisineType) {
+        double latitude = userLocationDto.getLatitude();
+        double longitude = userLocationDto.getLongitude();
+        List<RestaurantsEntity> restaurants = restaurantRepo.findRestaurantsWithinRadiusByCuisineType(latitude, longitude, DISTANCE_2KM, cuisineType);
         return restaurants.stream()
                 .map(RestaurantDto::fromEntity)
                 .collect(Collectors.toList());
     }
+
+    //Get all restaurants within a given radius filter by menu name
+    public List<RestaurantDto> getAllRestaurantsWithin2KmByMenuName(UserLocationDto userLocationDto, String menuName) {
+        double latitude = userLocationDto.getLatitude();
+        double longitude = userLocationDto.getLongitude();
+        List<RestaurantsEntity> restaurants = restaurantRepo.findRestaurantsWithinRadiusByMenuName(latitude, longitude, DISTANCE_2KM, menuName);
+        return restaurants.stream()
+                .map(RestaurantDto::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+
 }

@@ -13,4 +13,6 @@ public interface RestaurantRequestRepository extends JpaRepository<RestaurantReq
     Optional<RestaurantRequestEntity> findById (Long id);
 
     List<RestaurantRequestEntity> findByRestaurant(RestaurantsEntity restaurant);
+
+
 }

@@ -3,6 +3,8 @@ import com.example.ChoiGangDeliveryApp.owner.restaurant.dto.RestaurantDto;
 import com.example.ChoiGangDeliveryApp.owner.restaurant.dto.RestaurantOpenDto;
 import com.example.ChoiGangDeliveryApp.owner.restaurant.dto.RestaurantRequestDto;
 import com.example.ChoiGangDeliveryApp.owner.restaurant.dto.RestaurantUpdateDto;
+import com.example.ChoiGangDeliveryApp.owner.restaurant.entity.RestaurantsEntity;
+import com.example.ChoiGangDeliveryApp.user.dto.UserLocationDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -56,31 +58,36 @@ public class RestaurantController {
         return ResponseEntity.ok(requests);
     }
 
-    // View all restaurants within 2 km of the user
-    @GetMapping("/nearby")
-    public ResponseEntity<List<RestaurantDto>> getNearbyRestaurants(@RequestParam double latitude, @RequestParam double longitude) {
-        double distance = 2.0; // 2 km
-        List<RestaurantDto> nearbyRestaurants = restaurantService.getRestaurantsWithinRadius(latitude, longitude, distance);
-        return ResponseEntity.ok(nearbyRestaurants);
+    // GET ALL RESTAURANTS WITHIN A GIVEN RADIUS
+    @GetMapping("/within-radius")
+    public ResponseEntity<List<RestaurantDto>> getRestaurantsWithinRadius(@RequestBody UserLocationDto userLocationDto) {
+        List<RestaurantDto> restaurants = restaurantService.getRestaurantsWithinRadius(userLocationDto);
+        return ResponseEntity.ok(restaurants);
     }
 
-    // View a single restaurant by ID
-    @GetMapping("/{id}")
-    public ResponseEntity<RestaurantDto> getRestaurant(@PathVariable Long id) {
-        RestaurantDto restaurant = restaurantService.getRestaurantById(id);
+    // GET A SPECIFIC RESTAURANT BY ID
+    @GetMapping("/{restaurantId}")
+    public ResponseEntity<RestaurantDto> getRestaurantById(@PathVariable Long restaurantId) {
+        RestaurantDto restaurant = restaurantService.getRestaurantById(restaurantId);
         return ResponseEntity.ok(restaurant);
     }
 
-    // View all restaurants within 2 km filtered by cuisine type
-    @GetMapping("/nearby/cuisine")
-    public ResponseEntity<List<RestaurantDto>> getNearbyRestaurantsByCuisineType(
-            @RequestParam double latitude,
-            @RequestParam double longitude,
+    // GET ALL RESTAURANTS WITHIN A GIVEN RADIUS FILTERED BY CUISINE TYPE
+    @GetMapping("/within-radius/cuisine")
+    public ResponseEntity<List<RestaurantDto>> getRestaurantsWithinRadiusByCuisineType(
+            @RequestBody UserLocationDto userLocationDto,
             @RequestParam String cuisineType) {
-        double distance = 2.0; // 2 km
-        List<RestaurantDto> nearbyRestaurants = restaurantService.getRestaurantsWithinRadiusByCuisineType(latitude, longitude, distance, cuisineType);
-        return ResponseEntity.ok(nearbyRestaurants);
+        List<RestaurantDto> restaurants = restaurantService.getRestaurantsWithinRadiusByCuisineType(userLocationDto, cuisineType);
+        return ResponseEntity.ok(restaurants);
     }
 
+    // GET ALL RESTAURANTS WITHIN A GIVEN RADIUS FILTERED BY MENU NAME
+    @GetMapping("/within-radius/menu")
+    public ResponseEntity<List<RestaurantDto>> getAllRestaurantsWithin2KmByMenuName(
+            @RequestBody UserLocationDto userLocationDto,
+            @RequestParam String menuName) {
+        List<RestaurantDto> restaurants = restaurantService.getAllRestaurantsWithin2KmByMenuName(userLocationDto, menuName);
+        return ResponseEntity.ok(restaurants);
+    }
 
 }

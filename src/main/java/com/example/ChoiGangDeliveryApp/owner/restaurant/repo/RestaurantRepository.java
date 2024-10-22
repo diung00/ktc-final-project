@@ -29,4 +29,14 @@ public interface RestaurantRepository extends JpaRepository<RestaurantsEntity, L
             @Param("distance") double distance,
             @Param("cuisineType") String cuisineType);
 
+    @Query("SELECT r FROM RestaurantsEntity r JOIN r.menus m WHERE " +
+            "m.name LIKE %:menuName% AND " +
+            "6371 * ACOS(COS(RADIANS(:latitude)) * COS(RADIANS(r.latitude)) * " +
+            "COS(RADIANS(r.longitude) - RADIANS(:longitude)) + " +
+            "SIN(RADIANS(:latitude)) * SIN(RADIANS(r.latitude))) < :distance")
+    List<RestaurantsEntity> findRestaurantsWithinRadiusByMenuName(@Param("latitude") double latitude,
+                                                                  @Param("longitude") double longitude,
+                                                                  @Param("distance") double distance,
+                                                                  @Param("menuName") String menuName);
+
 }
