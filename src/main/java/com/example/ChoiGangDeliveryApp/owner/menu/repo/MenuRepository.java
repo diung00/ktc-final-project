@@ -1,10 +1,11 @@
 package com.example.ChoiGangDeliveryApp.owner.menu.repo;
 
 import com.example.ChoiGangDeliveryApp.enums.CuisineType;
-import com.example.ChoiGangDeliveryApp.owner.menu.entity.CategoryEntity;
 import com.example.ChoiGangDeliveryApp.owner.menu.entity.MenuEntity;
+import com.example.ChoiGangDeliveryApp.owner.restaurant.entity.RestaurantsEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -13,5 +14,8 @@ public interface MenuRepository extends JpaRepository<MenuEntity, Long> {
 
     List<MenuEntity> findByCuisineType(CuisineType cuisineType);
 
-    List<MenuEntity> findByCategory(CategoryEntity category);
+    List<MenuEntity> findByRestaurantId(Long restaurantId);
+    List<MenuEntity> findByRestaurantIn(List<RestaurantsEntity> restaurants);
+
+
 }

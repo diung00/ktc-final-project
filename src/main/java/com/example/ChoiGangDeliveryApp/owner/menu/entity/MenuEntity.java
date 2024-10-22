@@ -35,18 +35,16 @@ public class MenuEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private MenuStatus menuStatus;
 
-    private LocalDateTime preparationTime; // time to prepare menu (minute)
+    private int preparationTime; // time to prepare menu (minute)
 
     @Builder.Default
     @OneToMany(mappedBy = "menu", fetch = FetchType.LAZY)
     private List<MenuOrderEntity> menuOrders = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
-    private CategoryEntity category;
-
     @Enumerated(EnumType.STRING)
     private CuisineType cuisineType;
+
+    private String imagePath;
 
 }
 

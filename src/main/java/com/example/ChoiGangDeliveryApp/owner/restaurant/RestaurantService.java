@@ -27,6 +27,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -222,10 +223,6 @@ public class RestaurantService {
     }
 
 
-
-
-    // View list restaurant by cuisine type and location around user location
-    // Search Restaurant by userLocation and keyword
 
 
 

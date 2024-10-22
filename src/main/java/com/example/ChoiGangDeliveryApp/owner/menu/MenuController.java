@@ -1,11 +1,10 @@
 package com.example.ChoiGangDeliveryApp.owner.menu;
 
-import com.example.ChoiGangDeliveryApp.enums.CuisineType;
 import com.example.ChoiGangDeliveryApp.owner.menu.dto.MenuDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -25,41 +24,48 @@ public class MenuController {
         return ResponseEntity.ok(createdMenu);
     }
 
-    @GetMapping("/{id}")
+    // VIEW MENU BY MENU ID
+    @GetMapping("/{menuId}")
     public ResponseEntity<MenuDto> getMenuById(
             @PathVariable
-            Long id
+            Long menuId
     ) {
-        MenuDto menuDto = menuService.getMenuById(id);
+        MenuDto menuDto = menuService.getMenuById(menuId);
         return ResponseEntity.ok(menuDto);
     }
 
+    // VIEW ALL MENU BY RESTAURANT ID
+    @GetMapping("/restaurant/{restaurantId}")
+    public ResponseEntity<List<MenuDto>> viewAllMenuByRestaurantId(
+            @PathVariable Long restaurantId
+    ) {
+        List<MenuDto> menus = menuService.viewAllMenuByRestaurantId(restaurantId);
+        return ResponseEntity.ok(menus);
+    }
+
     // UPDATE MENU
-    @PutMapping("/update/{id}")
+    @PutMapping("/update/{menuId}")
     public ResponseEntity<MenuDto> updateMenu(
             @PathVariable
-            Long id,
+            Long menuId,
             @RequestBody
             MenuDto menuDto
     ) {
-        MenuDto updatedMenu = menuService.updateMenu(id, menuDto);
+        MenuDto updatedMenu = menuService.updateMenu(menuId, menuDto);
         return ResponseEntity.ok(updatedMenu);
     }
 
-    // VIEW MENU
-    @GetMapping("/view-all-menu")
-    public ResponseEntity<List<MenuDto>> viewAllMenu() {
-        List<MenuDto> menus = menuService.viewMenu();
-        return ResponseEntity.ok(menus);
-    }
 
-    // FIND BY CUISINE TYPE
-    @GetMapping("/find-by-cuisine-type")
-    public ResponseEntity<List<MenuDto>> findByCuisineType(
-            @RequestParam
-            CuisineType cuisineType) {
-        List<MenuDto> menus = menuService.findByCuisineType(cuisineType);
-        return ResponseEntity.ok(menus);
+    //UPDATE MENU IMAGE
+    @PutMapping("/{menuId}/image")
+    public ResponseEntity<MenuDto> updateMenuImage(
+            @PathVariable
+            Long menuId,
+            @RequestParam("image")
+            MultipartFile image
+    ) throws Exception {
+        MenuDto updatedMenu = menuService.updateMenuImage(menuId, image);
+        return ResponseEntity.ok(updatedMenu);
     }
 
     // DELETE
