@@ -12,41 +12,48 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("orders")
 public class OrderController {
     private final OrderService orderService;
-//
-//    @PostMapping("create")
-//    public OrderDto createOrder(
-//            @RequestBody
-//            OrderDto orderDto
-//    ) {
-//        return orderService.createOrder(orderDto);
-//    }
-//
-//    @PutMapping("getDriver")
-//    public OrderDto getDriver(
-//            @RequestBody
-//            OrderDto orderDto
-//    ){
-//        return orderService.getDriver(orderDto);
-//    }
-//
-//    @PutMapping("customerCancelOrder")
-//    public ResponseEntity<String> customerCancelOrder(
-//            @RequestBody
-//            CancelOrderDto dto
-//    ){
-//        orderService.customerCancelOrder(dto);
-//        return ResponseEntity.ok("cancel order successful");
-//    }
-//
-//    @PutMapping("restaurantCancelOrder")
-//    public ResponseEntity<String> restaurantCancelOrder(
-//            @RequestBody
-//            CancelOrderDto dto
-//    ){
-//        orderService.restaurantCancelOrder(dto);
-//        return ResponseEntity.ok("cancel order successful");
-//    }
-//
+
+    @PostMapping("create")
+    public OrderDto createOrder(
+            @RequestBody
+            OrderDto orderDto
+    ) {
+        return orderService.createOrder(orderDto);
+    }
+    @PutMapping("approve")
+    public OrderDto approveOrder(
+            @RequestBody
+            OrderDto orderDto
+    ){
+        return orderService.approveOrder(orderDto);
+    }
+
+    @PutMapping("getDriver")
+    public OrderDto getDriver(
+            @RequestBody
+            OrderDto orderDto
+    ){
+        return orderService.getDriver(orderDto);
+    }
+
+    @PutMapping("customerCancelOrder")
+    public ResponseEntity<String> customerCancelOrder(
+            @RequestBody
+            CancelOrderDto dto
+    ){
+        orderService.customerCancelOrder(dto);
+        return ResponseEntity.ok("cancel order successful");
+    }
+
+    @PutMapping("restaurantCancelOrder")
+    public ResponseEntity<String> restaurantCancelOrder(
+            @RequestBody
+            CancelOrderDto dto
+    ){
+        orderService.restaurantCancelOrder(dto);
+        return ResponseEntity.ok("cancel order successful");
+    }
+
 
 
 
