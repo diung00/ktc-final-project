@@ -1,6 +1,8 @@
 package com.example.ChoiGangDeliveryApp.owner.restaurant.repo;
 
+import com.example.ChoiGangDeliveryApp.enums.CuisineType;
 import com.example.ChoiGangDeliveryApp.owner.restaurant.entity.RestaurantsEntity;
+import com.example.ChoiGangDeliveryApp.security.config.CustomUserDetails;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -27,16 +29,17 @@ public interface RestaurantRepository extends JpaRepository<RestaurantsEntity, L
             @Param("latitude") double latitude,
             @Param("longitude") double longitude,
             @Param("distance") double distance,
-            @Param("cuisineType") String cuisineType);
+            @Param("cuisineType") CuisineType cuisineType);
 
     @Query("SELECT r FROM RestaurantsEntity r JOIN r.menus m WHERE " +
-            "m.name LIKE %:menuName% AND " +
             "6371 * ACOS(COS(RADIANS(:latitude)) * COS(RADIANS(r.latitude)) * " +
             "COS(RADIANS(r.longitude) - RADIANS(:longitude)) + " +
-            "SIN(RADIANS(:latitude)) * SIN(RADIANS(r.latitude))) < :distance")
-    List<RestaurantsEntity> findRestaurantsWithinRadiusByMenuName(@Param("latitude") double latitude,
-                                                                  @Param("longitude") double longitude,
-                                                                  @Param("distance") double distance,
-                                                                  @Param("menuName") String menuName);
+            "SIN(RADIANS(:latitude)) * SIN(RADIANS(r.latitude))) < :distance " +
+            "AND m.name LIKE %:menuName%")
+    List<RestaurantsEntity> findRestaurantsWithinRadiusByMenuNameContaining(
+            @Param("latitude") double latitude,
+            @Param("longitude") double longitude,
+            @Param("distance") double distance,
+            @Param("menuName") String menuName);
 
 }

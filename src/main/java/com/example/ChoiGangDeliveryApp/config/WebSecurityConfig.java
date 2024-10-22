@@ -45,7 +45,8 @@ public class WebSecurityConfig {
                             "/users/request-owner-role",
                             "/users/request-driver-role",
                             "/users/driver-request-status",
-                            "/users/owner-request-status"
+                            "/users/owner-request-status",
+                            "/users/**"
                             )
                             .authenticated();
                     auth.requestMatchers("/menus/**").authenticated();

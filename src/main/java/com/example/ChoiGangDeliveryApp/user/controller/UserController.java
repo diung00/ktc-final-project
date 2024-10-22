@@ -112,8 +112,6 @@ public class UserController {
         }
     }
 
-
-
     @PostMapping("/upload-profile-image")
     public ResponseEntity<String> uploadProfileImage (
             @RequestParam("image")
