@@ -63,6 +63,9 @@ public class WebSecurityConfig {
 
                     auth.requestMatchers( "/customers/**")
                             .hasRole("USER");
+                    auth.requestMatchers("/drivers/**")
+                            .hasRole("DRIVER");
+
                 })
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

@@ -27,6 +27,4 @@ public class DriverEntity extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private DriverStatus driverStatus;
-
-
 }

@@ -48,6 +48,41 @@ public class OrderController {
 //    }
 //
 
+    // Driver xem order details
+    @GetMapping("/{orderId}/driver/{driverId}")
+    public ResponseEntity<OrderDto> getOrderDetails(
+            @PathVariable Long orderId,
+            @PathVariable Long driverId) {
+        OrderDto orderDto = orderService.getOrderDetails(orderId, driverId);
+        return ResponseEntity.ok(orderDto);
+    }
 
+    // Giao order cho driver
+    @PostMapping("/{orderId}/assign/{driverId}")
+    public ResponseEntity<Void> assignOrderToDriver(
+            @PathVariable Long orderId,
+            @PathVariable Long driverId
+    ) {
+        orderService.assignOrderToDriver(orderId, driverId);
+        return ResponseEntity.ok().build();
+    }
+
+    // Driver accept order
+    @PostMapping("/{orderId}/accept")
+    public ResponseEntity<Void> acceptOrder(
+            @PathVariable Long orderId
+    ) {
+        orderService.acceptOrder(orderId);
+        return ResponseEntity.ok().build();
+    }
+
+    // Driver decline order
+    @PostMapping("/{orderId}/decline")
+    public ResponseEntity<Void> declineOrder(
+            @PathVariable Long orderId
+    ) {
+        orderService.declineOrder(orderId);
+        return ResponseEntity.ok().build();
+    }
 
 }

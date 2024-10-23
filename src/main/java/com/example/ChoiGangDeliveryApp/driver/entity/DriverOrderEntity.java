@@ -29,4 +29,5 @@ public class DriverOrderEntity extends BaseEntity {
 
     private LocalDateTime deliveryTime;
 
+
 }
