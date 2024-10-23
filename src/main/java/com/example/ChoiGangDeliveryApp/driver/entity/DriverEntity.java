@@ -20,7 +20,7 @@ public class DriverEntity extends BaseEntity {
     private UserEntity user;
 
     @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL)
-    private List<OrderEntity> orders = new ArrayList<>(); //List of orders that driver process
+    private List<DriverOrderEntity> orders = new ArrayList<>(); //List of orders that driver process
 
     private double latitude;
     private double longitude;
