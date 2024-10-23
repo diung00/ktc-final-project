@@ -42,4 +42,6 @@ public class OrderEntity extends BaseEntity {
     private LocalDateTime estimatedArrivalTime;
     private String note;
 
+    private boolean isAssigned;
+
 }

@@ -5,7 +5,7 @@ public enum OrderStatus {
     CANCELLED,
     COOKING,
     WAITING_FOR_DRIVER,
-    DRIVER_ACCEPT,
+    DRIVER_ACCEPTED,
     ON_DELIVERY,
     COMPLETED
 }

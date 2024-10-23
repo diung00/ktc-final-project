@@ -161,7 +161,47 @@ public class OrderService {
 
     // tài xế huỷ bắt đơn
 
+    // Driver xem order details
+    public OrderDto getOrderDetails(Long orderId, Long driverId) {
+        OrderEntity orderEntity = orderRepository.findOrderById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
 
+        if (orderEntity.getDriver() == null || !orderEntity.getDriver().getId().equals(driverId)) {
+            throw new RuntimeException("Driver is not authorized to view this order");
+        }
+        return OrderDto.fromEntity(orderEntity);
+    }
+
+    // Send order to driver
+    public void assignOrderToDriver(Long orderId, Long driverId) {
+        OrderEntity orderEntity = orderRepository.findOrderById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found."));
+        if (orderEntity.isAssigned()) {
+            throw new RuntimeException("Order has already been assigned.");
+        }
+        DriverEntity driver = new DriverEntity();
+        driver.setId(driverId);
+        orderEntity.setDriver(driver);
+        orderEntity.setAssigned(true);
+        orderRepository.save(orderEntity);
+    }
+
+    // Driver accept order
+    public void acceptOrder(Long orderId) {
+        OrderEntity orderEntity = orderRepository.findOrderById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found with id: " + orderId));
+        orderEntity.setOrderStatus(OrderStatus.DRIVER_ACCEPTED);
+        orderRepository.save(orderEntity);
+    }
+
+    // Driver decline order
+    public void declineOrder(Long orderId) {
+        OrderEntity orderEntity = orderRepository.findOrderById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found with id: " + orderId));
+        orderEntity.setOrderStatus(OrderStatus.WAITING_FOR_DRIVER);
+        orderEntity.setDriver(null);
+        orderRepository.save(orderEntity);
+    }
 
 
 
