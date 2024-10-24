@@ -44,7 +44,9 @@ public class OrderEntity extends BaseEntity {
 
 //    private LocalDateTime orderDate; // CreateAt already has been existed in BaseEntity
     private double totalMenusPrice; // Sum of (menuPrice * quantity)
-    private double shippingFee; // depend on each restaurant's  delivery fee policy
+
+    @Builder.Default
+    private double shippingFee = 0.0; // depend on each restaurant's  delivery fee policy
     private double totalAmount; // = totalMenusPrice + shippingFee
 
     private LocalDateTime estimatedArrivalTime; // preparationTime of menus in order + betalTime
