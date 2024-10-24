@@ -46,26 +46,17 @@ public class WebSecurityConfig {
                             "/users/request-driver-role",
                             "/users/driver-request-status",
                             "/users/owner-request-status",
-                            "/users/**"
+                            "/users/**",
+                            "/orders/**"
                             )
                             .authenticated();
                     auth.requestMatchers("/menus/**").authenticated();
                     auth.requestMatchers("/restaurants/**").authenticated();
-                    auth.requestMatchers(
-                                    "/admin/**"
-                            )
-                            .hasRole("ADMIN");
-                    auth.requestMatchers(
-                                    "/owners/**", "/restaurants/**"
-                            )
-                            .hasRole("OWNER");
-                    auth.requestMatchers("/error", "/static/**", "/", "/oauth2/**")
-                            .permitAll();
-
-                    auth.requestMatchers( "/customers/**")
-                            .hasRole("USER");
-                    auth.requestMatchers("/drivers/**")
-                            .hasRole("DRIVER");
+                    auth.requestMatchers("/admin/**").hasRole("ADMIN");
+                    auth.requestMatchers("/owners/**", "/restaurants/**").hasRole("OWNER");
+                    auth.requestMatchers("/error", "/static/**", "/", "/oauth2/**", "/websocket/**").permitAll();
+                    auth.requestMatchers( "/customers/**").hasRole("USER");
+                    auth.requestMatchers("/drivers/**").hasRole("DRIVER");
 
                 })
                 .sessionManagement(session -> session
