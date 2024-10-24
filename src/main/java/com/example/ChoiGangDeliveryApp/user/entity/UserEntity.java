@@ -38,29 +38,27 @@ public class UserEntity extends BaseEntity {
     private String licenseNumber;
     private String businessNumber;
 
-
     @Builder.Default
     private boolean emailVerified = false; //default is false
-    private String rejectionReason;
-
 
     @OneToOne(mappedBy = "owner")
     private RestaurantsEntity restaurant;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private OwnerRoleRequest roleChangeRequest;
-
-    @OneToMany(mappedBy = "user")
-    private List<OrderEntity> orders;
-
+    private OwnerRoleRequest ownerRoleRequest;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private DriverRoleRequest driverRoleRequest;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_location_id")
     private UserLocation userLocation;
 
-    //e Diu them
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "driver_id")
+    //
+    @OneToMany(mappedBy = "user")
+    private List<OrderEntity> orders;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private DriverEntity driver;
+
 
 }

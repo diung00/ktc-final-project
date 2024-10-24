@@ -31,32 +31,39 @@ public class WebSecurityConfig {
                     auth.requestMatchers(
                                     "/users/login",
                                     "/users/signup",
-                            "users/sendVerifyCode",
-                            "users/verifyEmail",
-                            ""
+                            "/users/signup/send-code",
+                            "/users/signup/verify",
+                            "/users/request-password-reset",
+                            "/users/reset-password"
                             )
                             .anonymous();
                     auth.requestMatchers(
-                                    "/users/details",
-                                    "/users/profile",
-                                    "/users/get-user-info"
-
-
+                                    "/users/get-my-profile", //view profile
+                                    "/users/update-profile", //update profile info
+                            "/users/change-password", //change password
+                            "/users/upload-profile-image", //upload profile image
+                            "/users/request-owner-role",
+                            "/users/request-driver-role",
+                            "/users/driver-request-status",
+                            "/users/owner-request-status",
+                            "/users/**"
                             )
                             .authenticated();
+                    auth.requestMatchers("/menus/**").authenticated();
                     auth.requestMatchers("/restaurants/**").authenticated();
                     auth.requestMatchers(
                                     "/admin/**"
                             )
                             .hasRole("ADMIN");
                     auth.requestMatchers(
-                                    "/owners/**", "/restaurants/**", "/menu/**"
+                                    "/owners/**", "/restaurants/**"
                             )
                             .hasRole("OWNER");
                     auth.requestMatchers("/error", "/static/**", "/", "/oauth2/**")
                             .permitAll();
+
                     auth.requestMatchers( "/customers/**")
-                            .hasRole("CUSTOMER");
+                            .hasRole("USER");
                 })
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

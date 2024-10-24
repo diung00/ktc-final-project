@@ -10,6 +10,11 @@ spring:
           starttls:
             enable: true
           auth: true
+#  email:
+#    verify:
+#      code:
+#        expire:
+#          minutes: 5
   security:
     oauth2:
       client:
@@ -76,3 +81,4 @@ ncp:
 
 jwt:
   secret: v^K#V@igLXJrBvgY^%gKGy4-GsY51jrun:?C38FY?8h%]t_rd]E@nhL?de3tR>?
+

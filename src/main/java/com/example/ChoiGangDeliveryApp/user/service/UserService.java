@@ -1,41 +1,30 @@
 package com.example.ChoiGangDeliveryApp.user.service;
 
+import com.example.ChoiGangDeliveryApp.api.ncpmaps.NaviService;
+import com.example.ChoiGangDeliveryApp.api.ncpmaps.dto.PointDto;
 import com.example.ChoiGangDeliveryApp.common.exception.GlobalErrorCode;
 import com.example.ChoiGangDeliveryApp.common.exception.GlobalException;
 import com.example.ChoiGangDeliveryApp.common.file.FileService;
-import com.example.ChoiGangDeliveryApp.common.util.GlobalConstants;
 import com.example.ChoiGangDeliveryApp.enums.ApprovalStatus;
 import com.example.ChoiGangDeliveryApp.enums.UserRole;
 import com.example.ChoiGangDeliveryApp.enums.VerificationStatus;
 import com.example.ChoiGangDeliveryApp.jwt.JwtTokenUtils;
 import com.example.ChoiGangDeliveryApp.jwt.dto.JwtRequestDto;
 import com.example.ChoiGangDeliveryApp.jwt.dto.JwtResponseDto;
-import com.example.ChoiGangDeliveryApp.owner.restaurant.dto.RestaurantDto;
 import com.example.ChoiGangDeliveryApp.security.config.AuthenticationFacade;
 import com.example.ChoiGangDeliveryApp.security.config.CustomUserDetails;
-import com.example.ChoiGangDeliveryApp.user.dto.PasswordChangeRequestDto;
-import com.example.ChoiGangDeliveryApp.user.dto.PasswordDto;
-import com.example.ChoiGangDeliveryApp.user.dto.UserCreateDto;
-import com.example.ChoiGangDeliveryApp.user.dto.UserDto;
-import com.example.ChoiGangDeliveryApp.user.entity.DriverRoleRequest;
-import com.example.ChoiGangDeliveryApp.user.entity.EmailVerification;
-import com.example.ChoiGangDeliveryApp.user.entity.OwnerRoleRequest;
-import com.example.ChoiGangDeliveryApp.user.entity.UserEntity;
-import com.example.ChoiGangDeliveryApp.user.repo.DriverRoleRequestRepository;
-import com.example.ChoiGangDeliveryApp.user.repo.OwnerRoleRequestRepository;
-import com.example.ChoiGangDeliveryApp.user.repo.UserRepository;
-import com.example.ChoiGangDeliveryApp.user.repo.VerificationRepository;
+import com.example.ChoiGangDeliveryApp.user.dto.*;
+import com.example.ChoiGangDeliveryApp.user.entity.*;
+import com.example.ChoiGangDeliveryApp.user.repo.*;
 import jakarta.mail.Message;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.sql.model.jdbc.UpsertOperation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -44,7 +33,6 @@ import org.springframework.web.server.ResponseStatusException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Random;
 
@@ -61,30 +49,15 @@ public class UserService {
     private final FileService fileService;
     private final OwnerRoleRequestRepository ownerRoleRequestRepository;
     private final DriverRoleRequestRepository driverRoleRequestRepository;
+    private final NaviService naviService;
+    private final UserLocationRepository userLocationRepository;
 
 
-    //First of all, user register
-    // User must be fill registerDto (username, pass, confirm-pass, email, address) to register
-    // Then create a new user with status is
-    //sign up
-
-    // Confirm the ID registered with the email address
-    public boolean userExists(String email) {
-        return userRepository.existsByEmail(email);
-    }
     @Transactional
     public UserDto createUser(UserCreateDto dto){
         //check if email is existing
         if (userRepository.existsByEmail(dto.getEmail()))
             throw new GlobalException(GlobalErrorCode.EMAIL_ALREADY_EXISTS);
-
-        // Check if email is in Verification Email table
-        EmailVerification verification = verificationRepository.findByEmail(dto.getEmail())
-                .orElseThrow(() -> new GlobalException(GlobalErrorCode.VERIFICATION_NOT_FOUND));
-        //Check verification status.
-        if (!verification.getStatus().equals(VerificationStatus.VERIFIED)) {
-            throw new GlobalException(GlobalErrorCode.VERIFICATION_INVALID_STATUS);
-        }
 
         //Check pass
         if (!dto.getPassword().equals(dto.getPassCheck()))
@@ -93,35 +66,24 @@ public class UserService {
         if (userRepository.existsByUsername(dto.getUsername()))
             throw new GlobalException(GlobalErrorCode.USERNAME_ALREADY_EXISTS);
 
-        //Create a new user
+        //Create a new user with role ROLE_INACTIVE
         UserEntity newUser = UserEntity.builder()
                 .username(dto.getUsername())
                 .email(dto.getEmail())
                 .password(passwordEncoder.encode(dto.getPassword()))
-                .role(UserRole.ROLE_USER)
+                .role(UserRole.ROLE_INACTIVE)
+                .emailVerified(false)
                 .build();
-        // Once the user is created, the email will be removed from the database (as they are no longer needed).
-        verificationRepository.deleteByEmail(dto.getEmail());
+        // save new user
+        userRepository.save(newUser);
+        // send verify email
+        sendVerifyCode(dto.getEmail());
 
         return UserDto.fromEntity(userRepository.save(newUser));
     }
-
-
-    //log in
-    // Generate json web token (jwt)
-    public JwtResponseDto login(JwtRequestDto dto){
-        UserEntity userEntity = userRepository.findByUsername(dto.getUsername())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
-
-        if (!passwordEncoder.matches(
-                dto.getPassword(),
-                userEntity.getPassword()))
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
-
-        String jwt = jwtTokenUtils.generateToken(CustomUserDetails.fromEntity(userEntity));
-        JwtResponseDto response = new JwtResponseDto();
-        response.setToken(jwt);
-        return response;
+    // Confirm the ID registered with the email address
+    public boolean userExists(String email) {
+        return userRepository.existsByEmail(email);
     }
 
     //Send verify code
@@ -168,30 +130,6 @@ public class UserService {
         // Save authentication code sending history
         verificationRepository.save(verification);
     }
-
-    public void verifyEmail(String email, String code) {
-        EmailVerification verification = verificationRepository.findByEmail(email)
-                .orElseThrow(() -> new GlobalException(GlobalErrorCode.VERIFICATION_NOT_FOUND));
-
-        if (!verification.getVerifyCode().equals(code)) {
-            // Check if the verify code sent to user email matches the verify code stored in the DB.
-            throw new GlobalException(GlobalErrorCode.VERIFICATION_CODE_MISMATCH);
-        } else if (!verification.getStatus().equals(VerificationStatus.SENT)) {
-            // If verify code is not appropriate
-            throw new GlobalException(GlobalErrorCode.VERIFICATION_INVALID_STATUS);
-        } else if (verification.getCreatedAt().isBefore(
-                LocalDateTime.now().minusMinutes(GlobalConstants.EMAIL_VERIFY_CODE_EXPIRE_SECOND))) {
-            // Verification time expired
-            throw new GlobalException(GlobalErrorCode.VERIFICATION_EXPIRED);
-        }
-        verification.setStatus(VerificationStatus.VERIFIED);
-        verificationRepository.save(verification);
-        UserEntity user = userRepository.findUserByEmail(email)
-                .orElseThrow(() -> new GlobalException(GlobalErrorCode.EMAIL_NOT_FOUND));
-        user.setEmailVerified(true);
-        userRepository.save(user);
-    }
-
     // Method to generate random number code
     public String generateRandomNumber(int len) {
         Random random = new Random();
@@ -202,30 +140,70 @@ public class UserService {
         return sb.toString();
     }
 
-    //Send verification code when registering
     @Transactional
-    public ResponseEntity<String> signUpSendCode(String email) {
-        if (userExists(email))
-            throw new GlobalException(GlobalErrorCode.EMAIL_ALREADY_EXISTS);
-        sendVerifyCode(email);
-        return ResponseEntity.ok("{}");
+    public void verifyEmail(String email, String code) {
+        EmailVerification verification = verificationRepository.findByEmail(email)
+                .orElseThrow(() -> new GlobalException(GlobalErrorCode.VERIFICATION_NOT_FOUND));
+
+        if (!verification.getVerifyCode().equals(code)) {
+            // Check if the verify code sent to user email matches the verify code stored in the DB.
+            throw new GlobalException(GlobalErrorCode.VERIFICATION_CODE_MISMATCH);
+        } else if (!verification.getStatus().equals(VerificationStatus.SENT)) {
+            // If verify code is not appropriate
+            throw new GlobalException(GlobalErrorCode.VERIFICATION_INVALID_STATUS);
+        }
+//        else if (verification.getCreatedAt().isBefore(
+//                LocalDateTime.now().minusMinutes(GlobalConstants.EMAIL_VERIFY_CODE_EXPIRE_SECOND))) {
+//            // Verification time expired
+//            throw new GlobalException(GlobalErrorCode.VERIFICATION_EXPIRED);
+//        }
+        verification.setStatus(VerificationStatus.VERIFIED);
+        log.info("Verifying email: {}", email);
+        log.info("Old Status: {}", verification.getStatus());
+        // find user by email and upgrade role from INACTIVE to ROLE_USER
+        UserEntity user = userRepository.findUserByEmail(email).orElseThrow(() -> new GlobalException(GlobalErrorCode.USER_NOT_FOUND));
+        user.setRole(UserRole.ROLE_USER);
+        user.setEmailVerified(true);
+        userRepository.save(user);
+        verificationRepository.deleteByEmail(email);
     }
+
+    //log in
+    // Generate json web token (jwt)
+    public JwtResponseDto login(JwtRequestDto dto){
+        UserEntity userEntity = userRepository.findByUsername(dto.getUsername())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
+
+        if (!passwordEncoder.matches(
+                dto.getPassword(),
+                userEntity.getPassword()))
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+
+        String jwt = jwtTokenUtils.generateToken(CustomUserDetails.fromEntity(userEntity));
+        JwtResponseDto response = new JwtResponseDto();
+        response.setToken(jwt);
+        return response;
+    }
+    //When users forgot their password. They can request to reset password
+    // step1 : input email, server send a code to their email.
     //This method verifies the code
     // and updates the user's password if the verification code is valid.
     @Transactional
-    public ResponseEntity<String> passwordSendCode(String email) {
+    public void passwordSendCode(String email) {
         //Check if any user has this email
         if (!userExists(email))
             throw new GlobalException(GlobalErrorCode.EMAIL_NOT_FOUND);
+        //send verify email
         sendVerifyCode(email);
-        return ResponseEntity.ok("{}");
     }
-    //reset password
+    //step 2: input code to reset password
     @Transactional
-    public ResponseEntity<String> resetPassword(PasswordChangeRequestDto requestDto) {
+    public void resetPassword(PasswordChangeRequestDto requestDto) {
         String email = requestDto.getEmail();
         String code = requestDto.getCode();
         String newPassword = requestDto.getNewPassword();
+        boolean exists = verificationRepository.existsByEmail(email);
+        log.info("email exists: {}", exists);
 
         EmailVerification verification = verificationRepository.findByEmail(email)
                 .orElseThrow(() -> new GlobalException(GlobalErrorCode.VERIFICATION_NOT_FOUND));
@@ -233,9 +211,12 @@ public class UserService {
         if (!verification.getVerifyCode().equals(code)) {
             // Check if verify code sent to user's email matches the verify code stored in the DB.
             throw new GlobalException(GlobalErrorCode.VERIFICATION_CODE_MISMATCH);
-        } else if (!verification.getStatus().equals(VerificationStatus.VERIFIED)) {
-            // If the verify code is not appropriate
-            throw new GlobalException(GlobalErrorCode.VERIFICATION_INVALID_STATUS);
+        }
+        // verify email
+        if (!verification.getStatus().equals(VerificationStatus.VERIFIED)) {
+            verification.setStatus(VerificationStatus.VERIFIED);
+            verificationRepository.save(verification);
+            log.info("email {} is verified successfully", email);
         }
 
         UserEntity user = userRepository.findUserByEmail(email)
@@ -244,8 +225,6 @@ public class UserService {
         userRepository.save(user);
 
         verificationRepository.deleteByEmail(email);
-
-        return ResponseEntity.ok("Success");
     }
     // Change password method
     @Transactional
@@ -282,7 +261,6 @@ public class UserService {
         }
 
         // Delete existing profile image
-
         String oldProfile = currentUser.getProfileImgPath();
         if (oldProfile != null) {
             try {
@@ -302,6 +280,30 @@ public class UserService {
         // 7. save and return RestaurantDto
         userRepository.save(currentUser);
 
+    }
+    // User update profile info
+    @Transactional
+    public UserDto updateUserProfile(UpdateUserDto dto) {
+        UserEntity currentUser = facade.getCurrentUserEntity();
+        currentUser.setName(dto.getName());
+        currentUser.setNickname(dto.getNickname());
+        currentUser.setAge(dto.getAge());
+        currentUser.setPhone(dto.getPhone());
+        currentUser.setAddress(dto.getAddress());
+        // Get address and geocoding to set lat longitude in UserLocation:
+        if (dto.getAddress() != null) {
+            PointDto location = naviService.geoCoding(dto.getAddress());
+            UserLocation userLocation = new UserLocation();
+            userLocation.setLatitude(location.getLatitude());
+            userLocation.setLongitude(location.getLongitude());
+
+            //set relationships
+            userLocation.setUser(currentUser);
+            currentUser.setUserLocation(userLocation);
+            //save
+            userLocationRepository.save(userLocation);
+        }
+        return UserDto.fromEntity(userRepository.save(currentUser));
     }
 
     //View Profile
@@ -381,6 +383,54 @@ public class UserService {
         driverRoleRequestRepository.save(request);
     }
 
+    //view request status
+    // 1. view owner role request status
+    public OwnerRoleRequestDto viewOwnerRoleRequestStatus() {
+        UserEntity currentUser = facade.getCurrentUserEntity();
+        OwnerRoleRequest request = ownerRoleRequestRepository.findByUser(currentUser)
+                .orElseThrow(() -> new GlobalException(GlobalErrorCode.REQUEST_NOT_FOUND));
+
+        return OwnerRoleRequestDto.builder()
+                .businessNumber(request.getBusinessNumber())
+                .userRole(currentUser.getRole())
+                .status(request.getStatus())
+                .rejectionReason(request.getRejectionReason())
+                .build();
+    }
+    // 2. view driver role request status
+    public DriverRoleRequestDto viewDriverRoleRequestStatus() {
+        UserEntity currentUser = facade.getCurrentUserEntity();
+        DriverRoleRequest request = driverRoleRequestRepository.findByUser(currentUser)
+                .orElseThrow(() -> new GlobalException(GlobalErrorCode.REQUEST_NOT_FOUND));
+
+        return DriverRoleRequestDto.builder()
+                .licenseNumber(request.getLicenseNumber())
+                .userRole(currentUser.getRole())
+                .status(request.getStatus())
+                .rejectionReason(request.getRejectionReason())
+                .build();
+    }
+
+    //get user location method
+    public UserLocationDto getUserLocation() {
+        // Get the current logged-in user entity
+        UserEntity currentUser = facade.getCurrentUserEntity();
+
+        // Get the user's location entity
+        UserLocation userLocation = currentUser.getUserLocation();
+
+        // If the user doesn't have a location set, handle it appropriately
+        if (userLocation == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User location not found");
+        }
+
+        // Map the UserLocation entity to the UserLocationDto
+        UserLocationDto userLocationDto = new UserLocationDto();
+        userLocationDto.setLatitude(userLocation.getLatitude());
+        userLocationDto.setLongitude(userLocation.getLongitude());
+
+        return userLocationDto;
+    }
 
 
 }

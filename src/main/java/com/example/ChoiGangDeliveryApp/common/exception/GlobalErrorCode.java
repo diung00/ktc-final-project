@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
 public enum GlobalErrorCode {
     // user errors
     EMAIL_ALREADY_EXISTS(HttpStatus.CONFLICT, "1001", "이미 가입된 이메일입니다."),
-    EMAIL_NOT_FOUND(HttpStatus.NOT_FOUND, "1002", "존재하지 않는 이메일입니다."),
+    EMAIL_NOT_FOUND(HttpStatus.NOT_FOUND, "1002", "존재하지 않는 사용자 이메일입니다."),
     EMAIL_PASSWORD_MISMATCH(HttpStatus.BAD_REQUEST, "1003", "이메일과 패스워드가 일치하지 않습니다."),
     PASSWORD_MISMATCH(HttpStatus.BAD_REQUEST, "1004", "비밀번호가 일치하지 않습니다."),
     AUTHENTICATION_FAILED(HttpStatus.UNAUTHORIZED, "1005", "인증에 실패했습니다."),
@@ -23,7 +23,7 @@ public enum GlobalErrorCode {
     DUPLICATE_MANAGER_REQUEST(HttpStatus.BAD_REQUEST, "1011", "이미 매니저 신청이 진행 중입니다."),
     MANAGER_REQUEST_NOT_FOUND(HttpStatus.NOT_FOUND, "1012", "존재하지 않는 매니저 신청입니다."),
     MANAGER_REQUEST_ALREADY_PROCESSED(HttpStatus.BAD_REQUEST, "1013", "이미 처리된 매니저 신청입니다."),
-    ROLE_UNAUTHORIZED(HttpStatus.NOT_FOUND, "1014", "권한이 없습니다. 호텔 관리자 혹은 시스템 관리자만 가능합니다."),
+    ROLE_UNAUTHORIZED(HttpStatus.NOT_FOUND, "1014", "권한이 없습니다. 관리자 혹은 시스템 관리자만 가능합니다."),
     ROLE_MISMATCH(HttpStatus.BAD_REQUEST, "1015", "권한이 없습니다. 시스템 관리자만 가능합니다."),
     USERNAME_ALREADY_EXISTS(HttpStatus.CONFLICT, "1016", "사용자 이름이 존재합니다"),
     EMAIL_NOT_VERIFIED(HttpStatus.BAD_REQUEST, "1017", "이메일이 확인되지 않았습니다."),
@@ -31,14 +31,19 @@ public enum GlobalErrorCode {
     DUPLICATE_DRIVER_REQUEST(HttpStatus.BAD_REQUEST, "1019", "사용자가 이미 드라이브 역할을 전달하도록 요청했습니다."),
     BUSINESS_NUMBER_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "1020", "사업 허가증이 이미 존재합니다."),
     LICENSE_NUMBER_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "1021", "운전면허증이 이미 존재합니다."),
+    USER_NOT_FOUND(HttpStatus.NOT_FOUND, "1022", "존재하지 않는 사용자입니다."),
     // email errors
     EMAIL_SENDING_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, "2001", "이메일 발송에 실패했습니다."),
     VERIFICATION_CODE_MISMATCH(HttpStatus.BAD_REQUEST, "2002", "인증 번호가 틀렸습니다."),
     VERIFICATION_NOT_FOUND(HttpStatus.NOT_FOUND, "2003", "이메일 인증 정보가 없습니다."),
     VERIFICATION_INVALID_STATUS(HttpStatus.BAD_REQUEST, "2004", "인증의 상태가 올바르지 않습니다."),
-    VERIFICATION_EXPIRED(HttpStatus.BAD_REQUEST, "2005", "인증 코드가 만료되었습니다.");
-
+    VERIFICATION_EXPIRED(HttpStatus.BAD_REQUEST, "2005", "인증 코드가 만료되었습니다."),
+    //request errors
+    REQUEST_NOT_FOUND(HttpStatus.NOT_FOUND, "3001", "요청을 찾을 수 없습니다."),
     // restaurant errors
+    RESTAURANT_NOT_FOUND(HttpStatus.NOT_FOUND, "4001", "레스토랑을 찾을 수 없습니다"),
+    USER_DO_NOT_HAVE_PERMISSION(HttpStatus.FORBIDDEN, "4002","사용자는 이 레스토랑의 소유자가 아닙니다."),
+    RESTAURANT_NOT_APPROVED(HttpStatus.FORBIDDEN, "4003", "레스토랑이 승인되지 않았습니다.");
     // driver errors
 
     // order errors

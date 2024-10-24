@@ -9,12 +9,14 @@ import com.example.ChoiGangDeliveryApp.enums.RequestType;
 import com.example.ChoiGangDeliveryApp.enums.UserRole;
 import com.example.ChoiGangDeliveryApp.owner.restaurant.dto.RestaurantDto;
 import com.example.ChoiGangDeliveryApp.owner.restaurant.dto.RestaurantOpenDto;
+import com.example.ChoiGangDeliveryApp.owner.restaurant.dto.RestaurantRequestDto;
 import com.example.ChoiGangDeliveryApp.owner.restaurant.dto.RestaurantUpdateDto;
 import com.example.ChoiGangDeliveryApp.owner.restaurant.entity.RestaurantRequestEntity;
 import com.example.ChoiGangDeliveryApp.owner.restaurant.entity.RestaurantsEntity;
 import com.example.ChoiGangDeliveryApp.owner.restaurant.repo.RestaurantRepository;
 import com.example.ChoiGangDeliveryApp.owner.restaurant.repo.RestaurantRequestRepository;
 import com.example.ChoiGangDeliveryApp.security.config.AuthenticationFacade;
+import com.example.ChoiGangDeliveryApp.user.dto.UserLocationDto;
 import com.example.ChoiGangDeliveryApp.user.entity.UserEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +29,9 @@ import org.springframework.web.server.ResponseStatusException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -221,15 +225,67 @@ public class RestaurantService {
         restaurantRepo.save(restaurant);
     }
 
+    // VIEW ALL REQUESTS BY OWNER
+    public List<RestaurantRequestDto> getMyRequests() {
+        UserEntity currentUser = facade.getCurrentUserEntity();
+        RestaurantsEntity restaurant = currentUser.getRestaurant();
+        if (restaurant == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User does not have a restaurant.");
+        }
+        List<RestaurantRequestEntity> requests = restaurantRequestRepo.findByRestaurant(restaurant);
+        return requests.stream()
+                .map(RestaurantRequestDto::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+    // GET ALL RESTAURANTS WITHIN A GIVEN RADIUS
+    private static final double DISTANCE_2KM = 2.0;
+
+    public List<RestaurantDto> getRestaurantsWithinRadius(
+            UserLocationDto userLocationDto) {
+        double latitude = userLocationDto.getLatitude();
+        double longitude = userLocationDto.getLongitude();
+        List<RestaurantsEntity> restaurants = restaurantRepo.findRestaurantsWithinRadius(latitude, longitude, DISTANCE_2KM);
+        return restaurants.stream()
+                .filter(restaurant -> restaurant.getApprovalStatus().equals(ApprovalStatus.APPROVED))
+                .map(RestaurantDto::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+    //GET A SPECIFIC RESTAURANT BY ID
+    public RestaurantDto getRestaurantById(Long restaurantId) {
+        RestaurantsEntity restaurant = restaurantRepo.findById(restaurantId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Restaurant not found"));
+        return RestaurantDto.fromEntity(restaurant);
+    }
 
 
+    // Get all restaurants within a given radius filtered by cuisine type
+    public List<RestaurantDto> getRestaurantsWithinRadiusByCuisineType(
+            UserLocationDto userLocationDto,
+            CuisineType cuisineType
+    ) {
+        double latitude = userLocationDto.getLatitude();
+        double longitude = userLocationDto.getLongitude();
+        List<RestaurantsEntity> restaurants = restaurantRepo.findRestaurantsWithinRadiusByCuisineType(latitude, longitude, DISTANCE_2KM, cuisineType);
+        return restaurants.stream()
+                .filter(restaurant -> restaurant.getApprovalStatus().equals(ApprovalStatus.APPROVED))
+                .map(RestaurantDto::fromEntity)
+                .collect(Collectors.toList());
+    }
 
-    // View list restaurant by cuisine type and location around user location
-    // Search Restaurant by userLocation and keyword
+    //Get all restaurants within a given radius filter by menu name with keyword search
+    public List<RestaurantDto> getAllRestaurantsWithin2KmByMenuName(UserLocationDto userLocationDto, String menuName) {
+        double latitude = userLocationDto.getLatitude();
+        double longitude = userLocationDto.getLongitude();
+        List<RestaurantsEntity> restaurants = restaurantRepo
+                .findRestaurantsWithinRadiusByMenuNameContaining(latitude, longitude, DISTANCE_2KM, menuName);
 
-
-
-
+        return restaurants.stream()
+                .filter(restaurant -> restaurant.getApprovalStatus().equals(ApprovalStatus.APPROVED))
+                .map(RestaurantDto::fromEntity)
+                .collect(Collectors.toList());
+    }
 
 
 }

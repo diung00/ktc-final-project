@@ -1,12 +1,14 @@
 package com.example.ChoiGangDeliveryApp.owner.menu.entity;
 
 import com.example.ChoiGangDeliveryApp.common.base.BaseEntity;
+import com.example.ChoiGangDeliveryApp.enums.CuisineType;
 import com.example.ChoiGangDeliveryApp.enums.MenuStatus;
 import com.example.ChoiGangDeliveryApp.order.entity.MenuOrderEntity;
 import com.example.ChoiGangDeliveryApp.owner.restaurant.entity.RestaurantsEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +40,11 @@ public class MenuEntity extends BaseEntity {
     @Builder.Default
     @OneToMany(mappedBy = "menu", fetch = FetchType.LAZY)
     private List<MenuOrderEntity> menuOrders = new ArrayList<>();
+
+    @Enumerated(EnumType.STRING)
+    private CuisineType cuisineType;
+
+    private String imagePath;
 
 }
 

@@ -84,8 +84,8 @@
 
 ## API 문서 및 다이어그램
 
-- [Postman Collection](Link_To_Postman_Collection): 모든 API 엔드포인트를 테스트할 수 있는 Postman 컬렉션 파일입니다.
-- [Entity Diagram](Link_To_ERD): 데이터베이스 엔티티와 그 관계를 시각화한 다이어그램입니다.
+- [Postman Collection](docs/CHOI-GANG-DELIVERY-APP.postman_collection.json): 모든 API 엔드포인트를 테스트할 수 있는 Postman 컬렉션 파일입니다.
+- [Entity Diagram](docs/ERD.png): 데이터베이스 엔티티와 그 관계를 시각화한 다이어그램입니다.
 - [Workflow Diagram](Link_To_WorkFlow_Diagram): 시스템 상호작용 및 주요 프로세스를 나타낸 다이어그램입니다.
 - [패키지 구조 다이어그램](Link_To_Structure_Tree): 프로젝트의 패키지 구조를 시각화한 다이어그램입니다.
 
@@ -93,9 +93,9 @@
 
 ### 체크포인트
 
-- [ ] **사용자 인증 및 권한 처리**: JWT 토큰 기반 인증 구현
-- [ ] **회원가입**: 필수 정보 입력 및 프로필 이미지 업로드
-- [ ] **식당 등록**: 메뉴 등록 및 최소 주문 금액 설정
+- [x] **사용자 인증 및 권한 처리**: JWT 토큰 기반 인증 구현
+- [x] **회원가입**: 필수 정보 입력 및 프로필 이미지 업로드
+- [x] **식당 등록**: 메뉴 등록 및 최소 주문 금액 설정
 - [ ] **주문 처리**: 사용자의 주문 요청 및 배달 시작 기능 구현
 - [ ] **실시간 배달 추적**: 배달부 위치 및 이동 경로 표시
 - [ ] **주문 관리**: 주문 상태 모니터링 및 배달원 할당
@@ -106,7 +106,7 @@
 
 ### 도전
 
-- [ ] **이메일 인증 추가**: 사용자 인증 과정에 이메일 인증을 추가하여 보안을 강화합니다.
+- [x] **이메일 인증 추가**: 사용자 인증 과정에 이메일 인증을 추가하여 보안을 강화합니다.
 - [ ] **리뷰 기능 구현**: 사용자들이 음식과 배달 서비스에 대한 리뷰를 남길 수 있도록 합니다.
 - [ ] **식당 즐겨찾기**: 좋아하는 식당 저장
 - [ ] **식당 및 음식 평가**: 고객 리뷰 및 평점 남기기
@@ -129,7 +129,7 @@
 
 ## 파일 링크
 
-- [Postman Collection](Link_to_Postman_Collection)
-- [Entity Diagram](Link_to_ERD)
+- [Postman Collection](docs/CHOI-GANG-DELIVERY-APP.postman_collection.json)
+- [Entity Diagram](docs/ERD.png)
 - [Workflow Diagram](Link_to_WorkFlow_Diagram)
 - [패키지 구조 다이어그램](Link_To_Structure_Tree)

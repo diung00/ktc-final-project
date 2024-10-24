@@ -17,7 +17,10 @@ public class OwnerRoleRequest extends BaseEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
     private String businessNumber;
+
+    @Enumerated(EnumType.STRING)
     private ApprovalStatus status;
+
     private String rejectionReason;
 
 
