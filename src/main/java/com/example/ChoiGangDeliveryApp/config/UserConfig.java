@@ -52,13 +52,13 @@ public class UserConfig {
                         .address("123 Test Street")
                         .phone("123-456-7890")
                         .openingHours("9:00 AM - 9:00 PM")
-                        .cuisineType(CuisineType.ASIAN_FOOD) // Ví dụ: loại ẩm thực là Italian
+                        .cuisineType(CuisineType.ASIAN_FOOD)
                         .rating(4.5)
                         .RestImage("restaurant_image.jpg")
                         .description("A test restaurant for Italian cuisine.")
                         .latitude(40.7128) // Đặt tọa độ ví dụ
                         .longitude(-74.0060)
-                        .approvalStatus(ApprovalStatus.APPROVED) // Nếu có trạng thái duyệt
+                        .approvalStatus(ApprovalStatus.APPROVED)
                         .build();
             }
 

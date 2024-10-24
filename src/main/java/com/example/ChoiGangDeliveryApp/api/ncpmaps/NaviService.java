@@ -100,6 +100,7 @@ public class NaviService {
         return new PointDto(Double.parseDouble(y), Double.parseDouble(x));
     }
 
+
     public NaviRouteDto withIpAddresses(NaviWithIpsDto dto) {
         PointDto start = this.geoLocation(dto.getStartIp());
         PointDto goal = this.geoLocation(dto.getGoalIp());
@@ -108,6 +109,7 @@ public class NaviService {
         return this.directions5(request);
     }
 
+    // GET location by IP address
     //IP주소를 입력하면 x,y값이 나온다.
     public PointDto geoLocation(String ip) {
         Map<String, Object> params = new HashMap<>();
