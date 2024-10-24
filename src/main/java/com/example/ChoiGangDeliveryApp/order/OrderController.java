@@ -1,95 +1,87 @@
 package com.example.ChoiGangDeliveryApp.order;
 
-import com.example.ChoiGangDeliveryApp.order.dto.CancelOrderDto;
 import com.example.ChoiGangDeliveryApp.order.dto.OrderDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.oauth2.core.endpoint.OAuth2DeviceAuthorizationResponse;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("orders")
+@RequestMapping("/orders")
 public class OrderController {
     private final OrderService orderService;
 
-    @PostMapping("create")
-    public OrderDto createOrder(
+    //CREATE AN ORDER
+    @PostMapping("/create")
+    public ResponseEntity<OrderDto> createOrder(
             @RequestBody
             OrderDto orderDto
     ) {
-        return orderService.createOrder(orderDto);
-    }
-    @PutMapping("approve")
-    public OrderDto approveOrder(
-            @RequestBody
-            OrderDto orderDto
-    ){
-        return orderService.approveOrder(orderDto);
+        OrderDto createdOrder = orderService.createOrder(orderDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdOrder);
     }
 
-    @PutMapping("getDriver")
-    public OrderDto getDriver(
-            @RequestBody
-            OrderDto orderDto
-    ){
-        return orderService.getDriver(orderDto);
-    }
-
-    @PutMapping("customerCancelOrder")
-    public ResponseEntity<String> customerCancelOrder(
-            @RequestBody
-            CancelOrderDto dto
-    ){
-        orderService.customerCancelOrder(dto);
-        return ResponseEntity.ok("cancel order successful");
-    }
-
-    @PutMapping("restaurantCancelOrder")
-    public ResponseEntity<String> restaurantCancelOrder(
-            @RequestBody
-            CancelOrderDto dto
-    ){
-        orderService.restaurantCancelOrder(dto);
-        return ResponseEntity.ok("cancel order successful");
-    }
-
-
-    // Driver xem order details
-    @GetMapping("/{orderId}/driver/{driverId}")
-    public ResponseEntity<OrderDto> getOrderDetails(
-            @PathVariable Long orderId,
-            @PathVariable Long driverId) {
-        OrderDto orderDto = orderService.getOrderDetails(orderId, driverId);
+    // VIEW 1 ORDER
+    @GetMapping("/{orderId}")
+    public ResponseEntity<OrderDto> viewOrder(@PathVariable Long orderId) {
+        OrderDto orderDto = orderService.viewOrder(orderId);
         return ResponseEntity.ok(orderDto);
     }
-
-    // Giao order cho driver
-    @PostMapping("/{orderId}/assign/{driverId}")
-    public ResponseEntity<Void> assignOrderToDriver(
-            @PathVariable Long orderId,
-            @PathVariable Long driverId
-    ) {
-        orderService.assignOrderToDriver(orderId, driverId);
-        return ResponseEntity.ok().build();
+    //VIEW ALL ORDERS BY RESTAURANT ID FOR DRIVER
+    //VIEW ALL ORDERS BY DRIVER ID
+    // VIEW ALL ORDERS BY RESTAURANT ID FOR OWNER
+    @GetMapping("/restaurant/{restaurantId}")
+    public ResponseEntity<List<OrderDto>> viewAllOrders(@PathVariable Long restaurantId) {
+        List<OrderDto> orders = orderService.viewAllOrders(restaurantId);
+        return ResponseEntity.ok(orders);
+    }
+    // RESTAURANT APPROVE AN ODER
+    @PutMapping("/approve")
+    public ResponseEntity<OrderDto>  approveOrder(
+            @RequestBody
+            OrderDto orderDto
+    ){
+        OrderDto approvedOrder = orderService.approveOrder(orderDto);
+        return ResponseEntity.ok(approvedOrder);
     }
 
-    // Driver accept order
-    @PostMapping("/{orderId}/accept")
-    public ResponseEntity<Void> acceptOrder(
+    @PutMapping("/get-driver")
+    public ResponseEntity<OrderDto> getDriver(
+            @RequestBody
+            OrderDto orderDto
+    ){
+        OrderDto updatedOrder = orderService.getDriver(orderDto);
+        return ResponseEntity.ok(updatedOrder);
+    }
+    //CANCEL AN ORDER
+    // CUSTOMER CANCEL AN ORDER
+    @PutMapping("/customer/{orderId}/cancel")
+    public ResponseEntity<String> customerCancelOrder(
             @PathVariable Long orderId
-    ) {
-        orderService.acceptOrder(orderId);
-        return ResponseEntity.ok().build();
+    ){
+        orderService.customerCancelOrder(orderId);
+        return ResponseEntity.ok("cancel order successful");
+    }
+    //RESTAURANT CANCEL AN ORDER
+    @PutMapping("/restaurant/{orderId}/cancel")
+    public ResponseEntity<String> restaurantCancelOrder(
+            @PathVariable Long orderId
+    ){
+        orderService.restaurantCancelOrder(orderId);
+        return ResponseEntity.ok("cancel order successful");
     }
 
     // Driver decline order
     @PostMapping("/{orderId}/decline")
-    public ResponseEntity<Void> declineOrder(
-            @PathVariable Long orderId
+    public ResponseEntity<String> declineOrder(
+            @PathVariable Long orderId,
+            @RequestBody String reason
     ) {
-        orderService.declineOrder(orderId);
-        return ResponseEntity.ok().build();
+        orderService.declineOrder(orderId, reason);
+        return ResponseEntity.ok("Driver declined successful");
     }
 
 }

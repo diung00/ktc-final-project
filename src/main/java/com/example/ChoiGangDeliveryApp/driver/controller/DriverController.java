@@ -1,10 +1,10 @@
-package com.example.ChoiGangDeliveryApp.driver;
+package com.example.ChoiGangDeliveryApp.driver.controller;
 
-import com.example.ChoiGangDeliveryApp.enums.OrderStatus;
+import com.example.ChoiGangDeliveryApp.driver.DriverService;
 import com.example.ChoiGangDeliveryApp.order.dto.OrderDto;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,23 +17,24 @@ import java.util.List;
 public class DriverController {
     private final DriverService driverService;
 
+    @PostMapping("/updateLocation")
+    public ResponseEntity<String> updateDriverLocation(@RequestParam String ip) {
+        driverService.updateDriverLocation(ip);
+        return ResponseEntity.ok("Location has been updated successfully.");
+    }
 
     // UNAVAILABLE MODE
-    @PutMapping("/{id}/unavailable")
-    public ResponseEntity<Void> setDriverUnavailable(
-            @PathVariable Long id
-    ) {
-        driverService.setDriverUnavailable(id);
-        return ResponseEntity.ok().build();
+    @PutMapping("/unavailable")
+    public ResponseEntity<String> setDriverUnavailable() {
+        driverService.setDriverUnavailable();
+        return ResponseEntity.ok("Driver status set to UNAVAILABLE");
     }
 
     // AVAILABLE MODE
-    @PutMapping("/{id}/available")
-    public ResponseEntity<Void> setDriverAvailable(
-            @PathVariable Long id
-    ) {
-        driverService.setDriverAvailable(id);
-        return ResponseEntity.ok().build();
+    @PutMapping("/available")
+    public ResponseEntity<String> setDriverAvailable() {
+        driverService.setDriverAvailable();
+        return ResponseEntity.ok("Driver status set to AVAILABLE");
     }
 
     // VIEW ORDER(CANCELLED, COMPLETED)

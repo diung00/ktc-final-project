@@ -22,6 +22,9 @@ public class WebSocketService {
     public void sendOrderStatusToRestaurant(String restaurantId, String message) {
         messagingTemplate.convertAndSend("/restaurant/" + restaurantId + "/notifications", message);
     }
+    public void sendOrderStatusToDriver(String userId, String message) {
+        messagingTemplate.convertAndSend("/user/" + userId + "/notifications", message);
+    }
 
 
 

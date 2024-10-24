@@ -4,15 +4,13 @@ import com.example.ChoiGangDeliveryApp.common.base.BaseEntity;
 import com.example.ChoiGangDeliveryApp.order.entity.OrderEntity;
 import com.example.ChoiGangDeliveryApp.user.entity.UserEntity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -27,7 +25,17 @@ public class DriverOrderEntity extends BaseEntity {
     @JoinColumn(name = "order_id", nullable = false)
     private OrderEntity order;
 
-    private LocalDateTime deliveryTime;
+    // Delivery time is set based on the estimated arrival time from OrderEntity
+    private LocalDateTime arrivalTime;
+
+    // Constructor or method to set delivery time from OrderEntity
+    public DriverOrderEntity(DriverEntity driver, OrderEntity order) {
+        this.driver = driver;
+        this.order = order;
+        this.arrivalTime = order.getEstimatedArrivalTime();
+    }
+
+
 
 
 }

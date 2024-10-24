@@ -12,6 +12,7 @@ import java.util.List;
 
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -19,6 +20,7 @@ public class DriverEntity extends BaseEntity {
     @OneToOne(fetch = FetchType.LAZY)
     private UserEntity user;
 
+    @Builder.Default
     @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL)
     private List<DriverOrderEntity> orders = new ArrayList<>(); //List of orders that driver process
 
@@ -27,4 +29,9 @@ public class DriverEntity extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private DriverStatus driverStatus;
+
+    public int getOrdersCount() {
+        return orders.size();
+    }
+
 }

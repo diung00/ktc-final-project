@@ -32,10 +32,13 @@ public class OrderEntity extends BaseEntity {
     @JoinColumn(name = "user_id")
     private UserEntity user; // ordered customer
 
+    private String deliveryAddress;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id")
     private RestaurantsEntity restaurant; // restaurant where process this order
 
+    @Builder.Default
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderMenuEntity> orderMenus = new ArrayList<>();
 

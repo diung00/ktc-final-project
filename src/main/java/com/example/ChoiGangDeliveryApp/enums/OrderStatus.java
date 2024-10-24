@@ -4,10 +4,10 @@ public enum OrderStatus {
     PENDING,
     PAID,
     CANCELLED,
-    CONFIRMED,
     COOKING,
     WAITING_FOR_DRIVER,
-    DRIVER_ACCEPTED,
+    DELIVERY_DELAYED,
+    ASSIGNED,
     ON_DELIVERY,
     COMPLETED
 }
