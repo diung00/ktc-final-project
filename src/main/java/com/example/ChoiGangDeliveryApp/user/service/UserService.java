@@ -25,6 +25,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -182,6 +185,7 @@ public class UserService {
         String jwt = jwtTokenUtils.generateToken(CustomUserDetails.fromEntity(userEntity));
         JwtResponseDto response = new JwtResponseDto();
         response.setToken(jwt);
+        log.info("User: {} has successfully logged in", userEntity.getUsername());
         return response;
     }
     //When users forgot their password. They can request to reset password
@@ -431,6 +435,13 @@ public class UserService {
 
         return userLocationDto;
     }
+
+    public UserDto getCurrentUserInfo() {
+        UserEntity currentUser = facade.getCurrentUserEntity();
+        return UserDto.fromEntity(currentUser);
+    }
+
+
 
 
 }

@@ -39,9 +39,10 @@ public class DriverService {
         //find driver by current user
         DriverEntity driver = driverRepository.findByUser(currentUser)
                 .orElseThrow(() -> new IllegalArgumentException("Driver not found for the current user"));
-
+        log.info("Driver found: {}", driver);
         // get location from ipAddress
         PointDto location = naviService.geoLocation(ipAddress);
+        log.info("Location from IP: " + location);
 
         //update location
         driver.setLatitude(location.getLatitude());
