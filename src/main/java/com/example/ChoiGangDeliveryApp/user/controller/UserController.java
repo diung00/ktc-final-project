@@ -4,9 +4,14 @@ import com.example.ChoiGangDeliveryApp.common.exception.GlobalException;
 import com.example.ChoiGangDeliveryApp.jwt.JwtTokenUtils;
 import com.example.ChoiGangDeliveryApp.jwt.dto.JwtRequestDto;
 import com.example.ChoiGangDeliveryApp.jwt.dto.JwtResponseDto;
+import com.example.ChoiGangDeliveryApp.security.config.CustomUserDetails;
 import com.example.ChoiGangDeliveryApp.user.dto.*;
+import com.example.ChoiGangDeliveryApp.user.entity.UserEntity;
 import com.example.ChoiGangDeliveryApp.user.service.UserService;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.multipart.MultipartFile;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -169,6 +174,12 @@ public class UserController {
         if (!tokenUtils.validate(token))
             return "not valid jwt";
         return "valid jwt";
+    }
+
+    @GetMapping("/get-user-info")
+    public ResponseEntity<UserDto> getUserInfo() {
+        UserDto userDto = service.getCurrentUserInfo();
+        return ResponseEntity.ok(userDto);
     }
 
 

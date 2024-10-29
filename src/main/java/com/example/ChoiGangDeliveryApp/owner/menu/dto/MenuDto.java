@@ -19,7 +19,7 @@ public class MenuDto {
     private Long id; //menu id
     private Long restaurantId;
     private String name; // menu's name
-    private int price; //menu's price
+    private double price; //menu's price
     private String description;
     private MenuStatus menuStatus; //AVAILABLE, SOLD_OUT
     private int preparationTime;

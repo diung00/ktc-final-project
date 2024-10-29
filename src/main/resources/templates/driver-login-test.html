@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Driver Login</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+</head>
+<body>
+<h1>Driver Login</h1>
+<a href="/views">Back</a>
+<form id="login-form">
+    <div class="mb-3">
+        <label for="username-input" class="form-label">ID</label>
+        <input type="text" id="username-input" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label for="password-input" class="form-label">Password</label>
+        <input type="password" id="password-input" class="form-control" required>
+    </div>
+    <button id="login-button" type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<div id="status"></div>
+
+<script>
+    const jwt = localStorage.getItem("token") ?? null;
+    if (jwt) {
+        fetch("/users/get-user-info", {
+            method: "GET",
+            headers: {
+                'Authorization': `Bearer ${jwt}`,
+                'Content-Type': 'application/json'
+            },
+        }).then(response => {
+            if (response.ok) {
+                location.href = "/views";
+            }
+        });
+    }
+
+    const loginForm = document.getElementById("login-form");
+    const usernameInput = document.getElementById("username-input");
+    const passwordInput = document.getElementById("password-input");
+
+    loginForm.addEventListener("submit", e => {
+        e.preventDefault();
+        const username = usernameInput.value;
+        const password = passwordInput.value;
+
+        fetch("/users/login", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username,
+                password}),
+        })
+        .then(response => {
+            if (response.ok) return response.json();
+            else throw Error("Login failed");
+        })
+        .then(json => {
+            localStorage.setItem("token", json.token);
+            connectWebSocket();
+            location.href = "/views";
+        })
+        .catch(error => alert(error.message));
+    });
+
+    function connectWebSocket() {
+        const socket = new SockJS('http://localhost:8080/websocket');
+        const stompClient = Stomp.over(socket);
+
+        stompClient.connect({}, function (frame) {
+            console.log('Connected: ' + frame);
+            document.getElementById('status').innerText = 'Connected to the server.';
+            startLocationUpdates(stompClient);
+        },
+        function (error) {
+            console.error('Error connecting to Websocket: ', error);
+        }
+    );
+    }
+
+
+    function sendDriverLocation(ipAddress, stompClient) {
+        const driverLocationDto = {
+            ipAddress: ipAddress,
+        };
+        stompClient.send("/app/driver/location", {}, JSON.stringify(driverLocationDto));
+    }
+
+
+    function startLocationUpdates(stompClient) {
+        setInterval(() => {
+            fetch('https://api.ipify.org?format=json')
+                .then(response => response.json())
+                .then(ipData => {
+                    const ipAddress = ipData.ip;
+                    sendDriverLocation(ipAddress, stompClient);
+                })
+                .catch(error => {
+                    console.error('Error fetching IP address:', error);
+                });
+        }, 300000);
+    }
+</script>
+</body>
+</html>

@@ -1,11 +1,13 @@
 package com.example.ChoiGangDeliveryApp.enums;
 
 public enum OrderStatus {
+    PENDING,
     PAID,
     CANCELLED,
     COOKING,
     WAITING_FOR_DRIVER,
-    DRIVER_ACCEPT,
+    DELIVERY_DELAYED,
+    ASSIGNED,
     ON_DELIVERY,
     COMPLETED
 }
