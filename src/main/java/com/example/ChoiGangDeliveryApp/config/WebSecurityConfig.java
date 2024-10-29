@@ -28,6 +28,7 @@ public class WebSecurityConfig {
     ) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
+                    auth.requestMatchers("/", "/views/**").permitAll();
                     auth.requestMatchers(
                                     "/users/login",
                                     "/users/signup",
@@ -63,7 +64,7 @@ public class WebSecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .oauth2Login(oauth2Login -> oauth2Login
-                        .loginPage("/users/login")
+                        .loginPage("/views/login")
                         .userInfoEndpoint(userInfo -> userInfo
                                 .userService(oAuth2UserService))
                         .successHandler(oAuth2SuccessHandler)

@@ -3,10 +3,167 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Views</title>
+    <title>ChoiGangDelivery</title>
+    <style>
+        /* common */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        /* Header */
+        .header {
+            background-color: #f3067d;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            font-size: 24px;
+        }
+
+        .header .site-name {
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+
+        .header .login-link {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 20px;
+            background-color: #f3067d;
+            font-weight: bold;
+        }
+
+        .header .login-link:hover {
+            background-color: #ff69b4;
+        }
+
+        /* Search Restaurant by Cuisine type */
+        .search-section {
+            text-align: center;
+            background-image: url('img\search-home.jpg');
+            background-size: cover;
+            background-position: center;
+            padding: 60px 20px; /* Điều chỉnh khoảng cách trên và dưới */
+            color: white; /* Chữ trắng cho dễ đọc trên nền tối */
+        }
+
+        .search-section input[type="text"] {
+            width: 80%;
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #ff69b4; /* Màu hồng cho border */
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.8); /* Nền trắng trong suốt cho ô tìm kiếm */
+        }
+
+        .search-section button {
+            padding: 10px 20px;
+            background-color: #ff69b4; /* Màu hồng */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .search-section button:hover {
+            background-color: #ff1493; /* Màu hồng đậm hơn khi hover */
+        }
+
+        /* Phần phân loại nhà hàng */
+        .categories {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .category-item {
+            width: 18%;
+            margin: 10px;
+            text-align: center;
+        }
+
+        .category-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+
+        .category-item img:hover {
+            transform: scale(1.05);
+        }
+
+        .category-item p {
+            font-weight: bold;
+            color: #ff1493; /* Màu chữ cho tên món ăn */
+            margin-top: 8px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to the Driver Views</h1>
-    <p>This page is intentionally left blank for testing purposes.</p>
+    <!-- Header -->
+    <div class="header">
+        <a href="#" class="site-name">ChoiGangDelivery</a>
+        <a href="/views/login" class="login-link">Login</a>
+    </div>
+
+    <!-- Phần tìm kiếm nhà hàng -->
+    <div class="search-section">
+        <input type="text" placeholder="Nhập địa chỉ để tìm nhà hàng...">
+        <button>Tìm kiếm</button>
+    </div>
+
+    <!-- Phần phân loại nhà hàng -->
+    <div class="categories">
+        <!-- Mỗi mục nhà hàng -->
+        <div class="category-item">
+            <img src="path/to/image1.jpg" alt="Món ăn 1">
+            <p>Món ăn 1</p>
+        </div>
+        <div class="category-item">
+            <img src="path/to/image2.jpg" alt="Món ăn 2">
+            <p>Món ăn 2</p>
+        </div>
+        <div class="category-item">
+            <img src="path/to/image3.jpg" alt="Món ăn 3">
+            <p>Món ăn 3</p>
+        </div>
+        <div class="category-item">
+            <img src="path/to/image4.jpg" alt="Món ăn 4">
+            <p>Món ăn 4</p>
+        </div>
+        <div class="category-item">
+            <img src="path/to/image5.jpg" alt="Món ăn 5">
+            <p>Món ăn 5</p>
+        </div>
+        <div class="category-item">
+            <img src="path/to/image6.jpg" alt="Món ăn 6">
+            <p>Món ăn 6</p>
+        </div>
+        <div class="category-item">
+            <img src="path/to/image7.jpg" alt="Món ăn 7">
+            <p>Món ăn 7</p>
+        </div>
+        <div class="category-item">
+            <img src="path/to/image8.jpg" alt="Món ăn 8">
+            <p>Món ăn 8</p>
+        </div>
+        <div class="category-item">
+            <img src="path/to/image9.jpg" alt="Món ăn 9">
+            <p>Món ăn 9</p>
+        </div>
+        <div class="category-item">
+            <img src="path/to/image10.jpg" alt="Món ăn 10">
+            <p>Món ăn 10</p>
+        </div>
+    </div>
 </body>
 </html>

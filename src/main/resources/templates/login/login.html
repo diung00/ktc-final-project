@@ -1,0 +1,73 @@
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>로그인 화면</title>
+    <link rel="stylesheet" href="../../static/css/login/login-styles.css">
+</head>
+<body>
+<div class="container" id="container">
+    <!-- Sign-up container -->
+    <div class="form-container sign-up-container">
+        <form id="signup-form">
+            <h1>Create Account</h1>
+            <div class="sign-up-input-container">
+                <input type="text" id="signUpUsername" placeholder="Username" required />
+                <input type="password" id="signUpPassword" placeholder="비밀번호" required />
+                <input type="password" id="signUpPassCheck" placeholder="비밀번호 확인" required />
+                <input type="email" id="signUpEmail" placeholder="이메일" required />
+            </div>
+            <button type="submit" id="signUpButton">Sign Up</button>
+        </form>
+    </div>
+
+    <!-- Verification container -->
+    <div class="form-container verification-container" id="emailVerificationContainer" style="display: none">
+        <form id="verification-form">
+            <h1>Verify Email</h1>
+            <input type="text" id="verificationCode" placeholder="인증코드" required />
+            <button type="button" id="verifyButton">Verify</button>
+        </form>
+    </div>
+
+    <!-- Login container-->
+    <div class="form-container sign-in-container">
+        <form id="login-form">
+            <h1>Sign in</h1>
+            <div class="social-container">
+                <a href="/oauth2/authorization/naver" class="social">
+                    <img src="../../static/img/socialIcons/naver.png" alt="네이버로 로그인"></a>
+                <a href="/oauth2/authorization/kakao" class="social">
+                    <img src="../../static/img/socialIcons/kakao.png" alt="카카오로 로그인"></a>
+                <a href="/oauth2/authorization/google" class="social">
+                    <img src="../../static/img/socialIcons/google.png" alt="구글로 로그인"></a>
+            </div>
+            <p>or use your account</p>
+            <input type="username" id="loginUsername" placeholder="username" />
+            <input type="password" id="loginPassword" placeholder="비밀번호" />
+            <button type="submit" id="loginButton">Sign In</button>
+            <a href="/views/find-password" style="margin-top: 10px; display: inline-block;">Forgot password?</a>
+        </form>
+    </div>
+    <div class="overlay-container">
+        <div class="overlay">
+            <div class="overlay-panel overlay-left">
+                <h1>Welcome Back!</h1>
+                <p>To keep connected with us please login with your personal info</p>
+                <button class="ghost" id="signIn">Sign In</button>
+            </div>
+            <div class="overlay-panel overlay-right">
+                <h1>Hello, Friend!</h1>
+                <p>Enter your personal details and start your journey with us</p>
+                <button class="ghost" id="signUp">Sign Up</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2024 Your Company. All Rights Reserved. | <a href="#">Privacy Policy</a></p>
+</footer>
+
+<script src="../../static/js/login/login.js"></script>
+</body>
+</html>

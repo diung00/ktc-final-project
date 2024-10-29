@@ -30,8 +30,8 @@
         fetch("/users/get-user-info", {
             method: "GET",
             headers: {
-                "Authorization": `Bearer ${jwt}`,
-                "Content-Type": "application/json"
+                'Authorization': `Bearer ${jwt}`,
+                'Content-Type': 'application/json'
             },
         }).then(response => {
             if (response.ok) {
@@ -52,9 +52,11 @@
         fetch("/users/login", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json",
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ username, password }),
+            body: JSON.stringify({
+                username,
+                password}),
         })
         .then(response => {
             if (response.ok) return response.json();
@@ -76,7 +78,11 @@
             console.log('Connected: ' + frame);
             document.getElementById('status').innerText = 'Connected to the server.';
             startLocationUpdates(stompClient);
-        });
+        },
+        function (error) {
+            console.error('Error connecting to Websocket: ', error);
+        }
+    );
     }
 
 
@@ -84,8 +90,6 @@
         const driverLocationDto = {
             ipAddress: ipAddress,
         };
-
-
         stompClient.send("/app/driver/location", {}, JSON.stringify(driverLocationDto));
     }
 

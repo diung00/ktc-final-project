@@ -185,6 +185,7 @@ public class UserService {
         String jwt = jwtTokenUtils.generateToken(CustomUserDetails.fromEntity(userEntity));
         JwtResponseDto response = new JwtResponseDto();
         response.setToken(jwt);
+        log.info("User: {} has successfully logged in", userEntity.getUsername());
         return response;
     }
     //When users forgot their password. They can request to reset password
