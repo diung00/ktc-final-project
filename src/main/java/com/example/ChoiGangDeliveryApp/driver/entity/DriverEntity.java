@@ -18,6 +18,7 @@ import java.util.List;
 @Entity
 public class DriverEntity extends BaseEntity {
     @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private UserEntity user;
 
     @Builder.Default

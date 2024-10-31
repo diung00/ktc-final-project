@@ -32,4 +32,45 @@ public class ViewController {
     public String map(){
         return "map";
     }
+
+    @GetMapping("/get-my-profile")
+    public String myProfile(){
+        return "users/get-my-profile";
+    }
+
+    @GetMapping("/change-password")
+    public String changePassword(){
+        return "users/change-password";
+    }
+
+    @GetMapping("/reset-password")
+    public String resetPassword(){
+        return "users/reset-password";
+    }
+
+    @GetMapping("/update-profile")
+    public String updateProfile(){
+        return "users/update-profile";
+    }
+    @GetMapping("upload-profile-image")
+    public String uploadProfileImage(){return "users/upload-profile-image";}
+
+    @GetMapping("/request-driver-role")
+    public String requestDriverRole(){
+        return "users/request-driver-role";
+    }
+
+    @GetMapping("/request-owner-role")
+    public String requestBusinessRole(){
+        return "users/request-owner-role";
+    }
+
+
+    @GetMapping("/driver-request-status")
+    public String driverRequestStatus(){return "users/driver-request-status";}
+
+    @GetMapping("owner-request-status")
+    public String ownerRequestStatus(){return "users/owner-request-status";}
+
+
 }

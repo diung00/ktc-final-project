@@ -1,7 +1,9 @@
 package com.example.ChoiGangDeliveryApp.user.entity;
 
 import com.example.ChoiGangDeliveryApp.common.base.BaseEntity;
+import com.example.ChoiGangDeliveryApp.driver.entity.DriverEntity;
 import com.example.ChoiGangDeliveryApp.enums.UserRole;
+import com.example.ChoiGangDeliveryApp.order.entity.OrderEntity;
 import com.example.ChoiGangDeliveryApp.owner.restaurant.entity.RestaurantsEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -50,6 +52,13 @@ public class UserEntity extends BaseEntity {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_location_id")
     private UserLocation userLocation;
+
+    //
+    @OneToMany(mappedBy = "user")
+    private List<OrderEntity> orders;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private DriverEntity driver;
 
 
 }
