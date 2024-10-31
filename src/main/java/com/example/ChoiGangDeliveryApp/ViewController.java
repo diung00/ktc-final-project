@@ -52,10 +52,25 @@ public class ViewController {
     public String updateProfile(){
         return "users/update-profile";
     }
+    @GetMapping("upload-profile-image")
+    public String uploadProfileImage(){return "users/upload-profile-image";}
 
-    @GetMapping("/upload-profile-image")
-    public String uploadProfileImage(){
-        return "users/upload-profile-image";
+    @GetMapping("/request-driver-role")
+    public String requestDriverRole(){
+        return "users/request-driver-role";
     }
+
+    @GetMapping("/request-owner-role")
+    public String requestBusinessRole(){
+        return "users/request-owner-role";
+    }
+
+
+    @GetMapping("/driver-request-status")
+    public String driverRequestStatus(){return "users/driver-request-status";}
+
+    @GetMapping("owner-request-status")
+    public String ownerRequestStatus(){return "users/owner-request-status";}
+
 
 }

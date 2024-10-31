@@ -44,4 +44,3 @@ document.getElementById('logout-link').addEventListener('click', function(event)
     window.location.href = '/views/login';
 });
 
-fetchUserProfile();

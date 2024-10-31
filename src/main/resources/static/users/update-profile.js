@@ -24,10 +24,10 @@ fetch("/users/get-my-profile", {
         document.getElementById("email").value = json.email;
         document.getElementById("phone").value = json.phone;
         document.getElementById("address").value = json.address;
-        document.getElementById("profileImgPath").value = json.profileImgPath;
-        document.getElementById("role").innerText = json.role;
-        document.getElementById("licenseNumber").innerText = json.licenseNumber;
-        document.getElementById("businessNumber").innerText = json.businessNumber;
+     //   document.getElementById("profileImgPath").value = json.profileImgPath;
+     //   document.getElementById("role").innerText = json.role;
+        // document.getElementById("licenseNumber").innerText = json.licenseNumber;
+     //   document.getElementById("businessNumber").innerText = json.businessNumber;
 
     })
     .catch(e => {
@@ -46,7 +46,9 @@ document.getElementById("updateForm").addEventListener("submit", function(event)
         email: document.getElementById("email").value,
         phone: document.getElementById("phone").value,
         address: document.getElementById("address").value,
-        profileImgPath: document.getElementById("profileImgPath").value,
+      //  profileImgPath: document.getElementById("profileImgPath").value,
+       // licenseNumber: document.getElementById("licenseNumber").value,
+     //   businessNumber: document.getElementById("businessNumber").value,
     };
 
     fetch("/users/update-profile", {
