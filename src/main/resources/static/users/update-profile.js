@@ -1,4 +1,4 @@
-const jwt = localStorage.getItem("jwt");
+const jwt = localStorage.getItem("token");
 if (!jwt) {
     location.href = "/views/login";
 }

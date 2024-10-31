@@ -32,4 +32,30 @@ public class ViewController {
     public String map(){
         return "map";
     }
+
+    @GetMapping("/get-my-profile")
+    public String myProfile(){
+        return "users/get-my-profile";
+    }
+
+    @GetMapping("/change-password")
+    public String changePassword(){
+        return "users/change-password";
+    }
+
+    @GetMapping("/reset-password")
+    public String resetPassword(){
+        return "users/reset-password";
+    }
+
+    @GetMapping("/update-profile")
+    public String updateProfile(){
+        return "users/update-profile";
+    }
+
+    @GetMapping("/upload-profile-image")
+    public String uploadProfileImage(){
+        return "users/upload-profile-image";
+    }
+
 }
