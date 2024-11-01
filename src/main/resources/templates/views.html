@@ -24,6 +24,13 @@
             font-size: 24px;
         }
 
+        button {
+            background-color: #f3067d;
+            color: white;
+            border: 1px solid white;
+            size: 100;
+        }
+
         .header .site-name {
             font-weight: bold;
             color: white;
@@ -92,7 +99,7 @@
 
         .category-item img {
             width: 100%;
-            height: auto;
+            height: 80%;
             border-radius: 10px;
             transition: transform 0.3s;
         }
@@ -109,61 +116,65 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <div class="header">
-        <a href="#" class="site-name">ChoiGangDelivery</a>
-        <a href="/views/get-my-profile">My Profile</a>
-    </div>
+<!-- Header -->
+<div class="header">
+    <a href="#" class="site-name">ChoiGangDelivery</a>
+    <a href="/views/get-my-profile">
+        <button type="button"> Sign-up </button>
+        <button type="button"> Sign-in </button>
+    </a>
+</div>
 
-    <!-- Phần tìm kiếm nhà hàng -->
-    <div class="search-section">
-        <input type="text" placeholder="Nhập địa chỉ để tìm nhà hàng...">
-        <button>Tìm kiếm</button>
-    </div>
+<!-- Phần tìm kiếm nhà hàng -->
+<div class="search-section">
+    <input type="text" placeholder="What delicious food are you looking for?">
+    <button> Search </button>
+</div>
 
-    <!-- Phần phân loại nhà hàng -->
-    <div class="categories">
-        <!-- Mỗi mục nhà hàng -->
-        <div class="category-item">
-            <img src="path/to/image1.jpg" alt="Món ăn 1">
-            <p>Món ăn 1</p>
-        </div>
-        <div class="category-item">
-            <img src="path/to/image2.jpg" alt="Món ăn 2">
-            <p>Món ăn 2</p>
-        </div>
-        <div class="category-item">
-            <img src="path/to/image3.jpg" alt="Món ăn 3">
-            <p>Món ăn 3</p>
-        </div>
-        <div class="category-item">
-            <img src="path/to/image4.jpg" alt="Món ăn 4">
-            <p>Món ăn 4</p>
-        </div>
-        <div class="category-item">
-            <img src="path/to/image5.jpg" alt="Món ăn 5">
-            <p>Món ăn 5</p>
-        </div>
-        <div class="category-item">
-            <img src="path/to/image6.jpg" alt="Món ăn 6">
-            <p>Món ăn 6</p>
-        </div>
-        <div class="category-item">
-            <img src="path/to/image7.jpg" alt="Món ăn 7">
-            <p>Món ăn 7</p>
-        </div>
-        <div class="category-item">
-            <img src="path/to/image8.jpg" alt="Món ăn 8">
-            <p>Món ăn 8</p>
-        </div>
-        <div class="category-item">
-            <img src="path/to/image9.jpg" alt="Món ăn 9">
-            <p>Món ăn 9</p>
-        </div>
-        <div class="category-item">
-            <img src="path/to/image10.jpg" alt="Món ăn 10">
-            <p>Món ăn 10</p>
-        </div>
+<!-- Phần phân loại nhà hàng -->
+<div class="categories">
+    <!-- Mỗi mục nhà hàng -->
+    <div class="category-item">
+        <img src="static/img/images/한식.jpg" alt="한식">
+        <p> 한식 </p>
     </div>
+    <div class="category-item">
+        <img src="static/img/images/일식.jpg" alt="일식">
+        <p>일식</p>
+    </div>
+    <div class="category-item">
+        <img src="static/img/images/중식.jpg" alt="중식">
+        <p>중식</p>
+    </div>
+    <div class="category-item">
+        <img src="static/img/images/양식.jpg" alt="양식">
+        <p>양식</p>
+    </div>
+    <div class="category-item">
+        <img src="static/img/images/패스트푸드.jpg" alt="패스트푸드">
+        <p>패스트푸드</p>
+    </div>
+    <div class="category-item">
+        <img src="static/img/images/치킨.jpg" alt="치킨">
+        <p>치킨</p>
+    </div>
+    <div class="category-item">
+        <img src="static/img/images/피자.jpg" alt="피자">
+        <p>피자</p>
+    </div>
+    <div class="category-item">
+        <img src="static/img/images/동남아 음식.jpg" alt="동남아 음식">
+        <p>동남아 음식</p>
+    </div>
+    <div class="category-item">
+        <img src="static/img/images/카페 - 디저트.jpg" alt="카페/디저트">
+        <p>카페/디저트</p>
+    </div>
+    <div class="category-item">
+        <img src="static/img/images/기타 세계 음식.jpg" alt="기타 세계 음식">
+        <p>기타 세계 음식</p>
+
+    </div>
+</div>
 </body>
 </html>
