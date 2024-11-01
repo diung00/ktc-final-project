@@ -13,6 +13,11 @@ import com.example.ChoiGangDeliveryApp.api.ncpmaps.dto.rgeocoding.RGeoLand;
 import com.example.ChoiGangDeliveryApp.api.ncpmaps.dto.rgeocoding.RGeoNcpResponse;
 import com.example.ChoiGangDeliveryApp.api.ncpmaps.dto.rgeocoding.RGeoRegion;
 import com.example.ChoiGangDeliveryApp.api.ncpmaps.dto.rgeocoding.RGeoResponseDto;
+import com.example.ChoiGangDeliveryApp.order.entity.OrderEntity;
+import com.example.ChoiGangDeliveryApp.owner.restaurant.entity.RestaurantsEntity;
+import com.example.ChoiGangDeliveryApp.owner.restaurant.repo.RestaurantRepository;
+import com.example.ChoiGangDeliveryApp.user.entity.UserEntity;
+import com.example.ChoiGangDeliveryApp.user.repo.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -123,5 +128,17 @@ public class NaviService {
 
         return new PointDto(lng, lat);
     }
+    // lấy toạ độ của user và restaurant trong 1 order
+    public NaviWithPointsDto getCoordinatesFromOrder(OrderEntity order) {
+        String userAddress = order.getUser().getAddress();
+        String restaurantAddress = order.getRestaurant().getAddress();
+
+        // Chuyển đổi địa chỉ thành tọa độ
+        PointDto userCoordinates = geoCoding(userAddress);
+        PointDto restaurantCoordinates = geoCoding(restaurantAddress);
+
+        return new NaviWithPointsDto(userCoordinates, restaurantCoordinates);
+    }
+
 
 }
