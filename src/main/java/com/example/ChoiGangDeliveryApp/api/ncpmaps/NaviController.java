@@ -4,10 +4,7 @@ import com.example.ChoiGangDeliveryApp.api.ncpmaps.dto.*;
 import com.example.ChoiGangDeliveryApp.api.ncpmaps.dto.rgeocoding.RGeoResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("navigate")
@@ -53,5 +50,9 @@ public class NaviController {
         return service.withIpAddresses(dto);
     }
 
-    
+    @GetMapping("geocode")
+    public PointDto geocode(@RequestParam String query) {
+        return service.geoCoding(query);
+    }
+
 }

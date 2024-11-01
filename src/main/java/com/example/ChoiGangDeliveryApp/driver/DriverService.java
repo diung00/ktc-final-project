@@ -2,6 +2,7 @@ package com.example.ChoiGangDeliveryApp.driver;
 
 import com.example.ChoiGangDeliveryApp.api.ncpmaps.NaviService;
 import com.example.ChoiGangDeliveryApp.api.ncpmaps.dto.PointDto;
+import com.example.ChoiGangDeliveryApp.driver.dto.DriverDto;
 import com.example.ChoiGangDeliveryApp.driver.entity.DriverEntity;
 import com.example.ChoiGangDeliveryApp.driver.repo.DriverRepository;
 import com.example.ChoiGangDeliveryApp.enums.DriverStatus;
@@ -15,6 +16,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +32,8 @@ public class DriverService {
     private final DriverRepository driverRepository;
     private final OrderRepository orderRepository;
     private final NaviService naviService;
+
+    private final SimpMessagingTemplate messagingTemplate;
 
     // get location of driver by IP
     public void updateDriverLocation(String ipAddress) {
@@ -50,6 +54,8 @@ public class DriverService {
 
         //save data
         driverRepository.save(driver);
+        // sent location to clients
+        messagingTemplate.convertAndSend("/topic/driverLocation", new DriverDto(location.getLatitude(), location.getLongitude()));
     }
 
     // UNAVAILABLE MODE
