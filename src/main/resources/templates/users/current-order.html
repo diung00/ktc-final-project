@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>order</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+  <style>
+    #map {
+      width: 100%;
+      height: 400px;
+    }
+  </style>
+</head>
+<body>
+<div class="container mt-4">
+  <div class="header">
+    <a href="/views" class="site-name">ChoiGangDelivery</a>
+    <a href="/views/login" class="login-link" id="logout-link">Logout</a>
+    <a href="/views/get-my-profile">My Profile</a>
+
+  </div>
+  <h1>Order</h1>
+  <div id="order-details">
+    <p><strong>Order ID:</strong> <span id="order-id"></span></p>
+    <p><strong>Driver ID:</strong> <span id="driver-id"></span></p>
+    <p><strong>User ID:</strong> <span id="user-id"></span></p>
+    <p><strong>Delivery Address:</strong> <span id="delivery-address"></span></p>
+    <p><strong>Restaurant ID:</strong> <span id="restaurant-id"></span></p>
+    <p><strong>Order Date:</strong> <span id="order-date"></span></p>
+    <p><strong>Order Status:</strong> <span id="order-status"></span></p>
+    <p><strong>Total Menu Price:</strong> <span id="total-menus-price"></span></p>
+    <p><strong>Shipping Fee:</strong> <span id="shipping-fee"></span></p>
+    <p><strong>Total Amount:</strong> <span id="total-amount"></span></p>
+    <p><strong>Estimated Arrival Time:</strong> <span id="estimated-arrival-time"></span></p>
+  </div>
+  <div id="map"></div>
+</div>
+
+<script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=codtfoiath"></script>
+<script src="/static/users/current-order.js"></script>
+</body>
+</html>
