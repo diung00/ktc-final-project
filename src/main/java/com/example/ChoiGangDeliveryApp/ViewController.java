@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/views")
 public class ViewController {
-
+    //home page
     @GetMapping("")
     public String showViewsPage() {
         return "views";
     }
-
+    //login
     @GetMapping("/login")
     public String login() {
         return "login/login";
@@ -22,17 +22,17 @@ public class ViewController {
     public String findPassword() {
         return "login/find-password";
     }
-
+    //test
     @GetMapping("/driver-login-test")
     public String showDriverLoginPage() {
         return "driver-login-test";
     }
-
+    //test
     @GetMapping("/map")
     public String map(){
         return "map";
     }
-
+    //user
     @GetMapping("/get-my-profile")
     public String myProfile(){
         return "users/get-my-profile";
@@ -69,8 +69,12 @@ public class ViewController {
     @GetMapping("/driver-request-status")
     public String driverRequestStatus(){return "users/driver-request-status";}
 
-    @GetMapping("owner-request-status")
+    @GetMapping("/owner-request-status")
     public String ownerRequestStatus(){return "users/owner-request-status";}
+
+    //owner
+    @GetMapping("/restaurant-management")
+    public String restaurantManagement() {return "restaurant/restaurant-management";}
 
 
 }

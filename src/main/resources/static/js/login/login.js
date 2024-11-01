@@ -35,7 +35,7 @@ loginForm.addEventListener("submit", e => {
     else throw new Error("Login failed");
 })
 .then(function(json) {
-    // localStorage.setItem("token", json.token);
+    localStorage.setItem("token", json.token);
     location.href = "/views";
 })
 .catch(function(error) {

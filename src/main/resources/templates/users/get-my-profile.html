@@ -7,7 +7,7 @@
 <body>
 
 <div class="header">
-    <a href="#" class="site-name">ChoiGangDelivery</a>
+    <a href="/views" class="site-name">ChoiGangDelivery</a>
     <a href="/views/login" class="login-link" id="logout-link">Logout</a>
     <a href="/views/get-my-profile">My Profile</a>
 
@@ -29,7 +29,8 @@
 <h3 id="email"></h3>
 <h3 id="phone"></h3>
 <h3 id="address"></h3>
-<h3 id="profileImgPath"></h3>
+<h3>Profile Image:</h3>
+<img id="profileImg" src="" alt="Profile Image" style="max-width: 200px; height: auto;">
 <h3 id="role"></h3>
 <h3 id="licenseNumber"></h3>
 <h3 id="businessNumber"></h3>
@@ -42,11 +43,10 @@
 
 <h3 id="emailVerified"></h3>
 
-<h3 id="restaurant"><a href="gắn link nhà hàng của bản than vào đây">My restaurant</a></h3>
-<h3 id="userLocation"></h3>
+<h3 id="restaurant"><a href="/views/restaurant-management">My restaurant</a></h3>
 <h3 id="orders"></h3>
 <h3 id="driver"><a href="link chuyển hướng sang giao diện của driver">Driver mode</a></h3>
 
-<script src="/static/users/get-my-profile.js"></script>
+<script src="/static/js/users/get-my-profile.js"></script>
 </body>
 </html>

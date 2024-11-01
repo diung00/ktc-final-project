@@ -237,6 +237,15 @@ public class RestaurantService {
                 .map(RestaurantRequestDto::fromEntity)
                 .collect(Collectors.toList());
     }
+    // GET MY RESTAURANT BY OWNER
+    public RestaurantDto getRestaurantByOwner() {
+        UserEntity currentUser = facade.getCurrentUserEntity();
+        RestaurantsEntity restaurant = restaurantRepo.findByOwner(currentUser)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Restaurant not found for user: " + currentUser));
+
+        return RestaurantDto.fromEntity(restaurant);
+    }
+    //SEARCH RESTAURANT FOR CUSTOMER
 
     // GET ALL RESTAURANTS WITHIN A GIVEN RADIUS
     private static final double DISTANCE_2KM = 2.0;

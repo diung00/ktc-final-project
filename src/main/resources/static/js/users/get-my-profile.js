@@ -25,7 +25,7 @@ if (!jwt){
             document.getElementById("email").innerHTML = `Email: <span class="text-muted">${json.email}</span>`;
             document.getElementById("phone").innerHTML = `Phone: <span class="text-muted">${json.phone}</span>`;
             document.getElementById("address").innerHTML = `Address: <span class="text-muted">${json.address}</span>`;
-            document.getElementById("profileImgPath").innerHTML = `Profile Image: <span class="text-muted">${json.profileImgPath}</span>`;
+            document.getElementById("profileImg").src = json.profileImgPath;
             document.getElementById("role").innerHTML = `Role: <span class="text-muted">${json.role}</span>`;
             document.getElementById("licenseNumber").innerHTML = `License Number: <span class="text-muted">${json.licenseNumber}</span>`;
             document.getElementById("businessNumber").innerHTML = `Business Number: <span class="text-muted">${json.businessNumber}</span>`;

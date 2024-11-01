@@ -61,6 +61,13 @@ public class RestaurantController {
         return ResponseEntity.ok(requests);
     }
 
+    // GET MY RESTAURANT
+    @GetMapping("/my-restaurant")
+    public ResponseEntity<RestaurantDto> getMyRestaurant(){
+        RestaurantDto restaurant = restaurantService.getRestaurantByOwner();
+        return ResponseEntity.ok(restaurant);
+    }
+
     // GET ALL RESTAURANTS WITHIN A GIVEN RADIUS
     @GetMapping("/within-radius")
     public ResponseEntity<List<RestaurantDto>> getRestaurantsWithinRadius() {
