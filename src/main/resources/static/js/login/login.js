@@ -15,9 +15,10 @@ signInChanger.addEventListener('click', () => {
 const loginForm = document.getElementById("login-form");
 const loginUsername = document.getElementById("loginUsername");
 const loginPassword = document.getElementById("loginPassword");
+
 loginForm.addEventListener("submit", e => {
   e.preventDefault();
-  
+
   const username = loginUsername.value;
   const password = loginPassword.value;
   fetch("/users/login", {
@@ -30,13 +31,21 @@ loginForm.addEventListener("submit", e => {
         password: password
     }),
 })
+
 .then(function(response) {
     if (response.ok) return response.json();
     else throw new Error("Login failed");
 })
 .then(function(json) {
-    // localStorage.setItem("token", json.token);
-    location.href = "/views";
+    console.log(json);
+    localStorage.setItem("token", json.token);
+    location.href = json.redirectUrl;
+    // location.href = "/views";
+    if (json.role === "ADMIN") {
+        location.href = "/views/admin"; // Chuyển hướng đến trang admin
+    } else {
+        location.href = "/views"; // Chuyển hướng đến trang người dùng
+    }
 })
 .catch(function(error) {
     alert(error.message);

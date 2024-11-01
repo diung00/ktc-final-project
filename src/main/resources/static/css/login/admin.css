@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+
+/* Reset mặc định */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    color: #343a40;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #007bff;
+    margin-bottom: 20px;
+}
+
+section {
+    background-color: #ffffff;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    color: #0056b3;
+}
+
+/* Styling for tables to display lists of users and requests */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+table thead {
+    background-color: #007bff;
+    color: #fff;
+}
+
+table th, table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+table th {
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tbody tr:hover {
+    background-color: #e9ecef;
+}
+
+td button {
+    padding: 6px 12px;
+    margin: 0 5px;
+    font-size: 0.9rem;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Specific colors for accept and decline buttons */
+button.accept {
+    background-color: #28a745;
+}
+
+button.accept:hover {
+    background-color: #218838;
+}
+
+button.decline {
+    background-color: #dc3545;
+}
+
+button.decline:hover {
+    background-color: #c82333;
+}
+
+/* Button styles for filtering by role or status */
+.filter-button {
+    background-color: #17a2b8;
+    color: #fff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.filter-button:hover {
+    background-color: #138496;
+}
+
+/* Styles for form fields and labels */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #495057;
+}
+
+.form-group input,
+.form-group textarea {
+    padding: 8px;
+    font-size: 1rem;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+
+/* Submit button */
+.submit-btn {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submit-btn:hover {
+    background-color: #0056b3;
+}

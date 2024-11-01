@@ -22,6 +22,11 @@ import java.util.List;
 public class AdminController {
     private final AdminService adminService;
 
+    @GetMapping("/views/admin")
+    public String adminPage() {
+        return "admin";
+    }
+
     // View all users
     @GetMapping("/users")
     public ResponseEntity<List<UserDto>> getAllUsers() {

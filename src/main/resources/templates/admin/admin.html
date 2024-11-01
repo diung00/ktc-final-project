@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+<h1>Admin Panel</h1>
+
+<section>
+    <h2>User List</h2>
+    <button onclick="fetchUsers()">Show User List</button>
+    <table id="user-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>User</th>
+            <th>Role</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</section>
+
+<section>
+    <h2>Owner Requests</h2>
+    <button onclick="fetchOwnerRequests()">Show Owner Requests</button>
+    <table id="owner-request-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>User ID</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</section>
+
+<section>
+    <h2>Driver Requests</h2>
+    <button onclick="fetchDriverRequests()">Show Driver Requests</button>
+    <table id="driver-request-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>User ID</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</section>
+
+<section>
+    <h2>Restaurant Requests</h2>
+    <button onclick="fetchRestaurantRequests()">Show Restaurant Requests</button>
+    <table id="restaurant-request-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Restaurant</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</section>
+
+<script src="admin.js"></script>
+</body>
+</html>
