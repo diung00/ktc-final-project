@@ -84,14 +84,17 @@ public class NaviService {
         NaviRouteDto result = this.directions5(request);
         return result;
     }
-    //Exchange from address to coordinates
+    // Change from address to coordinates
     public PointDto geoCoding(String query) {
         Map<String, Object> params = new HashMap<>();
         params.put("query", query);
 
         GeoNcpResponse response = mapExchange.geocode(params);
         log.info("geoCoding: {}", response);
-        if (response == null || !response.getStatus().equals("OK")) {
+        if (response == null) {
+            throw new IllegalStateException("Error fetching geocoding data: ");
+        }
+        else if (!response.getStatus().equals("OK")) {
             throw new IllegalStateException("Error fetching geocoding data: " + response.getErrorMessage());
         }
         List<GeoAddress> addresses = response.getAddresses();
@@ -102,7 +105,7 @@ public class NaviService {
         String x = response.getAddresses().get(0).getX();
         String y = response.getAddresses().get(0).getY();
 
-        return new PointDto(Double.parseDouble(y), Double.parseDouble(x));
+        return new PointDto(Double.parseDouble(x), Double.parseDouble(y));
     }
 
 
@@ -114,8 +117,9 @@ public class NaviService {
         return this.directions5(request);
     }
 
-    // GET location by IP address
-    //IP주소를 입력하면 x,y값이 나온다.
+    // GET location from IP address
+    // Input: ip Address
+    // Output: Geometry location (longitude, latitude)
     public PointDto geoLocation(String ip) {
         Map<String, Object> params = new HashMap<>();
         params.put("ip", ip);
