@@ -57,13 +57,7 @@ public class UserController {
             @RequestBody
             JwtRequestDto dto
     ){
-        JwtResponseDto response = service.login(dto);
-        if (response.getUserRole().equals(UserRole.ROLE_ADMIN)) {
-            response.setRedirectUrl("/views/admin");
-        } else {
-            response.setRedirectUrl("/views");
-        }
-        return response;
+        return service.login(dto);
     }
 
     // Send verification code for password reset
