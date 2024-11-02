@@ -66,6 +66,7 @@ function fetchMyRestaurantInfo() {
 
         // Initialize map
         console.log("Initializing map with coordinates:", data.latitude, data.longitude);
+
         initMap(data.latitude, data.longitude);
     })
     .catch(error => {
@@ -80,6 +81,17 @@ function fetchMyRestaurantInfo() {
 }
 fetchMyRestaurantInfo();
 
+let position = new naver.maps.LatLng(37.3595704, 127.105399)
+  let mapOptions = {
+    center: position,
+    zoom: 15,
+    zoomControl: true,
+    zoomControlOptions: {
+      position: naver.maps.Position.TOP_RIGHT
+    }
+  };
+
+ 
 // Map function
 function initMap(latitude, longitude) {
     const mapElement = document.getElementById('map');
@@ -92,6 +104,7 @@ function initMap(latitude, longitude) {
     const mapOptions = {
         center: new naver.maps.LatLng(latitude, longitude),
         zoom: 15,
+        mapTypeId: naver.maps.MapTypeId.NORMAL
     };
 
     // Initialize the map

@@ -26,8 +26,8 @@ public class PointDto {
     public static List<PointDto> directionRouteToPointDto(DirectionRoute directionRoute) {
         List<PointDto> path = new ArrayList<>();
         for (int i = 0; i < directionRoute.getPath().size(); i++) {
-            Double lat = directionRoute.getPath().get(i).get(1);
             Double lng = directionRoute.getPath().get(i).get(0);
+            Double lat = directionRoute.getPath().get(i).get(1);
             PointDto dto = new PointDto(lng, lat);
             path.add(dto);
         }
