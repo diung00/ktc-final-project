@@ -22,6 +22,10 @@ public class RestaurantDto {
     private String description;
     private String approvalStatus;
     private Long ownerId;
+    //Restaurant location
+    private double latitude;
+    private double longitude;
+
 
     public static RestaurantDto fromEntity(RestaurantsEntity newRestaurant) {
         return RestaurantDto.builder()
@@ -36,6 +40,8 @@ public class RestaurantDto {
                 .description(newRestaurant.getDescription())
                 .approvalStatus(newRestaurant.getApprovalStatus().name())
                 .ownerId(newRestaurant.getOwner() != null ? newRestaurant.getOwner().getId() : null)
+                .latitude(newRestaurant.getLatitude())
+                .longitude(newRestaurant.getLongitude())
                 .build();
     }
 }
