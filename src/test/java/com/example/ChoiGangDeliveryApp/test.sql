@@ -1,2 +1,2 @@
 
-DELETE FROM user WHERE username = 'huong2';
+DELETE FROM restaurants WHERE id = 4;
