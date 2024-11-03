@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>레스토랑 등록 페이지</title>
+    <link rel="stylesheet" href="../../static/css/restaurant/restaurant-create.css">
+</head>
+<body>
+<header>
+    <th:block th:replace="~{header-footer/header}"></th:block>
+</header>
+
+<div class="container">
+    <h5 class="my-3 border-bottom pb-2">레스토랑 정보</h5>
+    
+    <input type="hidden" id="restaurantId">
+    
+    <div class="mb-3">
+        <label for="name" class="form-label">이름</label>
+        <input type="text" name="name" id="name" class="form-control">
+    </div>
+    
+    <div class="mb-3">
+        <label for="address" class="form-label">주소</label>
+        <input type="text" name="address" id="address" class="form-control">
+    </div>
+    
+    <div class="mb-3">
+        <label for="phone" class="form-label">전화번호</label>
+        <input type="text" name="phone" id="phone" class="form-control">
+    </div>
+    
+    <div class="mb-3">
+        <label for="openingHours" class="form-label">영업 시간</label>
+        <input type="text" name="openingHours" id="openingHours" class="form-control">
+    </div>
+    
+    <div class="mb-3">
+        <label for="cuisineType" class="form-label">음식 종류</label>
+        <select name="cuisineType" id="cuisineType" class="form-control">
+            <option value="KOREAN_FOOD">한식</option>
+            <option value="JAPANESE_FOOD">일식</option>
+            <option value="CHINESE_FOOD">중식</option>
+            <option value="WESTERN_FOOD">양식</option>
+            <option value="FAST_FOOD">패스트푸드</option>
+            <option value="CAFE_DESSERT">카페/디저트</option>
+            <option value="CHICKEN">치킨</option>
+            <option value="PIZZA">피자</option>
+            <option value="ASIAN_FOOD">동남아 음식</option>
+            <option value="INTERNATIONAL_FOOD">기타 세계 음식</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="description" class="form-label">설명</label>
+        <textarea name="description" id="description" class="form-control" rows="5"></textarea>
+    </div>
+    
+    <button type="button" onclick="createRestaurant()" class="btn btn-primary my-2">저장하기</button>
+    
+    <!-- Restaurant Image Update Form -->
+    <div class="mb-3">
+        <form id="imageUploadForm">
+            <input type="file" id="image" name="image" accept="image/*">
+            <button type="button" onclick="uploadImage()" class="btn btn-primary my-2">Upload Image</button>
+        </form>
+    </div>
+</div>
+
+
+<th:block th:replace="~{header-footer/footer}"></th:block>
+<script src="/static/js/restaurant/restaurant-create.js"></script>
+
+</body>
+</html>

@@ -85,6 +85,95 @@ public class UserConfig {
                         .build();
                 userRepository.save(owner);
             }
+            if (!userRepository.existsByUsername("ownerTest3")) {
+                UserEntity owner = UserEntity.builder()
+                        .username("ownerTest3")
+                        .password(passwordEncoder.encode("12345"))
+                        .role(UserRole.ROLE_OWNER)
+                        .businessNumber("123456782023")
+                        .email("ownerTest3@example.com")
+                        .emailVerified(true)
+                        .build();
+                userRepository.save(owner);
+            }
+
+            if (!userRepository.existsByUsername("ownerTest4")) {
+                UserEntity owner = UserEntity.builder()
+                        .username("ownerTest4")
+                        .password(passwordEncoder.encode("12345"))
+                        .role(UserRole.ROLE_OWNER)
+                        .businessNumber("123456782012")
+                        .email("ownerTest4@example.com")
+                        .emailVerified(true)
+                        .build();
+                userRepository.save(owner);
+            }
+            if (!userRepository.existsByUsername("ownerTest5")) {
+                UserEntity owner = UserEntity.builder()
+                        .username("ownerTest5")
+                        .password(passwordEncoder.encode("12345"))
+                        .role(UserRole.ROLE_OWNER)
+                        .businessNumber("123456782124")
+                        .email("ownerTest5@example.com")
+                        .emailVerified(true)
+                        .build();
+                userRepository.save(owner);
+            }
+            if (!userRepository.existsByUsername("ownerTest6")) {
+                UserEntity owner = UserEntity.builder()
+                        .username("ownerTest6")
+                        .password(passwordEncoder.encode("12345"))
+                        .role(UserRole.ROLE_OWNER)
+                        .businessNumber("123456122024")
+                        .email("ownerTest6@example.com")
+                        .emailVerified(true)
+                        .build();
+                userRepository.save(owner);
+            }
+            if (!userRepository.existsByUsername("ownerTest7")) {
+                UserEntity owner = UserEntity.builder()
+                        .username("ownerTest7")
+                        .password(passwordEncoder.encode("12345"))
+                        .role(UserRole.ROLE_OWNER)
+                        .businessNumber("123126782024")
+                        .email("ownerTest7@example.com")
+                        .emailVerified(true)
+                        .build();
+                userRepository.save(owner);
+            }
+            if (!userRepository.existsByUsername("ownerTest8")) {
+                UserEntity owner = UserEntity.builder()
+                        .username("ownerTest8")
+                        .password(passwordEncoder.encode("12345"))
+                        .role(UserRole.ROLE_OWNER)
+                        .businessNumber("123452382024")
+                        .email("ownerTest8@example.com")
+                        .emailVerified(true)
+                        .build();
+                userRepository.save(owner);
+            }
+            if (!userRepository.existsByUsername("ownerTest9")) {
+                UserEntity owner = UserEntity.builder()
+                        .username("ownerTest9")
+                        .password(passwordEncoder.encode("12345"))
+                        .role(UserRole.ROLE_OWNER)
+                        .businessNumber("128956782024")
+                        .email("ownerTest9@example.com")
+                        .emailVerified(true)
+                        .build();
+                userRepository.save(owner);
+            }
+            if (!userRepository.existsByUsername("ownerTest10")) {
+                UserEntity owner = UserEntity.builder()
+                        .username("ownerTest10")
+                        .password(passwordEncoder.encode("12345"))
+                        .role(UserRole.ROLE_OWNER)
+                        .businessNumber("193456781224")
+                        .email("ownerTest10@example.com")
+                        .emailVerified(true)
+                        .build();
+                userRepository.save(owner);
+            }
             // Create customer user for testing
             if (!userRepository.existsByUsername("userTest1")) {
                 UserEntity customerUser = UserEntity.builder()
