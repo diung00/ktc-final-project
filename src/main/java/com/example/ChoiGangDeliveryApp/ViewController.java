@@ -89,6 +89,8 @@ public class ViewController {
     public String restaurantUpdate() {return "restaurant/restaurant-update";}
     @GetMapping("/restaurant-open")
     public String openRestaurant() {return "restaurant/restaurant-create";}
+    @GetMapping("/my-restaurant-requests")
+    public String myRestaurantRequests() {return "restaurant/restaurant-view-requests";}
 
     //Admin dashboard
     @GetMapping("/admin")
