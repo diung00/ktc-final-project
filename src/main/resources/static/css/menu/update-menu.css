@@ -1,0 +1,71 @@
+header {
+    background-color: #c2185b;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+h1 {
+    color: #c2185b;
+    font-size: 28px;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* Form container */
+#menu-form {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Label styling */
+#menu-form label {
+    display: block;
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+/* Input, textarea, and select styling */
+#menu-form input[type="text"],
+#menu-form input[type="number"],
+#menu-form textarea,
+#menu-form select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+/* Button styling */
+#menu-form button[type="submit"] {
+    background-color: #c2185b;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+#menu-form button[type="submit"]:hover {
+    background-color: #a5003a;
+}
+
+/* Response message styling */
+#response-message {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 16px;
+    color: #333;
+}

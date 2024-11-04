@@ -97,6 +97,10 @@ public class ViewController {
     public String viewMenu() {return "menu/restaurant-menu";}
     @GetMapping("/restaurant-add-menu")
     public String addMenu() {return "menu/create-menu";}
+    @GetMapping("/restaurant-update-menu")
+    public String updateMenu() {return "menu/update-menu";}
+    @GetMapping("/restaurant-delete-menu")
+    public String deleteMenu() {return "menu/delete-menu";}
 
     //Admin dashboard
     @GetMapping("/admin")
