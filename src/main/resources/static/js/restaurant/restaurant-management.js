@@ -1,4 +1,7 @@
 console.log("js is loading")
+document.addEventListener("DOMContentLoaded", function() {
+    fetchMyRestaurantInfo();
+});
 
 function fetchMyRestaurantInfo() {
     const restaurantDetails = document.getElementById('restaurant-details');
@@ -18,6 +21,7 @@ function fetchMyRestaurantInfo() {
         console.log("Response received:", response);
 
         if (response.ok) {
+            createButton.style.display = 'none';
             return response.json();
         } else {
             throw new Error('No registered restaurant found.');
@@ -28,11 +32,6 @@ function fetchMyRestaurantInfo() {
         const name = document.createElement('h2');
         name.textContent = data.name;
         restaurantDetails.appendChild(name);
-
-        // Cuisine type
-        const cuisineType = document.createElement('h2');
-        cuisineType.textContent = data.cuisineType;
-        restaurantDetails.appendChild(cuisineType);
 
         // Restaurant img
         const image = document.createElement('img');
@@ -49,7 +48,10 @@ function fetchMyRestaurantInfo() {
         const detailItems = [
             { label: '주소', value: data.address },
             { label: '전화번호', value: data.phone },
+            { label: '영업 시간', value: data.openingHours },
+            { label: '음식 종류', value: data.cuisineType },
             { label: '설명', value: data.description },
+
         ];
 
         detailItems.forEach(item => {
@@ -64,6 +66,24 @@ function fetchMyRestaurantInfo() {
             detailList.appendChild(value);
         });
 
+        //Add Restaurant Menu
+        //
+        buttonContainer.innerHTML =
+                '<button class="btn btn-success btn-restaurant" id="updateRestaurantBtn">레스토랑 수정</button>\n' +
+                '<button class="btn btn-danger btn-restaurant" id="deleteRestaurantBtn">레스토랑 삭제</button>'
+
+        const updateRestaurantBtn = document.getElementById('updateRestaurantBtn');
+        updateRestaurantBtn.addEventListener('click', () => {
+                location.href = `views/restaurant-update`;
+        })
+
+        const deleteHotelBtn = document.getElementById('deleteRestaurantBtn');
+        // 레스토랑 삭제 버튼 클릭 시 경고창 표시 후 삭제 여부 확인
+        deleteRestaurantBtn.addEventListener('click', () => {
+            if (confirm("정말 삭제하시겠습니까?")) {
+                deleteRestaurant(data.id);
+            }
+
         // Initialize map
         console.log("Initializing map with coordinates:", data.latitude, data.longitude);
 
@@ -72,13 +92,19 @@ function fetchMyRestaurantInfo() {
     .catch(error => {
         console.error('Fetch error:', error);
         restaurantDetails.textContent = 'Error connecting to the server. Details: ' + error.message;
-
+        // Display error message
+        restaurantDetails.textContent = '현재 등록된 레스토랑이 없습니다.';
         // Create "Create Restaurant" button if no restaurant is found
-        restaurantDetails.textContent = '현재 등록된 식당이 없습니다.';
         buttonContainer.innerHTML =
-            '<button class="btn btn-primary btn-restaurant" id="createRestaurantBtn">식당 생성</button>';
+                '<button class="btn btn-primary btn-restaurant" id="createRestaurantBtn">레스토랑생성</button>';
+
+        const createRestaurantBtn = document.getElementById('createRestaurantBtn');
+        createRestaurantBtn.addEventListener('click', () => {
+            location.href = `/views/restaurant-open`;
+        })
     });
-}
+    }}
+
 fetchMyRestaurantInfo();
 
 let position = new naver.maps.LatLng(37.3595704, 127.105399)
