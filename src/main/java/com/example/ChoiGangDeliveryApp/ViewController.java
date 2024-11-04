@@ -95,7 +95,7 @@ public class ViewController {
     //Menu
     @GetMapping("/menu")
     public String viewMenu() {return "menu/restaurant-menu";}
-    @GetMapping("/restaurant-add-Menu")
+    @GetMapping("/restaurant-add-menu")
     public String addMenu() {return "menu/create-menu";}
 
     //Admin dashboard

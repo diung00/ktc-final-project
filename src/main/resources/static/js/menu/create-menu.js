@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const urlParams = new URLSearchParams(window.location.search);
     const restaurantId = urlParams.get("id"); // Lấy ID từ query string
 
+
     const menuForm = document.getElementById("menu-form");
     menuForm.addEventListener("submit", (event) => {
         event.preventDefault();

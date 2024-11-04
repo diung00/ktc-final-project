@@ -16,6 +16,10 @@ function fetchRestaurantById(restaurantId) {
             }
         });
 }
+document.getElementById('add-menu-btn').addEventListener('click', function() {
+    location.href = '/views/restaurant-add-menu';
+});
+
 
 function fetchMenuByRestaurantId(restaurantId) {
     const restaurantDetails = document.getElementById('restaurant-details');

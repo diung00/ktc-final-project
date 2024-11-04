@@ -5,12 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restaurant Menu</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../static/css/menu/create-menu.css">
 </head>
 <body>
 
 <header>
-    <h1 class="text-center">Restaurant Menu</h1>
+    <th:block th:replace="~{header-footer/header}"></th:block>
 </header>
+<!-- Add Menu -->
+<div id="addMenu-container">
+    <button id="add-menu-btn" class="btn btn-primary">메뉴 등록</button>
+</div>
 
 <div class="container mt-5">
     <div id="restaurant-details" class="border p-4 text-center">
@@ -24,6 +29,8 @@
         </ul>
     </div>
 </div>
+
+<th:block th:replace="~{header-footer/footer}"></th:block>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="/static/js/menu/restaurant-menu.js"></script>

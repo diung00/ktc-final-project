@@ -1,30 +1,64 @@
-<h1>Create Menu</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Menu</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../static/css/menu/create-menu.css">
+</head>
+<body>
+
+<header>
+    <th:block th:replace="~{header-footer/header}"></th:block>
+</header>
+
+<h1>메뉴 등록</h1>
 <form id="menu-form">
 
-  <label for="name">Menu Name:</label>
+  <label for="name">메뉴 이름:</label>
   <input type="text" id="name" required><br>
 
-  <label for="price">Price:</label>
-  <input type="number" id="price" required><br>
+  <label for="price">가격 (₩):</label>
+  <input type="number" id="price" step="500" required><br>
 
-  <label for="description">Description:</label>
+  <label for="description">설명:</label>
   <textarea id="description" required></textarea><br>
+  <small>가격은 500원 단위로 입력하세요.</small><br>
 
-  <label for="menuStatus">Menu Status:</label>
+  <label for="menuStatus">메뉴 상태:</label>
   <select id="menuStatus" required>
-    <option value="AVAILABLE">Available</option>
-    <option value="SOLD_OUT">Sold Out</option>
+    <option value="AVAILABLE">판매 중</option>
+    <option value="SOLD_OUT">품절</option>
   </select><br>
 
-  <label for="preparationTime">Preparation Time (minutes):</label>
+  <label for="preparationTime">준비 시간 (분):</label>
   <input type="number" id="preparationTime" required><br>
 
-  <label for="cuisineType">Cuisine Type:</label>
-  <input type="text" id="cuisineType"><br>
+  <label for="cuisineType">요리 종류:</label>
+  <select name="cuisineType" id="cuisineType" class="form-control" required>
+    <option value="KOREAN_FOOD">한식</option>
+    <option value="JAPANESE_FOOD">일식</option>
+    <option value="CHINESE_FOOD">중식</option>
+    <option value="WESTERN_FOOD">양식</option>
+    <option value="FAST_FOOD">패스트푸드</option>
+    <option value="CAFE_DESSERT">카페/디저트</option>
+    <option value="CHICKEN">치킨</option>
+    <option value="PIZZA">피자</option>
+    <option value="ASIAN_FOOD">동남아 음식</option>
+    <option value="INTERNATIONAL_FOOD">기타 세계 음식</option>
+  </select><br>
 
-  <button type="submit">Create Menu</button>
+  <button type="submit">메뉴 만들기</button>
 </form>
 
 <div id="response-message"></div>
 
+
+<div id="response-message"></div>
+
+<th:block th:replace="~{header-footer/footer}"></th:block>
+
 <script src="/static/js/menu/create-menu.js"></script>
+</body>
+</html>
