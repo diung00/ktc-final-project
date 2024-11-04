@@ -5,10 +5,10 @@
 <header>
     <!-- 부트 스트랩 세팅도 on -->
     <div class="nav-bar">
-        <a href="/views" class="logo">Homepage</a>
+        <a href="/views" class="logo">ChoiGangDelivery</a>
         <!-- 나중에 로고에 아이콘 링크시키기 -->
 <!--        <ul class="nav-menu">-->
-<!--            <li><a href="/hotel">호텔</a></li>-->
+<!--            <li><a href="/restaurants">Restaurants</a></li>-->
 <!--            <li><a href="/foods">맛집</a></li>-->
 <!--            &lt;!&ndash; 추가 메뉴 항목 &ndash;&gt;-->
 <!--        </ul>-->
@@ -53,7 +53,7 @@
             usernameHref.href = '/views/get-my-profile';
             usernameHref.style.textDecoration = 'none';
             usernameHref.style.color = 'black';
-            usernameHref.innerHTML = `<span class="username">${data.username}</span>`;
+            usernameHref.innerHTML = `<span class="username" style="margin-right: 8px;"> ${data.username} </span>`;
 
             const userRoleSpan = document.createElement('span');
             userRoleSpan.classList.add('user-role');
@@ -62,6 +62,19 @@
             let additionalHref = null;
             if (data.role === 'ROLE_USER') {
                 role = ' 회원';
+                const userHref = document.createElement('a');
+                userHref.href = '/views/my-order';
+                userHref.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16"> <path d="M0 1a1 1 0 0 1 1-1h1.204a.5.5 0 0 1 .491.408L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L1.61 2H1a1 1 0 0 1-1-1zm3.01 2L4.89 10H13l1.25-6.75H3.01z"/> <path d="M4.5 12a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm5 0a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/> </svg> My Order';
+                managementHref.classList.add('text-menu');
+                additionalHref = managementHref;
+            }
+            else if (data.role === 'ROLE_DRIVER') {
+                role = ' 배달원';
+                const managementHref = document.createElement('a');
+                managementHref.href = '/views/driver';
+                managementHref.innerText = ' 배달 대시보드';
+                managementHref.classList.add('text-menu');
+                additionalHref = managementHref;
             }
             else if (data.role === 'ROLE_OWNER') {
                 role = ' 매니저';

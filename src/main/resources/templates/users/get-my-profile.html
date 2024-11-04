@@ -3,49 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <title>My Profile</title>
+    <link rel="stylesheet" href="../../static/css/users/get-my-profile.css">
 </head>
 <body>
+<header>
+    <th:block th:replace="~{header-footer/header}"></th:block>
+</header> 
 
-<div class="header">
-    <a href="/views" class="site-name">ChoiGangDelivery</a>
-    <a href="/views/login" class="login-link" id="logout-link">Logout</a>
-    <a href="/views/get-my-profile">My Profile</a>
-
-</div>
 <h1>My profile</h1>
-<div>
-    <a href="/views/update-profile">update profile</a>
-    <a href="/views/change-password">change password</a>
-    <a href="/views/reset-password">reset password</a>
-    <a href="/views/upload-profile-image">upload profile image</a>
-
+<!-- Profile Information Section -->
+<div class="section">
+    <img id="profileImg" src="" alt="Profile Image" style="max-width: 200px; height: auto;">
+    <h3 id="name"></h3>
+    <h3 id="nickname"></h3>
+    <h3 id="age"></h3>
+    <h3 id="email"></h3>
+    <h3 id="phone"></h3>
+    <h3 id="address"></h3>
+    <h3 id="emailVerified"></h3>
+    <h3 id="licenseNumber" style="display: none;"></h3>
+    <h3 id="businessNumber" style="display: none;"></h3>
 </div>
 
-<h3 id="username"></h3>
-<h3 id="password"></h3>
-<h3 id="name"></h3>
-<h3 id="nickname"></h3>
-<h3 id="age"></h3>
-<h3 id="email"></h3>
-<h3 id="phone"></h3>
-<h3 id="address"></h3>
-<h3>Profile Image:</h3>
-<img id="profileImg" src="" alt="Profile Image" style="max-width: 200px; height: auto;">
-<h3 id="role"></h3>
-<h3 id="licenseNumber"></h3>
-<h3 id="businessNumber"></h3>
+<!-- Personal Information Section -->
+<div class="section">
+    <h2>나의 정보 관리</h2>
+    <div><a href="/views/update-profile">회원 정보 변경</a></div>
+    <div><a href="/views/change-password">비미번호 변경</a></div>
+    <div><a href="/views/upload-profile-image">프로파일 사진 병경</a></div>
+</div>
 
-<a href="/views/request-driver-role">request driver role</a><br>
-<a href="/views/driver-request-status">Driver request status</a><br>
-<a href="/views/request-owner-role">request owner role</a><br>
-<a href="/views/owner-request-status">Owner request status</a>
+<div class="section">
+    <h2>요청 관리</h2>
+    <div><a href="/views/request-driver-role">운전자 역할로 업그레이드</a></div>
+    <div><a href="/views/request-owner-role">소유자 역할로 업그레이드</a></div>
+    <div><a href="/views/driver-request-status">운전자 요청 상태</a></div>
+    <div><a href="/views/owner-request-status">소유자 요청 상태</a></div>
+</div>
 
+<br>
 
-<h3 id="emailVerified"></h3>
-
-<h3 id="restaurant"><a href="/views/restaurant-management">My restaurant</a></h3>
-<h3 id="orders"></h3>
-<h3 id="driver"><a href="link chuyển hướng sang giao diện của driver">Driver mode</a></h3>
+<th:block th:replace="~{header-footer/footer}"></th:block>
 
 <script src="/static/js/users/get-my-profile.js"></script>
 </body>
