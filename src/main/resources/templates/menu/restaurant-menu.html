@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restaurant Menu</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../static/css/menu/create-menu.css">
+    <link rel="stylesheet" href="../../static/css/menu/restaurant-menu.css">
 </head>
 <body>
 
@@ -14,21 +13,45 @@
 </header>
 <!-- Add Menu -->
 <div id="addMenu-container">
-    <button id="add-menu-btn" class="btn btn-primary">메뉴 등록</button>
+    <button id="add-menu-btn" class="custom-btn">메뉴 등록</button>
 </div>
 
-<div class="container mt-5">
+<div id="menu-list" class="mt-4">
+    <h2>Restaurant's Menu</h2>
+    <!-- Menu Table -->
+    <table id="menu-table" class="table">
+        <thead>
+            <tr>
+                <th>메뉴 ID</th>
+                <th>메뉴 이름</th>
+                <th>가격 (₩)</th>
+                <th>설명</th>
+                <th>상태</th>
+                <th>준비 시간 (분)</th>
+                <th>종류</th>
+                <th>이미지</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="menu-items">
+            <!-- Menu content will be displayed here -->
+        </tbody>
+    </table>
+</div>
+
+
+<!-- <div class="container mt-5">
     <div id="restaurant-details" class="border p-4 text-center">
-        <!-- Restaurant Info sẽ được hiển thị ở đây -->
+        Restaurant Info sẽ được hiển thị ở đây
     </div>
 
     <div id="menu-list" class="mt-4">
         <h2>Restaurant's menu</h2>
         <ul id="menu-items" class="list-group">
-            <!-- Các mục thực đơn sẽ được hiển thị ở đây -->
+            Các mục thực đơn sẽ được hiển thị ở đây
         </ul>
     </div>
-</div>
+</div> -->
 
 <th:block th:replace="~{header-footer/footer}"></th:block>
 
