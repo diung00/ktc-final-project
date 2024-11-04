@@ -1,0 +1,68 @@
+header {
+    background-color: #c2185b; 
+    color: white; 
+    padding: 20px;
+    text-align: center;
+}
+#addMenu-container {
+    display: flex;
+    justify-content: left;
+    margin-top: 20px;
+}
+
+#add-menu-btn {
+    font-size: 16px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin: 15px 5px 15px;
+    background-color: #c2185b;
+    color: white;
+    border: none;
+}
+#add-menu-btn:hover {
+    background-color: #e84687;
+}
+#restaurant-details {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#restaurant-details p {
+    font-size: 1em;
+    color: #333;
+}
+
+
+#menu-list {
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+#menu-list h2 {
+    font-size: 1.5em;
+    color: #343a40;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+#menu-items {
+    list-style: none;
+    padding: 0;
+}
+
+#menu-items .list-group-item {
+    padding: 10px 15px;
+    font-size: 1.1em;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    transition: background-color 0.3s ease;
+}
+
+#menu-items .list-group-item:hover {
+    background-color: #f1f1f1;
+}

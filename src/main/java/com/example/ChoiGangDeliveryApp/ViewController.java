@@ -72,14 +72,14 @@ public class ViewController {
     @GetMapping("/owner-request-status")
     public String ownerRequestStatus(){return "users/owner-request-status";}
 
-    @GetMapping("current-order")
+    @GetMapping("/current-order")
     public String driverLocation(){return "users/current-order";}
 
 
-    @GetMapping("list-restaurant")
+    @GetMapping("/list-restaurant")
     public String listRestaurant(){return "restaurant/list-restaurant";}
 
-    @GetMapping("get-one-restaurant")
+    @GetMapping("/get-one-restaurant")
     public String getOneRestaurant(){return "restaurant-details";}
 
     //owner
@@ -91,6 +91,12 @@ public class ViewController {
     public String openRestaurant() {return "restaurant/restaurant-create";}
     @GetMapping("/my-restaurant-requests")
     public String myRestaurantRequests() {return "restaurant/restaurant-view-requests";}
+
+    //Menu
+    @GetMapping("/menu")
+    public String viewMenu() {return "menu/restaurant-menu";}
+    @GetMapping("/restaurant-add-menu")
+    public String addMenu() {return "menu/create-menu";}
 
     //Admin dashboard
     @GetMapping("/admin")

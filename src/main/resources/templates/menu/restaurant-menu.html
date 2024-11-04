@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Menu</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../static/css/menu/create-menu.css">
+</head>
+<body>
+
+<header>
+    <th:block th:replace="~{header-footer/header}"></th:block>
+</header>
+<!-- Add Menu -->
+<div id="addMenu-container">
+    <button id="add-menu-btn" class="btn btn-primary">메뉴 등록</button>
+</div>
+
+<div class="container mt-5">
+    <div id="restaurant-details" class="border p-4 text-center">
+        <!-- Restaurant Info sẽ được hiển thị ở đây -->
+    </div>
+
+    <div id="menu-list" class="mt-4">
+        <h2>Restaurant's menu</h2>
+        <ul id="menu-items" class="list-group">
+            <!-- Các mục thực đơn sẽ được hiển thị ở đây -->
+        </ul>
+    </div>
+</div>
+
+<th:block th:replace="~{header-footer/footer}"></th:block>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="/static/js/menu/restaurant-menu.js"></script>
+</body>
+</html>
