@@ -64,9 +64,9 @@
                 role = ' 회원';
                 const userHref = document.createElement('a');
                 userHref.href = '/views/my-order';
-                userHref.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16"> <path d="M0 1a1 1 0 0 1 1-1h1.204a.5.5 0 0 1 .491.408L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L1.61 2H1a1 1 0 0 1-1-1zm3.01 2L4.89 10H13l1.25-6.75H3.01z"/> <path d="M4.5 12a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm5 0a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/> </svg> My Order';
-                managementHref.classList.add('text-menu');
-                additionalHref = managementHref;
+                userHref.innerHTML = `🛒 My Order`;
+                userHref.classList.add('text-menu');
+                additionalHref = userHref;
             }
             else if (data.role === 'ROLE_DRIVER') {
                 role = ' 배달원';
