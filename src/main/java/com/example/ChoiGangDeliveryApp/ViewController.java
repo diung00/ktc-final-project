@@ -80,7 +80,7 @@ public class ViewController {
     public String listRestaurant(){return "restaurant/list-restaurant";}
 
     @GetMapping("get-one-restaurant")
-    public String getOneRestaurant(){return "restaurant-details";}
+    public String getOneRestaurant(){return "restaurant/restaurant-details";}
 
     //owner
     @GetMapping("/restaurant-management")
@@ -95,4 +95,13 @@ public class ViewController {
     public String admin() {return "admin/admin";}
 
 
+    //menu
+    @GetMapping("/create-menu")
+    public String createMenu() {return "menu/create-menu";}
+    @GetMapping("restaurant-menu")
+    public String restaurantMenu() {return "menu/restaurant-menu";}
+
+    //order
+    @GetMapping("/order")
+    public String order() {return "users/order";}
 }

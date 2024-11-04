@@ -1,0 +1,30 @@
+<h1>Create Menu</h1>
+<form id="menu-form">
+
+  <label for="name">Menu Name:</label>
+  <input type="text" id="name" required><br>
+
+  <label for="price">Price:</label>
+  <input type="number" id="price" required><br>
+
+  <label for="description">Description:</label>
+  <textarea id="description" required></textarea><br>
+
+  <label for="menuStatus">Menu Status:</label>
+  <select id="menuStatus" required>
+    <option value="AVAILABLE">Available</option>
+    <option value="SOLD_OUT">Sold Out</option>
+  </select><br>
+
+  <label for="preparationTime">Preparation Time (minutes):</label>
+  <input type="number" id="preparationTime" required><br>
+
+  <label for="cuisineType">Cuisine Type:</label>
+  <input type="text" id="cuisineType"><br>
+
+  <button type="submit">Create Menu</button>
+</form>
+
+<div id="response-message"></div>
+
+<script src="/static/js/menu/create-menu.js"></script>
