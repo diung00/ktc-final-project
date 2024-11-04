@@ -28,7 +28,7 @@ public class WebSecurityConfig {
     ) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/", "/views/**").permitAll();
+                    auth.requestMatchers("/", "/views/**", "/static/img/**").permitAll();
                     auth.requestMatchers(
                                     "/users/login",
                                     "/users/signup",
