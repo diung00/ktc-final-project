@@ -37,9 +37,9 @@ public class OrderDto {
                 .deliveryAddress(entity.getDeliveryAddress())
                 .restaurantId(entity.getRestaurant() != null ? entity.getRestaurant().getId() : null)
                 .orderStatus(entity.getOrderStatus().name())
-                .totalMenusPrice(entity.calculateTotalMenusPrice())
+                .totalMenusPrice(entity.getTotalMenusPrice())
                 .shippingFee(entity.getShippingFee())
-                .totalAmount(entity.calculateTotalAmount())
+                .totalAmount(entity.getTotalAmount())
                 .estimatedArrivalTime(entity.getEstimatedArrivalTime())
                 .note(entity.getNote())
                 .build();
