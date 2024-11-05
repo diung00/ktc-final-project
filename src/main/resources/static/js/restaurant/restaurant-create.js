@@ -64,7 +64,7 @@ async function loadRestaurantId() {
             // call uploadImage
             await uploadImage(restaurantId);
             
-            // Xóa form
+            // Clear form
             clearForm();
         } else {
             alert("Failed to load restaurant data. Please make sure you are logged in.");
@@ -76,8 +76,11 @@ async function loadRestaurantId() {
 
 // Function to upload an image for the restaurant
 async function uploadImage(restaurantId) {
+    if (!restaurantId) {
+        restaurantId = localStorage.getItem("restaurantId");
+    }
     const imageFile = document.getElementById("image").files[0];
-    const restaurantId = localStorage.getItem("restaurantId");
+    
 
     if (!imageFile) {
         alert("Please select an image to upload.");

@@ -5,10 +5,10 @@
 <header>
     <!-- 부트 스트랩 세팅도 on -->
     <div class="nav-bar">
-        <a href="/views" class="logo">Homepage</a>
+        <a href="/views" class="logo">ChoiGangDelivery</a>
         <!-- 나중에 로고에 아이콘 링크시키기 -->
 <!--        <ul class="nav-menu">-->
-<!--            <li><a href="/hotel">호텔</a></li>-->
+<!--            <li><a href="/restaurants">Restaurants</a></li>-->
 <!--            <li><a href="/foods">맛집</a></li>-->
 <!--            &lt;!&ndash; 추가 메뉴 항목 &ndash;&gt;-->
 <!--        </ul>-->
@@ -53,7 +53,7 @@
             usernameHref.href = '/views/get-my-profile';
             usernameHref.style.textDecoration = 'none';
             usernameHref.style.color = 'black';
-            usernameHref.innerHTML = `<span class="username">${data.username}</span>`;
+            usernameHref.innerHTML = `<span class="username" style="margin-right: 8px;"> ${data.username} </span>`;
 
             const userRoleSpan = document.createElement('span');
             userRoleSpan.classList.add('user-role');
@@ -62,6 +62,19 @@
             let additionalHref = null;
             if (data.role === 'ROLE_USER') {
                 role = ' 회원';
+                const userHref = document.createElement('a');
+                userHref.href = '/views/my-order';
+                userHref.innerHTML = `🛒 My Order`;
+                userHref.classList.add('text-menu');
+                additionalHref = userHref;
+            }
+            else if (data.role === 'ROLE_DRIVER') {
+                role = ' 배달원';
+                const managementHref = document.createElement('a');
+                managementHref.href = '/views/driver';
+                managementHref.innerText = ' 배달 대시보드';
+                managementHref.classList.add('text-menu');
+                additionalHref = managementHref;
             }
             else if (data.role === 'ROLE_OWNER') {
                 role = ' 매니저';

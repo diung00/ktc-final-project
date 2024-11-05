@@ -13,6 +13,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.intercept.AuthorizationFilter;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 @Configuration
 @RequiredArgsConstructor
@@ -28,7 +29,7 @@ public class WebSecurityConfig {
     ) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/", "/views/**").permitAll();
+                    auth.requestMatchers("/", "/views/**", "/static/img/**").permitAll();
                     auth.requestMatchers(
                                     "/users/login",
                                     "/users/signup",

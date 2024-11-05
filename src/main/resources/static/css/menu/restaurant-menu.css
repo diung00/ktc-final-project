@@ -1,0 +1,111 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+header {
+    background-color: #c2185b; 
+    color: white; 
+    padding: 20px;
+    text-align: center;
+}
+
+h2 {
+    text-align: center;
+    margin-top: 20px;
+    color: #c2185b;
+}
+
+#addMenu-container {
+    text-align: center; /* Center align the add menu button */
+    margin: 20px 0; /* Add margin above and below the button */
+}
+
+.custom-btn {
+    background-color: #c2185b; /* Same color as header */
+    color: white; /* White text color */
+    border: none; /* No border */
+    padding: 10px 20px; /* Padding for the button */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.custom-btn:hover {
+    background-color: #a5003a; /* Darker shade for hover effect */
+}
+
+.update-menu-btn {
+    background-color: #c2185b; 
+    color: white; 
+    border: none; 
+    padding: 8px 16px; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    transition: background-color 0.3s ease;
+}
+
+.update-menu-btn:hover {
+    background-color: #a5003a;
+}
+
+#menu-list {
+    overflow-x: auto;
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 800px; 
+    background-color: white; 
+    border-radius: 8px; 
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+table {
+    width: 100%; 
+    border-collapse: collapse; 
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 12px; 
+    text-align: center; 
+    border-bottom: 1px solid #ddd; 
+    min-height: 60px;
+}
+
+th {
+    background-color: #c2185b;
+    color: white; 
+}
+
+tr:hover {
+    background-color: #e3f2fd; 
+}
+
+td {
+    color: #666; 
+    font-size: 14px; 
+}
+
+td img {
+    max-width: 100%;
+    height: auto; 
+    display: block; 
+    margin: auto; 
+}
+
+td:nth-child(5) {
+    font-weight: bold; 
+    color: #c2185b; 
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    th, td {
+        padding: 8px; 
+    }
+
+    h2 {
+        font-size: 18px; 
+    }
+}

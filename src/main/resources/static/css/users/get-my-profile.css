@@ -1,0 +1,105 @@
+/* Reset some default browser styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    color: #333;
+    background-color: #f9f9f9;
+    line-height: 1.6;
+}
+
+header {
+    background-color: #c2185b; 
+    color: white; 
+    padding: 20px;
+    text-align: center;
+}
+
+.header a {
+    color: rgb(29, 28, 28);
+    text-decoration: none;
+    margin-left: 15px;
+    font-size: 18px;
+}
+
+.header a:hover {
+    text-decoration: underline;
+}
+
+.site-name {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+h1 {
+    color: #c2185b;
+    font-size: 28px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.section {
+    width: 80%;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 15px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.section img {
+    display: block;
+    margin: 0 auto;
+    border-radius: 5%;
+}
+
+.section h3 {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.section h2 {
+    font-size: 22px;
+    color: black;
+    border-bottom: 2px solid rgba(128, 128, 128, 0.211);
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+}
+
+.section div {
+    margin-top: 10px;
+}
+
+.section div a {
+    color: rgba(17, 1, 1, 0.595);
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.section div a:hover {
+    text-decoration: underline;
+}
+
+#role-specific-info {
+    display: none; /* this will be controlled by JavaScript */
+}
+
+/* Profile Image */
+#profileImg {
+    width: 150px;
+    height: auto;
+    margin: 20px auto;
+    display: block;
+    border-radius: 5%;
+}
+
+h3 span.text-muted {
+    color: #777;
+}
+

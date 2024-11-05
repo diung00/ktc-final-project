@@ -16,8 +16,8 @@
 /*}*/
 
 .footer-distributed{
-    background: #666;
-    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
+    background: grey;
+    box-shadow: 0 1px 1px 0 whitesmoke;
     box-sizing: border-box;
     width: 100%;
     text-align: left;
@@ -47,7 +47,7 @@
 }
 
 .footer-distributed h3 span{
-    color:  lightseagreen;
+    color:  rgb(244, 9, 173);
 }
 
 /* Footer links */
@@ -67,7 +67,7 @@
 }
 
 .footer-distributed .footer-company-name{
-    color:  #222;
+    color: white;
     font-size: 14px;
     font-weight: normal;
     margin: 0;
@@ -80,7 +80,7 @@
 }
 
 .footer-distributed .footer-center i{
-    background-color:  #33383b;
+    background-color:  #c2185b;
     color: #ffffff;
     font-size: 25px;
     width: 38px;
@@ -113,7 +113,7 @@
 }
 
 .footer-distributed .footer-center p a{
-    color:  lightseagreen;
+    color:  white;
     text-decoration: none;;
 }
 

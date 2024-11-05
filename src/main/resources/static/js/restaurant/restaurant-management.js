@@ -16,6 +16,10 @@ function fetchMyRestaurantInfo() {
     })
     .then(response => {
         console.log("Response received:", response);
+        //View restaurant request
+        document.getElementById('view-requests-btn').addEventListener('click', function() {
+            location.href = '/views/my-restaurant-requests';
+        });
 
         if (response.ok) {
             return response.json();
@@ -28,11 +32,6 @@ function fetchMyRestaurantInfo() {
         const name = document.createElement('h2');
         name.textContent = data.name;
         restaurantDetails.appendChild(name);
-
-        // Cuisine type
-        const cuisineType = document.createElement('h2');
-        cuisineType.textContent = data.cuisineType;
-        restaurantDetails.appendChild(cuisineType);
 
         // Restaurant img
         const image = document.createElement('img');
@@ -49,7 +48,10 @@ function fetchMyRestaurantInfo() {
         const detailItems = [
             { label: '주소', value: data.address },
             { label: '전화번호', value: data.phone },
+            { label: '영업 시간', value: data.openingHours },
+            { label: '음식 종류', value: data.cuisineType },
             { label: '설명', value: data.description },
+
         ];
 
         detailItems.forEach(item => {
@@ -64,6 +66,38 @@ function fetchMyRestaurantInfo() {
             detailList.appendChild(value);
         });
 
+        // viewMenuBtn, updateRestaurantBtn, closeRestaurantBtn
+        buttonContainer.innerHTML =
+            '<button class="btn btn-primary btn-restaurant" id="viewOrderBtn">주문 보기</button>\n' +
+            '<button class="btn btn-primary btn-restaurant" id="viewMenuBtn">메뉴 보기</button>\n' +
+            '<button class="btn btn-success btn-restaurant" id="updateRestaurantBtn">레스토랑 수정</button>\n' +
+            '<button class="btn btn-danger btn-restaurant" id="closeRestaurantBtn">레스토랑 삭제</button>';
+
+        // View Order
+        const viewOrderBtn = document.getElementById('viewOrderBtn');
+        viewOrderBtn.addEventListener('click', () => {
+            location.href = `/views/order`; 
+        });
+
+        // View Menu Button
+        const viewMenuBtn = document.getElementById('viewMenuBtn');
+        viewMenuBtn.addEventListener('click', () => {
+            location.href = `/views/menu`; 
+        });
+        //Update Restaurant Button
+        const updateRestaurantBtn = document.getElementById('updateRestaurantBtn');
+        updateRestaurantBtn.addEventListener('click', () => {
+            location.href = `/views/restaurant-update`;
+        });
+        //Close Restaurant Button
+        const closeRestaurantBtn = document.getElementById('closeRestaurantBtn');
+        // 레스토랑 삭제 버튼 클릭 시 경고창 표시 후 삭제 여부 확인
+        closeRestaurantBtn.addEventListener('click', () => {
+            if (confirm("정말 삭제하시겠습니까?")) {
+                closeRestaurant(data.id);
+            }
+        });
+
         // Initialize map
         console.log("Initializing map with coordinates:", data.latitude, data.longitude);
 
@@ -72,25 +106,49 @@ function fetchMyRestaurantInfo() {
     .catch(error => {
         console.error('Fetch error:', error);
         restaurantDetails.textContent = 'Error connecting to the server. Details: ' + error.message;
-
+        // Display error message
+        restaurantDetails.textContent = '현재 등록된 레스토랑이 없습니다.';
         // Create "Create Restaurant" button if no restaurant is found
-        restaurantDetails.textContent = '현재 등록된 식당이 없습니다.';
         buttonContainer.innerHTML =
-            '<button class="btn btn-primary btn-restaurant" id="createRestaurantBtn">식당 생성</button>';
+            '<button class="btn btn-primary btn-restaurant" id="createRestaurantBtn">레스토랑생성</button>';
+
+        const createRestaurantBtn = document.getElementById('createRestaurantBtn');
+        createRestaurantBtn.addEventListener('click', () => {
+            location.href = `/views/restaurant-open`;
+        })
     });
 }
-fetchMyRestaurantInfo();
 
-let position = new naver.maps.LatLng(37.3595704, 127.105399)
-  let mapOptions = {
-    center: position,
-    zoom: 15,
-    zoomControl: true,
-    zoomControlOptions: {
-      position: naver.maps.Position.TOP_RIGHT
+// Close Restaurant Fuction
+async function closeRestaurant(restaurantId) {
+    const jwt = localStorage.getItem("token");
+    if (!jwt) {
+        alert('You must be logged in to process.');
+        return;
     }
-  };
+    try {
+        const response = await fetch(`/restaurants/${restaurantId}/close`, {
+            method: "DELETE",
+            headers: {
+                'Authorization': `Bearer ${jwt}`
+            }
+        });
+        const responseText = await response.text();
+        console.log('Response:', responseText);
 
+        if (response.ok) {
+            alert('삭제를 완료했습니다.');
+            location.reload();
+        } else {
+            const data = JSON.parse(responseText);
+            console.error(data);
+            alert('삭제에 실패했습니다.');
+        }
+    } catch (error) {
+        console.error('Error: ', error);
+        alert('요청하는 동안 오류가 발생했습니다.')
+    }
+}
  
 // Map function
 function initMap(latitude, longitude) {
@@ -109,31 +167,61 @@ function initMap(latitude, longitude) {
 
     // Initialize the map
     const map = new naver.maps.Map(mapElement, mapOptions);
-
-    // Create a polyline variable (if needed) and markers array
-    let polyline = null;
-    let markers = [];
-
-    // Set up the click event listener for the map
-    naver.maps.Event.addListener(map, 'click', function(e) {
-        // Clear existing polyline if necessary
-        if (polyline) {
-            polyline.setMap(null);
+    
+    console.log('Map initialized:', map);
+    
+    // Create a marker at the restaurant's location
+    const iconUrl = '/static/img/icon/map.png';
+    console.log("Marker icon URL:", iconUrl);
+    var markerOptions = {
+        position: new naver.maps.LatLng(latitude, longitude),
+        map: map,
+        icon: {
+            url: iconUrl,
+            size: new naver.maps.Size(32, 32),
+            origin: new naver.maps.Point(0, 0),
+            anchor: new naver.maps.Point(16, 32)
         }
+    };
+    var marker = new naver.maps.Marker(markerOptions);
+    console.log('Marker position:', latitude, longitude);
+    console.log('Marker created:', marker);
+    
+    const img = new Image();
+    img.src = iconUrl;
+    img.onload = function() {
+        console.log('Icon loaded successfully');
+    };
+    img.onerror = function() {
+        console.error('Error loading icon');
+    };
 
-        // If there are already two markers, remove them
-        if (markers.length === 2) {
-            markers.forEach(marker => {
-                marker.setMap(null);
-            });
-            markers.length = 0; // Clear the markers array
-        } else {
-            // Add a new marker at the clicked position
-            const newMarker = new naver.maps.Marker({
-                position: e.coord,
-                map: map,
-            });
-            markers.push(newMarker); // Add new marker to the array
-        }
-    });
+    
+    // // Create a polyline variable (if needed) and markers array
+    // let polyline = null;
+    // let markers = [];
+
+    // // Set up the click event listener for the map
+    // naver.maps.Event.addListener(map, 'click', function(e) {
+    //     // Clear existing polyline if necessary
+    //     if (polyline) {
+    //         polyline.setMap(null);
+    //     }
+
+    //     // If there are already two markers, remove them
+    //     if (markers.length === 2) {
+    //         markers.forEach(marker => {
+    //             marker.setMap(null);
+    //         });
+    //         markers.length = 0; // Clear the markers array
+    //     } else {
+    //         // Add a new marker at the clicked position
+    //         const newMarker = new naver.maps.Marker({
+    //             position: e.coord,
+    //             map: map
+    //         });
+    //         markers.push(newMarker); // Add new marker to the array
+    //     }
+    // });
 }
+fetchMyRestaurantInfo();
