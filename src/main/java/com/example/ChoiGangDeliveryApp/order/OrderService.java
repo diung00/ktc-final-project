@@ -26,6 +26,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.sql.Driver;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -98,7 +99,27 @@ public class OrderService {
     }
 
     //view all orders by restaurant id for driver
+
     //view all orders by driver id
+    public List<OrderDto> viewAllOrderByDriverId(Long driverId) {
+        //get current user
+        UserEntity currentUser = authFacade.getCurrentUserEntity();
+        Optional<DriverEntity> driverOpt = driverRepository.findByUser(currentUser);
+        if (driverOpt.isEmpty()) {
+            throw new RuntimeException("Driver not found for the current user");
+        }
+        DriverEntity driver =  driverOpt.get();
+
+        //check driver
+        if (!driver.getId().equals(driverId)) {
+            throw new RuntimeException("Unauthorized access to orders by driver ID");
+        }
+
+        //find order by driverId
+        List<OrderEntity> orders = orderRepository.findAllByDriverId(driverId);
+
+        return orders.stream().map(OrderDto::fromEntity).collect(Collectors.toList());
+    }
 
     //View all orders by restaurant id for owner
     @Transactional(readOnly = true)

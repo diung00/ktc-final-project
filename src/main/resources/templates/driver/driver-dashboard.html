@@ -3,9 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Driver DashBoard</title>
+    <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=r6pv70yc8h"></script>
+    <link rel="stylesheet" href="../../static/css/driver/driver-dashboard.css">
 </head>
 <body>
+    <header>
+        <th:block th:replace="~{header-footer/header}"></th:block>
+    </header>
+    
+    <!-- Map container with buttons on top -->
+    <div class="map-container">
+        <div class="map" id="map"></div>
+
+        <!-- Order List Button -->
+        <button id="orderListBtn" class="order-list-button">📋배달리스트</button>
+        <!-- 운행시작 button (available mode) -->
+        <button id="availabilityBtn" class="availability-button" data-status="available">운행하기</button>
+    </div>
+
+
+    <!-- <th:block th:replace="~{header-footer/footer}"></th:block> -->
+    <script src="/static/js/driver/driver-dashboard.js"></script>
+
     
 </body>
 </html>

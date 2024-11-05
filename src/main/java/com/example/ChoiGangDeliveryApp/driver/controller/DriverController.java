@@ -1,6 +1,7 @@
 package com.example.ChoiGangDeliveryApp.driver.controller;
 
 import com.example.ChoiGangDeliveryApp.driver.DriverService;
+import com.example.ChoiGangDeliveryApp.enums.DriverStatus;
 import com.example.ChoiGangDeliveryApp.order.dto.OrderDto;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -23,19 +24,37 @@ public class DriverController {
         return ResponseEntity.ok("Location has been updated successfully.");
     }
 
-    // UNAVAILABLE MODE
-    @PutMapping("/unavailable")
-    public ResponseEntity<String> setDriverUnavailable() {
-        driverService.setDriverUnavailable();
-        return ResponseEntity.ok("Driver status set to UNAVAILABLE");
+    //Get driver status
+    @GetMapping("/status")
+    public ResponseEntity<String> getDriverStatus() {
+        String status = driverService.getDriverStatus();
+        return ResponseEntity.ok(status);
     }
 
-    // AVAILABLE MODE
-    @PutMapping("/available")
-    public ResponseEntity<String> setDriverAvailable() {
-        driverService.setDriverAvailable();
-        return ResponseEntity.ok("Driver status set to AVAILABLE");
+    //DRIVER AVAILABLE MODE
+    @PutMapping("/update-status")
+    public ResponseEntity<String> setDriverStatus(@RequestParam String status) {
+        try {
+            driverService.setDriverStatus(DriverStatus.valueOf(status.toUpperCase()));
+            return ResponseEntity.ok("Driver status updated to " + status);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body("Invalid status value. Use 'AVAILABLE' or 'UNAVAILABLE'.");
+        }
     }
+
+//    // UNAVAILABLE MODE
+//    @PutMapping("/unavailable")
+//    public ResponseEntity<String> setDriverUnavailable() {
+//        driverService.setDriverUnavailable();
+//        return ResponseEntity.ok("Driver status set to UNAVAILABLE");
+//    }
+//
+//    // AVAILABLE MODE
+//    @PutMapping("/available")
+//    public ResponseEntity<String> setDriverAvailable() {
+//        driverService.setDriverAvailable();
+//        return ResponseEntity.ok("Driver status set to AVAILABLE");
+//    }
 
     // VIEW ORDER(CANCELLED, COMPLETED)
     @GetMapping("/{id}/orders/completed-cancelled")
