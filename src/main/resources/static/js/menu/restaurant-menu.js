@@ -68,7 +68,10 @@ function fetchMenuByRestaurantId(restaurantId) {
                 <td>${menu.preparationTime}</td>
                 <td>${menu.cuisineType}</td>
                 <td><img src="${menu.imagePath}" alt="${menu.name}" style="width: 90px ; height: auto;"></td>
-                <td><button class="update-menu-btn" data-id="${menu.id}">메뉴 수청</button></td> 
+                <td>
+                    <button class="update-menu-btn" data-id="${menu.id}">메뉴 수청</button>
+                    <button class="delete-menu-btn" data-id="${menu.id}">메뉴 삭제</button>
+                </td> 
             `;
 
             menuItemsList.appendChild(menuRow);
@@ -78,6 +81,31 @@ function fetchMenuByRestaurantId(restaurantId) {
             button.addEventListener('click', function() {
                 const menuId = this.getAttribute('data-id');
                 location.href = `/views/restaurant-update-menu?id=${menuId}`;
+            });
+        });
+        //Menu delete button
+        // Menu delete button
+        document.querySelectorAll('.delete-menu-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const menuId = this.getAttribute('data-id');
+                if (confirm("Are you sure you want to delete this menu item?")) {
+                    fetch(`/menus/delete/${menuId}`, {
+                        method: 'DELETE'
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            alert('Menu item deleted successfully.');
+                            // Remove the deleted row from the table
+                            button.closest('tr').remove();
+                        } else {
+                            alert('Failed to delete menu item.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('An error occurred while deleting the menu item.');
+                    });
+                }
             });
         });
     })
