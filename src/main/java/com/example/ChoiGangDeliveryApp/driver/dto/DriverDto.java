@@ -24,6 +24,11 @@ public class DriverDto {
     private double longitude;
     private String driverStatus;
 
+    public DriverDto(double longitude, double latitude) {
+        this.longitude = longitude;
+        this.latitude = latitude;
+    }
+
     // Convert from DriverEntity into DriverDto
     public static DriverDto fromEntity(DriverEntity driverEntity) {
         return DriverDto.builder()

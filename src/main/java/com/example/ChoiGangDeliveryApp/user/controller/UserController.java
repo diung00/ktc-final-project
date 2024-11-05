@@ -1,6 +1,7 @@
 package com.example.ChoiGangDeliveryApp.user.controller;
 
 import com.example.ChoiGangDeliveryApp.common.exception.GlobalException;
+import com.example.ChoiGangDeliveryApp.enums.UserRole;
 import com.example.ChoiGangDeliveryApp.jwt.JwtTokenUtils;
 import com.example.ChoiGangDeliveryApp.jwt.dto.JwtRequestDto;
 import com.example.ChoiGangDeliveryApp.jwt.dto.JwtResponseDto;

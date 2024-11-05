@@ -1,0 +1,78 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+}
+
+/* 네비게이션 바 스타일링 */
+.nav-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #c2185b;
+    padding: 0.5rem 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 상자 그림자 */
+    border-bottom: 1px solid #ddd; /* 하단 테두리 */
+}
+
+.logo {
+    font-size: 1.5rem;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.nav-menu {
+    list-style: none;
+    display: flex;
+    margin-left: -1rem;
+}
+
+.nav-menu li {
+    padding: 0 1rem;
+}
+
+.nav-menu a {
+    text-decoration: none;
+    color: white;
+    font-size: 1rem;
+    transition: color 0.3s ease; /* 색상 변경 애니메이션 */
+}
+
+.nav-menu a:hover {
+    color: #fe068a; /* 호버 시 색상 변경 */
+}
+
+.nav-user-info {
+    display: flex;
+    align-items: center;
+}
+.nav-user-info span {
+    color: white; 
+}
+
+.nickname, .user-role{
+    font-size: 0.9rem;
+    padding: 0.25rem 0.5rem;
+    background: #c2185b;
+    border-radius: 15px; /* 둥근 모서리 */
+    box-shadow: 0 1px 2px #c2185b; /* 상자 그림자 */
+    margin-right: 5px;
+}
+
+.user-role {
+    color: #fff;
+    background: rgb(254, 4, 92);
+}
+
+.text-menu {
+    font-size: 1rem;
+    color: white;
+    text-decoration: none;
+    margin-left: 10px;
+}
