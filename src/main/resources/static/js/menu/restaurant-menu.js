@@ -20,13 +20,25 @@ async function loadRestaurantData() {
         }
 
         const restaurantData = await response.json();
-        
+
         // Giả sử restaurantData có thuộc tính id
         const restaurantId = restaurantData.id; // Get restaurantId
         localStorage.setItem('restaurantId', restaurantId); // Lưu restaurantId vào localStorage
 
         fetchMenuByRestaurantId(restaurantId);
 
+        // "메뉴 등록" Button
+// Tạo nút bấm dẫn đến trang tạo menu
+        const createMenuButton = document.createElement('button');
+        createMenuButton.textContent = '메뉴 등록';
+        createMenuButton.classList.add('create-menu');
+        createMenuButton.addEventListener('click', () => {
+            window.location.href = `/views/restaurant-add-menu?id=${restaurantId}`;
+        });
+
+// Thêm nút bấm vào createMenuButton
+        const buttonContainer = document.getElementById('create-button-container');
+        buttonContainer.appendChild(createMenuButton);
     } catch (error) {
         console.error('Error loading restaurant data:', error);
         alert('Error loading restaurant data: ' + error.message);
@@ -69,7 +81,7 @@ function fetchMenuByRestaurantId(restaurantId) {
                 <td>${menu.cuisineType}</td>
                 <td><img src="${menu.imagePath}" alt="${menu.name}" style="width: 90px ; height: auto;"></td>
                 <td>
-                    <button class="update-menu-btn" data-id="${menu.id}">메뉴 수청</button>
+                    <button class="update-menu-btn" data-id="${menu.id}">메뉴 수정</button>
                     <button class="delete-menu-btn" data-id="${menu.id}">메뉴 삭제</button>
                 </td> 
             `;
@@ -90,24 +102,30 @@ function fetchMenuByRestaurantId(restaurantId) {
                 const menuId = this.getAttribute('data-id');
                 if (confirm("Are you sure you want to delete this menu item?")) {
                     fetch(`/menus/delete/${menuId}`, {
-                        method: 'DELETE'
-                    })
-                    .then(response => {
-                        if (response.ok) {
-                            alert('Menu item deleted successfully.');
-                            // Remove the deleted row from the table
-                            button.closest('tr').remove();
-                        } else {
-                            alert('Failed to delete menu item.');
+                        method: 'DELETE',
+                        headers: {
+                            'Authorization': `Bearer ${localStorage.getItem("token")}`,
+                            'Content-Type': 'application/json'
                         }
                     })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        alert('An error occurred while deleting the menu item.');
-                    });
+                        .then(response => {
+                            if (response.ok) {
+                                alert('Menu item deleted successfully.');
+                                button.closest('tr').remove();
+                            } else {
+                                return response.json().then(err => {
+                                    alert(`Failed to delete menu item: ${err.message || 'Unknown error'}`);
+                                });
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('An error occurred while deleting the menu item: ' + error.message);
+                        });
                 }
             });
         });
+
     })
     .catch(error => {
         console.error('Fetch error:', error);
@@ -118,7 +136,3 @@ function fetchMenuByRestaurantId(restaurantId) {
 // Load the restaurant data when the page is loaded
 document.addEventListener('DOMContentLoaded', loadRestaurantData);
 
-// "메뉴 등록" Button
-document.getElementById('add-menu-btn').addEventListener('click', function() {
-    location.href = '/views/restaurant-add-menu';
-});

@@ -47,9 +47,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 return response.json();
             })
             .then(data => {
-                const responseMessage = document.getElementById("response-message");
-                responseMessage.innerHTML = `<p>Menu created successfully: ${data.name}</p>`;
-                // Bạn có thể thêm logic để làm mới danh sách menu hoặc điều hướng đến trang khác
+              //  const responseMessage = document.getElementById("response-message");
+              //  responseMessage.innerHTML = `<p>Menu created successfully: ${data.name}</p>`;
+                window.location.href = `/views/menu`;
             })
             .catch(error => {
                 console.error("Fetch error:", error);

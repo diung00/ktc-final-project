@@ -5,6 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restaurant Menu</title>
     <link rel="stylesheet" href="../../static/css/menu/restaurant-menu.css">
+    <style>
+        .create-menu {
+            background-color: #c2185b;
+            color: white;
+            padding: 5px 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: inline-block;
+            margin-top: 20px;
+        }
+        #buttonContainer {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .text-center {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
 </head>
 <body>
 
@@ -12,8 +35,7 @@
     <th:block th:replace="~{header-footer/header}"></th:block>
 </header>
 <!-- Add Menu -->
-<div id="addMenu-container">
-    <button id="add-menu-btn" class="custom-btn">메뉴 등록</button>
+<div id="create-button-container" class="text-center">
 </div>
 
 <div id="menu-list" class="mt-4">

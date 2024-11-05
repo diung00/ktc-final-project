@@ -80,7 +80,7 @@ public class ViewController {
     public String listRestaurant(){return "restaurant/list-restaurant";}
 
     @GetMapping("/get-one-restaurant")
-    public String getOneRestaurant(){return "restaurant-details";}
+    public String getOneRestaurant(){return "restaurant/restaurant-details";}
 
     //owner
     @GetMapping("/restaurant-management")
@@ -94,9 +94,11 @@ public class ViewController {
 
     //Menu
     @GetMapping("/menu")
-    public String viewMenu() {return "menu/restaurant-menu";}
+    public String viewMenu() {return "/menu/restaurant-menu";}
     @GetMapping("/restaurant-add-menu")
     public String addMenu() {return "menu/create-menu";}
+    @GetMapping("/restaurant-update-menu")
+    public String updateMenu() {return "menu/restaurant-update-menu";}
 
     //Admin dashboard
     @GetMapping("/admin")
