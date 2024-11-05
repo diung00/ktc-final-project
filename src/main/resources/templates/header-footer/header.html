@@ -95,9 +95,10 @@
             userRoleSpan.innerText = role;
 
             const logoutHref = document.createElement('a');
-            logoutHref.href = '/logout';
+            logoutHref.href = '#';
             logoutHref.innerText = '로그아웃';
             logoutHref.classList.add('text-menu');
+            logoutHref.addEventListener('click', logout);
 
             navUserInfoDiv.appendChild(usernameHref);
             navUserInfoDiv.appendChild(userRoleSpan);
@@ -122,6 +123,11 @@
         //     element.style.marginLeft = horizontalMarginValue;
         //     element.style.marginRight = horizontalMarginValue;
         // });
+    }
+
+    function logout() {
+        localStorage.clear();
+        location.href = "/views/login";
     }
 
     function initialize() {
