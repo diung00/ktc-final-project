@@ -102,5 +102,9 @@ public class ViewController {
     @GetMapping("/admin")
     public String admin() {return "admin/admin";}
 
+    //driver
+    @GetMapping("/driver")
+    public String driver() {return "driver/driver-dashboard";}
+
 
 }

@@ -12,12 +12,9 @@ import com.example.ChoiGangDeliveryApp.order.entity.OrderEntity;
 import com.example.ChoiGangDeliveryApp.order.repo.OrderRepository;
 import com.example.ChoiGangDeliveryApp.security.config.AuthenticationFacade;
 import com.example.ChoiGangDeliveryApp.user.entity.UserEntity;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -57,25 +54,41 @@ public class DriverService {
         // sent location to clients
         messagingTemplate.convertAndSend("/topic/driverLocation", new DriverDto(location.getLatitude(), location.getLongitude()));
     }
-
-    // UNAVAILABLE MODE
-    public void setDriverUnavailable() {
+    public String getDriverStatus() {
         UserEntity currentUser = facade.getCurrentUserEntity();
-        //find driver
         DriverEntity driver = driverRepository.findByUser(currentUser)
                 .orElseThrow(() -> new RuntimeException("Driver not found"));
-        driver.setDriverStatus(DriverStatus.UNAVAILABLE);
-        driverRepository.save(driver);
-    }
+        return driver.getDriverStatus().name();
 
+    }
     // AVAILABLE MODE
-    public void setDriverAvailable() {
+    public void setDriverStatus(DriverStatus status) {
         UserEntity currentUser = facade.getCurrentUserEntity();
         DriverEntity driver = driverRepository.findByUser(currentUser)
                 .orElseThrow(() -> new RuntimeException("Driver not found"));
-        driver.setDriverStatus(DriverStatus.AVAILABLE);
+        driver.setDriverStatus(status);
         driverRepository.save(driver);
     }
+
+
+    //    // UNAVAILABLE MODE
+//    public void setDriverUnavailable() {
+//        UserEntity currentUser = facade.getCurrentUserEntity();
+//        //find driver
+//        DriverEntity driver = driverRepository.findByUser(currentUser)
+//                .orElseThrow(() -> new RuntimeException("Driver not found"));
+//        driver.setDriverStatus(DriverStatus.UNAVAILABLE);
+//        driverRepository.save(driver);
+//    }
+//
+//    // AVAILABLE MODE
+//    public void setDriverAvailable() {
+//        UserEntity currentUser = facade.getCurrentUserEntity();
+//        DriverEntity driver = driverRepository.findByUser(currentUser)
+//                .orElseThrow(() -> new RuntimeException("Driver not found"));
+//        driver.setDriverStatus(DriverStatus.AVAILABLE);
+//        driverRepository.save(driver);
+//    }
     // VIEW ORDER(CANCELLED, COMPLETED)
     public List<OrderDto> getCompletedAndCancelledOrders(Long driverId) {
         List<OrderStatus> statuses = Arrays.asList(OrderStatus.COMPLETED, OrderStatus.CANCELLED);
