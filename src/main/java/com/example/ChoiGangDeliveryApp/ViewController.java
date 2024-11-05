@@ -73,7 +73,7 @@ public class ViewController {
     public String ownerRequestStatus(){return "users/owner-request-status";}
 
     @GetMapping("current-order")
-    public String driverLocation(){return "users/current-order";}
+    public String currentOrder(){return "users/current-order";}
 
 
     @GetMapping("list-restaurant")

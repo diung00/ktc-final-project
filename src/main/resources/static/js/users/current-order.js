@@ -1,50 +1,66 @@
 async function displayOrderDetails(orderId) {
     try {
-        const response = await fetch(`orders/${orderId}`); // Gọi API với phương thức GET để lấy thông tin đơn hàng
-        if (!response.ok) {
-            throw new Error('Network response was not ok: ' + response.statusText);
-        }
-        const orderData = await response.json();
+        const response = await fetch(`/orders/${orderId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem("token")}`
+            }
+        });
 
-        // Cập nhật các thẻ span với thông tin đơn hàng
-        document.getElementById('order-id').textContent = orderData.id;
-        document.getElementById('driver-id').textContent = orderData.driverId;
-        document.getElementById('user-id').textContent = orderData.userId;
-        document.getElementById('delivery-address').textContent = orderData.deliveryAddress;
-        document.getElementById('restaurant-id').textContent = orderData.restaurantId;
-        document.getElementById('order-date').textContent = new Date(orderData.orderDate).toLocaleString();
-        document.getElementById('order-status').textContent = orderData.orderStatus;
-        document.getElementById('total-menus-price').textContent = orderData.totalMenusPrice.toFixed(2);
-        document.getElementById('shipping-fee').textContent = orderData.shippingFee.toFixed(2);
-        document.getElementById('total-amount').textContent = orderData.totalAmount.toFixed(2);
-        document.getElementById('estimated-arrival-time').textContent = new Date(orderData.estimatedArrivalTime).toLocaleString();
+        console.log('Response Status:', response.status); // Kiểm tra trạng thái
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error('Network response was not ok: ' + errorText);
+        }
+
+        const orderData = await response.json();
+        console.log(orderData); // Kiểm tra dữ liệu nhận được
+
+        document.getElementById('order-details').innerHTML = `
+            <p><strong>Order ID:</strong> ${orderData.id}</p>
+            <p><strong>Driver ID:</strong> ${orderData.driverId || 'N/A'}</p>
+            <p><strong>User ID:</strong> ${orderData.userId}</p>
+            <p><strong>Delivery Address:</strong> ${orderData.deliveryAddress}</p>
+            <p><strong>Restaurant ID:</strong> ${orderData.restaurantId}</p>
+            <p><strong>Order Date:</strong> ${new Date(orderData.orderDate).toLocaleString()}</p>
+            <p><strong>Order Status:</strong> ${orderData.orderStatus}</p>
+            <p><strong>Total Menu Price:</strong> ${orderData.totalMenusPrice.toFixed(2)}</p>
+            <p><strong>Shipping Fee:</strong> ${orderData.shippingFee.toFixed(2)}</p>
+            <p><strong>Total Amount:</strong> ${orderData.totalAmount.toFixed(2)}</p>
+            <p><strong>Estimated Arrival Time:</strong> ${new Date(orderData.estimatedArrivalTime).toLocaleString()}</p>
+        `;
+
+        // Gọi hàm để lấy chỉ đường
+        ///await getDirectionsFromOrder(orderData);
     } catch (error) {
         console.error('Error fetching order details:', error);
+        alert('Could not load order details. Please try again later. \n' + error.message); // Hiển thị thông báo lỗi
     }
 }
-// Lấy orderId từ URL
-const pathSegments = window.location.pathname.split('/');
-const orderId = pathSegments[pathSegments.length - 1];
-
-displayOrderDetails(orderId);
 
 
 async function getDirectionsFromOrder(order) {
     const dto = await getCoordinatesFromOrder(order);
+    try {
+        const response = await fetch(`/navigate/points`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dto) // Gửi tọa độ
+        });
 
-    const response = await fetch(`/navigate/points`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(dto) // Gửi tọa độ
-    });
-
-    if (response.ok) {
-        const data = await response.json();
-        drawRoute(data.path);
-    } else {
-        console.error('Failed to get directions');
+        if (response.ok) {
+            const data = await response.json();
+            drawRoute(data.path);
+        } else {
+            throw new Error('Failed to get directions');
+        }
+    } catch (error) {
+        console.error(error);
+        alert('Could not get directions. Please try again later.');
     }
 }
 
@@ -72,7 +88,11 @@ function drawRoute(path) {
     });
 
     map.setCenter(coordinates[0]); // Trung tâm bản đồ tại điểm bắt đầu
+
+    console.log('User Location:', coordinates[0]); // Log vị trí người dùng
+    console.log('Restaurant Location:', coordinates[coordinates.length - 1]); // Log vị trí nhà hàng
 }
+
 
 // Khởi tạo bản đồ
 const map = new naver.maps.Map('map', {
@@ -81,12 +101,9 @@ const map = new naver.maps.Map('map', {
 });
 
 async function getCoordinatesFromOrder(order) {
-    const response = await fetch(`orders/${order.id}`); // Lấy thông tin đơn hàng bằng orderId
-    const orderData = await response.json();
-
     return {
-        start: await getCoordinates(orderData.user.address), // Lấy tọa độ người dùng
-        goal: await getCoordinates(orderData.restaurant.address) // Lấy tọa độ nhà hàng
+        start: await getCoordinates(order.deliveryAddress), // Lấy tọa độ người dùng
+        goal: await getCoordinates(order.restaurant.address) // Lấy tọa độ nhà hàng
     };
 }
 
@@ -101,3 +118,7 @@ document.getElementById('logout-link').addEventListener('click', function(event)
     localStorage.removeItem('token');
     window.location.href = '/views/login';
 });
+
+const urlParams = new URLSearchParams(window.location.search);
+const orderId = urlParams.get('orderId');
+displayOrderDetails(orderId);

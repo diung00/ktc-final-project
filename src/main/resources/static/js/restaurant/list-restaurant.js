@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     const restaurantDiv = document.createElement("div");
                     restaurantDiv.classList.add("restaurant");
                     restaurantDiv.innerHTML = `
-                        <h2><a href="/restaurant-details.html?restaurantId=${restaurant.id}">${restaurant.name}</a></h2>
+                        <h2><a href="/views/get-one-restaurant?id=${restaurant.id}">${restaurant.name}</a></h2>
                         <p>Address: ${restaurant.address}</p>
                         <p>Phone: ${restaurant.phone}</p>
                         <p>Opening Hours: ${restaurant.openingHours}</p>

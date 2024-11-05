@@ -1,3 +1,24 @@
+// Hàm để lấy thông tin người dùng hiện tại
+function fetchCurrentUser() {
+    const jwt = localStorage.getItem("token"); // Lấy token từ localStorage
+
+    return fetch('/users/get-my-profile', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${jwt}`
+        }
+    })
+        .then(response => {
+            if (response.ok) {
+                return response.json(); // Trả về dữ liệu người dùng
+            } else {
+                throw new Error('Unable to fetch user profile.');
+            }
+        });
+}
+
+// Hàm để lấy thông tin nhà hàng theo ID
 function fetchRestaurantById(restaurantId) {
     const jwt = localStorage.getItem("token");
 
@@ -17,7 +38,8 @@ function fetchRestaurantById(restaurantId) {
         });
 }
 
-function fetchMenuByRestaurantId(restaurantId) {
+// Hàm để lấy menu theo ID nhà hàng
+function fetchMenuByRestaurantId(restaurantId, currentUser) {
     const restaurantDetails = document.getElementById('restaurant-details');
     const menuItemsList = document.getElementById('menu-items');
     const jwt = localStorage.getItem("token");
@@ -55,19 +77,42 @@ function fetchMenuByRestaurantId(restaurantId) {
 
                     // Tạo nội dung cho mỗi mục thực đơn
                     menuItem.innerHTML = `
-                    <h5>${menu.name} - $${menu.price.toFixed(2)}</h5>
-                    <p>${menu.description || 'No description available.'}</p>
-                    <p><strong>Status:</strong> ${menu.menuStatus}</p>
-                    <p><strong>Preparation Time:</strong> ${menu.preparationTime} minutes</p>
-                    <p><strong>Cuisine Type:</strong> ${menu.cuisineType}</p>
-                    ${menu.imagePath ? `<img src="${menu.imagePath}" alt="${menu.name}" style="width: 100%; height: auto;" />` : `<p>No image available</p>`}
+                <h5>${menu.name} - $${menu.price.toFixed(2)}</h5>
+                <p>${menu.description || 'No description available.'}</p>
+                <p><strong>Status:</strong> ${menu.menuStatus}</p>
+                <p><strong>Preparation Time:</strong> ${menu.preparationTime} minutes</p>
+                <p><strong>Cuisine Type:</strong> ${menu.cuisineType}</p>
+                ${menu.imagePath ? `<img src="${menu.imagePath}" alt="${menu.name}" style="width: 100%; height: auto;" />` : `<p>No image available</p>`}
                 `;
+
+                    // Tạo nút "Order"
                     const orderButton = document.createElement('button');
                     orderButton.textContent = 'Order';
-                    orderButton.classList.add('btn', 'btn-success', 'mt-2');
+                    orderButton.classList.add('btn', 'btn-success', 'mt-2'); // Thêm lớp CSS để định kiểu
+
+                    // Thay đổi sự kiện click để sử dụng closure cho currentUser
                     orderButton.addEventListener('click', () => {
-                        createOrder(menu, restaurantId);
+                        const orderData = {
+                            driverId: null, // chưa có tài xế
+                            userId: currentUser.id, // Lấy từ thông tin người dùng hiện tại
+                            deliveryAddress: currentUser.address, // Địa chỉ từ người dùng hiện tại
+                            restaurantId: restaurantId,
+                            orderDate: new Date().toISOString(),
+                            orderStatus: "PENDING",
+                            totalMenusPrice: menu.price,
+                            shippingFee: 0.0,
+                            totalAmount: menu.price + 0.0,
+                            estimatedArrivalTime: new Date(Date.now() + 60 * 60 * 1000).toISOString()
+                        };
+
+                        // Lưu dữ liệu đơn hàng vào sessionStorage
+                        sessionStorage.setItem('orderData', JSON.stringify(orderData));
+
+                        // Chuyển hướng đến trang order
+                        window.location.href = '/views/order';
                     });
+
+                    // Thêm nút vào mục menu
                     menuItem.appendChild(orderButton);
 
                     // Thêm item vào danh sách
@@ -86,7 +131,17 @@ const params = new URLSearchParams(window.location.search);
 const restaurantId = params.get('id'); // Lấy giá trị của 'id' từ query string
 
 if (restaurantId) {
-    fetchMenuByRestaurantId(restaurantId); // Gọi hàm với restaurantId
+    // Gọi hàm để lấy thông tin người dùng trước
+    fetchCurrentUser()
+        .then(currentUser => {
+            // Sau khi có thông tin người dùng, gọi hàm để lấy menu
+            fetchMenuByRestaurantId(restaurantId, currentUser);
+        })
+        .catch(error => {
+            console.error('Error fetching current user:', error);
+            // Xử lý lỗi, ví dụ chuyển hướng đến trang đăng nhập
+            location.href = "/views/login";
+        });
 } else {
     console.error('No restaurant ID found in the URL.');
 }
