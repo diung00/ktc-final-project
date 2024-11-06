@@ -24,6 +24,13 @@
             font-size: 24px;
         }
 
+        button {
+            background-color: #f3067d;
+            color: white;
+            border: 1px solid white;
+            size: 100;
+        }
+
         .header .site-name {
             font-weight: bold;
             color: white;
@@ -92,7 +99,7 @@
 
         .category-item img {
             width: 100%;
-            height: auto;
+            height: 80%;
             border-radius: 10px;
             transition: transform 0.3s;
         }
@@ -112,15 +119,20 @@
 <!-- Header -->
 <div class="header">
     <a href="#" class="site-name">ChoiGangDelivery</a>
-    <a href="/views/get-my-profile">내 프로필</a> <!-- My Profile -->
-    <a href="/views/list-restaurant">주변 식당 보기</a>
+    <a href="/login.html" >
+        <button type="button"> Sign-in </button>
+    </a>
+
+
 </div>
 
 <!-- Phần tìm kiếm nhà hàng -->
-<div class="search-section">
-    <input type="text" placeholder="레스토랑을 찾으려면 주소를 입력하세요..."> <!-- Nhập địa chỉ để tìm nhà hàng -->
-    <button>검색</button> <!-- Tìm kiếm -->
-</div>
+<form id="search-section" class="search-section">
+    <input id="searchInput" type="text" placeholder="Which restaurants are you looking for?">
+    <button type="submit"> Search </button>
+</form>
+
+<script src="/static/js/views.js"></script>
 
 <!-- Phần phân loại nhà hàng -->
 <div class="categories">
