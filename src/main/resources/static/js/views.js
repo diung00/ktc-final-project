@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const searchTerm = searchInput.value.trim(); // Lấy giá trị từ ô input
 
         if (!searchTerm) {
-            alert("Please enter a search term.");
+            alert("검색어 입력하세요!.");
             return;
         }
 

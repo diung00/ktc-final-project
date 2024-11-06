@@ -38,7 +38,7 @@ async function displayOrderDetails(orderId) {
             const restaurantLongitude = orderData.userLatitude;
 
 
-            initMap(latitude, longitude);
+            initMap(userLatitude, userLongitude, restaurantLatitude, restaurantLongitude);
 
     } catch (error) {
         console.error('Error fetching order details:', error);
@@ -53,7 +53,7 @@ function initMap(userLatitude, userLongitude, restaurantLatitude, restaurantLong
         return;
     }
 
-    // Khởi tạo bản đồ với tọa độ trung tâm là latitude và longitude
+    // Khởi tạo bản đồ với tọa độ trung tâm là tọa độ người dùng
     const map = new naver.maps.Map(mapElement, {
         center: new naver.maps.LatLng(userLatitude, userLongitude),
         zoom: 15,
@@ -62,15 +62,23 @@ function initMap(userLatitude, userLongitude, restaurantLatitude, restaurantLong
 
     console.log('Map initialized with center:', userLatitude, userLongitude);
 
-    // Đặt marker tại vị trí trung tâm
-    const marker = new naver.maps.Marker({
-        position: new naver.maps.LatLng(latitude, longitude),
+    // Đặt marker tại vị trí người dùng
+    const userMarker = new naver.maps.Marker({
+        position: new naver.maps.LatLng(userLatitude, userLongitude),
         map: map,
-        title: 'Current Location'
+        title: 'User Location'
     });
+    console.log('User marker set at:', userLatitude, userLongitude);
 
-    console.log('Marker set at:', latitude, longitude);
+    // Đặt marker tại vị trí nhà hàng
+    const restaurantMarker = new naver.maps.Marker({
+        position: new naver.maps.LatLng(restaurantLatitude, restaurantLongitude),
+        map: map,
+        title: 'Restaurant Location'
+    });
+    console.log('Restaurant marker set at:', restaurantLatitude, restaurantLongitude);
 }
+
 
 
 // Đăng xuất
