@@ -13,41 +13,11 @@
             color: #333;
         }
 
-        /* Header */
-        .header {
-            background-color: #f3067d;
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: white;
-            font-size: 24px;
-        }
-
         button {
-            background-color: #f3067d;
+            background-color: #c2185b;
             color: white;
             border: 1px solid white;
             size: 100;
-        }
-
-        .header .site-name {
-            font-weight: bold;
-            color: white;
-            text-decoration: none;
-        }
-
-        .header .login-link {
-            color: white;
-            text-decoration: none;
-            padding: 10px 15px;
-            border-radius: 20px;
-            background-color: #f3067d;
-            font-weight: bold;
-        }
-
-        .header .login-link:hover {
-            background-color: #ff69b4;
         }
 
         /* Search Restaurant by Cuisine type */
@@ -56,22 +26,22 @@
             background-image: url('img\search-home.jpg');
             background-size: cover;
             background-position: center;
-            padding: 60px 20px; /* Điều chỉnh khoảng cách trên và dưới */
-            color: white; /* Chữ trắng cho dễ đọc trên nền tối */
+            padding: 60px 20px;
+            color: white; 
         }
 
         .search-section input[type="text"] {
             width: 80%;
             padding: 10px;
             font-size: 16px;
-            border: 2px solid #ff69b4; /* Màu hồng cho border */
+            border: 2px solid #c2185b;
             border-radius: 5px;
-            background-color: rgba(255, 255, 255, 0.8); /* Nền trắng trong suốt cho ô tìm kiếm */
+            background-color: rgba(255, 255, 255, 0.8);
         }
 
         .search-section button {
             padding: 10px 20px;
-            background-color: #ff69b4; /* Màu hồng */
+            background-color: #c2185b;
             color: white;
             border: none;
             border-radius: 5px;
@@ -80,10 +50,9 @@
         }
 
         .search-section button:hover {
-            background-color: #ff1493; /* Màu hồng đậm hơn khi hover */
+            background-color: #ff1493;
         }
 
-        /* Phần phân loại nhà hàng */
         .categories {
             display: flex;
             flex-wrap: wrap;
@@ -110,21 +79,15 @@
 
         .category-item p {
             font-weight: bold;
-            color: #ff1493; /* Màu chữ cho tên món ăn */
+            color: #c2185b;
             margin-top: 8px;
         }
     </style>
 </head>
+<header>
+    <th:block th:replace="~{header-footer/header}"></th:block>
+</header>
 <body>
-<!-- Header -->
-<div class="header">
-    <a href="#" class="site-name">ChoiGangDelivery</a>
-    <a href="/login.html" >
-        <button type="button"> Sign-in </button>
-    </a>
-
-
-</div>
 
 <!-- Phần tìm kiếm nhà hàng -->
 <form id="search-section" class="search-section">
@@ -179,5 +142,7 @@
 
     </div>
 </div>
+<th:block th:replace="~{header-footer/footer}"></th:block>
+<script src="../../static/js/views.js"></script>
 </body>
 </html>
