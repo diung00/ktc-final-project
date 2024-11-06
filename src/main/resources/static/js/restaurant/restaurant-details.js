@@ -36,12 +36,12 @@ if (restaurantId) {
 
             // Tạo nút "View Menu"
             const viewMenuButton = document.createElement('button');
-            viewMenuButton.textContent = 'View Menu';
+            viewMenuButton.textContent = '메뉴 보기';
             viewMenuButton.classList.add('btn', 'btn-primary', 'mt-3'); // Thêm các lớp CSS để định kiểu
 
             // Thêm sự kiện cho nút "View Menu"
             viewMenuButton.addEventListener('click', () => {
-                window.location.href = `/views/restaurant-menu?id=${restaurantId}`;
+                window.location.href = `/views/view-menu?id=${restaurantId}`;
             });
 
             // Thêm nút vào restaurantInfoDiv

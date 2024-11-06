@@ -72,6 +72,9 @@ public class ViewController {
     @GetMapping("/owner-request-status")
     public String ownerRequestStatus(){return "users/owner-request-status";}
 
+    @GetMapping("/order")
+    public String order(){return "users/order";}
+
     @GetMapping("current-order")
     public String currentOrder(){return "users/current-order";}
 
@@ -81,6 +84,9 @@ public class ViewController {
 
     @GetMapping("/get-one-restaurant")
     public String getOneRestaurant(){return "restaurant/restaurant-details";}
+
+    @GetMapping("/view-menu")
+    public String viewMenuForUser(){return "menu/restaurant-menu-for-user";}
 
     //owner
     @GetMapping("/restaurant-management")
