@@ -16,13 +16,12 @@ public class MenuController {
     private final MenuService menuService;
 
     // CREATE MENU
-    @PostMapping("/{restaurantId}/create")
+    @PostMapping("/create")
     public ResponseEntity<MenuDto> createMenu(
-            @PathVariable("restaurantId") Long restaurantId,
             @RequestBody
             CreateMenuDto dto
     ) {
-        MenuDto createdMenu = menuService.createMenu(restaurantId,dto);
+        MenuDto createdMenu = menuService.createMenu(dto);
         return ResponseEntity.ok(createdMenu);
     }
 

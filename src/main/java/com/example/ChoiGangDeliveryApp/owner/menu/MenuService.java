@@ -12,6 +12,7 @@ import com.example.ChoiGangDeliveryApp.owner.restaurant.entity.RestaurantsEntity
 import com.example.ChoiGangDeliveryApp.owner.restaurant.repo.RestaurantRepository;
 import com.example.ChoiGangDeliveryApp.security.config.AuthenticationFacade;
 import com.example.ChoiGangDeliveryApp.user.entity.UserEntity;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,21 +38,20 @@ public class MenuService {
 
     // CREATE
     @Transactional
-    public MenuDto createMenu(Long restaurantId, CreateMenuDto dto) {
+    public MenuDto createMenu(CreateMenuDto dto) {
         UserEntity currentUser = facade.getCurrentUserEntity();
 
         //check restaurant status
-        RestaurantsEntity restaurant = checkRestaurantStatus(restaurantId);
+        RestaurantsEntity restaurant = restaurantRepository.findByOwner(currentUser)
+                .orElseThrow(()->new EntityNotFoundException("Restaurant not found for the current user."));
 
-        //Check if user is restaurant owner
-        if (!restaurant.getOwner().equals(currentUser)) {
-            throw new GlobalException(GlobalErrorCode.USER_DO_NOT_HAVE_PERMISSION);
-        }
+        checkRestaurantStatus(restaurant.getId());
 
         MenuEntity menuEntity = MenuEntity.builder()
                 .name(dto.getName())
-                .description(dto.getDescription())
                 .price(dto.getPrice())
+                .description(dto.getDescription())
+                .menuStatus(dto.getMenuStatus())
                 .cuisineType(dto.getCuisineType())
                 .preparationTime(dto.getPreparationTime())
                 .restaurant(restaurant)
@@ -120,8 +120,9 @@ public class MenuService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Menu not found"));
 
         menuEntity.setName(menuDto.getName());
-        menuEntity.setDescription(menuDto.getDescription());
         menuEntity.setPrice(menuDto.getPrice());
+        menuEntity.setDescription(menuDto.getDescription());
+        menuEntity.setMenuStatus(menuDto.getMenuStatus());
         menuEntity.setPreparationTime(menuDto.getPreparationTime());
         menuEntity.setCuisineType(menuDto.getCuisineType());
 

@@ -5,23 +5,18 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
-    // Lấy restaurantId từ URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const restaurantId = urlParams.get("id"); // Lấy ID từ query string
-
-
     const menuForm = document.getElementById("menu-form");
     menuForm.addEventListener("submit", (event) => {
         event.preventDefault();
 
         const name = document.getElementById("name").value;
-        const price = parseInt(document.getElementById("price").value, 10);
+        const price = parseFloat(document.getElementById("price").value, 10);
         const description = document.getElementById("description").value;
         const menuStatus = document.getElementById("menuStatus").value;
         const preparationTime = parseInt(document.getElementById("preparationTime").value, 10);
         const cuisineType = document.getElementById("cuisineType").value;
 
-        // Tạo đối tượng dữ liệu menu
+        // Create menuData object
         const menuData = {
             name: name,
             price: price,
@@ -31,8 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
             cuisineType: cuisineType
         };
 
-        // Sử dụng URL chính xác để gửi yêu cầu
-        fetch(`/menus/${restaurantId}/create`, {
+        fetch(`/menus/create`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -47,9 +41,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 return response.json();
             })
             .then(data => {
-                const responseMessage = document.getElementById("response-message");
-                responseMessage.innerHTML = `<p>Menu created successfully: ${data.name}</p>`;
-                // Bạn có thể thêm logic để làm mới danh sách menu hoặc điều hướng đến trang khác
+              //  const responseMessage = document.getElementById("response-message");
+              //  responseMessage.innerHTML = `<p>Menu created successfully: ${data.name}</p>`;
+                window.location.href = `/views/menu`;
             })
             .catch(error => {
                 console.error("Fetch error:", error);

@@ -1,8 +1,10 @@
 package com.example.ChoiGangDeliveryApp;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/views")
@@ -72,15 +74,15 @@ public class ViewController {
     @GetMapping("/owner-request-status")
     public String ownerRequestStatus(){return "users/owner-request-status";}
 
-    @GetMapping("/current-order")
-    public String driverLocation(){return "users/current-order";}
+    @GetMapping("current-order")
+    public String currentOrder(){return "users/current-order";}
 
 
     @GetMapping("/list-restaurant")
     public String listRestaurant(){return "restaurant/list-restaurant";}
 
     @GetMapping("/get-one-restaurant")
-    public String getOneRestaurant(){return "restaurant-details";}
+    public String getOneRestaurant(){return "restaurant/restaurant-details";}
 
     //owner
     @GetMapping("/restaurant-management")
@@ -94,9 +96,14 @@ public class ViewController {
 
     //Menu
     @GetMapping("/menu")
-    public String viewMenu() {return "menu/restaurant-menu";}
+    public String viewMenu() {return "menu/view-all-menus";}
     @GetMapping("/restaurant-add-menu")
     public String addMenu() {return "menu/create-menu";}
+    @GetMapping("/restaurant-update-menu")
+    public String updateMenu(@RequestParam("menuId") Long id, Model model) {
+        model.addAttribute("menuId", id);
+        return "menu/update-menu";
+    }
 
     //Admin dashboard
     @GetMapping("/admin")

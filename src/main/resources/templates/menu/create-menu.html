@@ -13,18 +13,20 @@
     <th:block th:replace="~{header-footer/header}"></th:block>
 </header>
 
-<h1>메뉴 등록</h1>
 <form id="menu-form">
+  <a href="/views/menu" id="back-link" class="back-link">Back to Menu</a>
+  <h1>메뉴 등록</h1>
 
   <label for="name">메뉴 이름:</label>
   <input type="text" id="name" required><br>
 
   <label for="price">가격 (₩):</label>
   <input type="number" id="price" step="500" required><br>
+  <small>가격은 500원 단위로 입력하세요.</small><br>
 
   <label for="description">설명:</label>
   <textarea id="description" required></textarea><br>
-  <small>가격은 500원 단위로 입력하세요.</small><br>
+  
 
   <label for="menuStatus">메뉴 상태:</label>
   <select id="menuStatus" required>

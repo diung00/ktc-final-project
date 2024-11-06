@@ -126,7 +126,7 @@
     }
 
     function logout() {
-        localStorage.clear();
+        localStorage.removeItem("token");
         location.href = "/views/login";
     }
 
