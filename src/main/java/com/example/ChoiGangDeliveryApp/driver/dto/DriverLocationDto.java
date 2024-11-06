@@ -4,5 +4,6 @@ import lombok.Data;
 
 @Data
 public class DriverLocationDto {
-    private String ipAddress;
+    private double latitude;
+    private double longitude;
 }
