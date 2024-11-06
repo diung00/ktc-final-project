@@ -21,7 +21,7 @@ if (restaurantId) {
             return response.json();
         })
         .then(restaurant => {
-            const restaurantInfoDiv = document.getElementById("restaurant-info");
+            const restaurantInfoDiv = document.getElementById("restaurant-details");
             restaurantInfoDiv.innerHTML = `
             <h2>${restaurant.name}</h2>
             <p>Address: ${restaurant.address}</p>
