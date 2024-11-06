@@ -45,8 +45,8 @@ a {
 
 button {
     border-radius: 20px;
-    border: 1px solid #D81B60;
-    background-color: #D81B60;
+    border: 1px solid #f3067d;
+    background-color: #f3067d;
     color: #FFFFFF;
     font-size: 12px;
     font-weight: bold;
@@ -197,9 +197,9 @@ input {
 }
 
 .overlay {
-    background: #D81B60;
-    background: -webkit-linear-gradient(to right, #D81B60, #FF416C);
-    background: linear-gradient(to right, #D81B60, #FF416C);
+    background: #f3067d;
+    background: -webkit-linear-gradient(to right, #f3067d, #f3067d);
+    background: linear-gradient(to right, #f3067d, #f3067d);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 0 0;

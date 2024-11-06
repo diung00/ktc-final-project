@@ -3,23 +3,16 @@ if (!jwt) {
     location.href = "/views/login";
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const restaurantId = urlParams.get("restaurantId");
+// Lấy ID từ URL
+const urlParams = new URLSearchParams(window.location.search);
+const restaurantId = urlParams.get("id");
 
-    if (!restaurantId) {
-        console.error("No restaurantId found in URL");
-        return;
-    }
-
-    const viewMenu = document.getElementById("viewMenu");
-    viewMenu.href = `/views/link menu của nhà hàng`;
-
+if (restaurantId) {
     fetch(`/restaurants/${restaurantId}`, {
         method: "GET",
         headers: {
-            "Authorization": `Bearer ${jwt}`
-        },
+            "authorization": `Bearer ${jwt}`
+        }
     })
         .then(response => {
             if (!response.ok) {
@@ -27,19 +20,35 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             return response.json();
         })
-        .then(data => {
-            document.getElementById("restaurant-name").textContent = data.name;
-            document.getElementById("restaurant-address").textContent = `Address: ${data.address}`;
-            document.getElementById("restaurant-phone").textContent = `Phone: ${data.phone}`;
-            document.getElementById("restaurant-opening-hours").textContent = `Opening Hours: ${data.openingHours}`;
-            document.getElementById("restaurant-cuisine-type").textContent = `Cuisine: ${data.cuisineType}`;
-            document.getElementById("restaurant-rating").textContent = `Rating: ${data.rating}`;
-            document.getElementById("restaurant-image").src = data.restImage;
-            document.getElementById("restaurant-description").textContent = data.description;
-            document.getElementById("restaurant-approval-status").textContent = `Approval Status: ${data.approvalStatus}`;
+        .then(restaurant => {
+            const restaurantInfoDiv = document.getElementById("restaurant-info");
+            restaurantInfoDiv.innerHTML = `
+            <h2>${restaurant.name}</h2>
+            <p>Address: ${restaurant.address}</p>
+            <p>Phone: ${restaurant.phone}</p>
+            <p>Opening Hours: ${restaurant.openingHours}</p>
+            <p>Cuisine: ${restaurant.cuisineType}</p>
+            <p>Rating: ${restaurant.rating}</p>
+            <img src="${restaurant.restImage}" alt="${restaurant.name}" />
+            <p>${restaurant.description}</p>
+            <p>Status: ${restaurant.approvalStatus}</p>
+        `;
+
+            // Tạo nút "View Menu"
+            const viewMenuButton = document.createElement('button');
+            viewMenuButton.textContent = '메뉴 보기';
+            viewMenuButton.classList.add('btn', 'btn-primary', 'mt-3'); // Thêm các lớp CSS để định kiểu
+
+            // Thêm sự kiện cho nút "View Menu"
+            viewMenuButton.addEventListener('click', () => {
+                window.location.href = `/views/view-menu?id=${restaurantId}`;
+            });
+
+            // Thêm nút vào restaurantInfoDiv
+            restaurantInfoDiv.appendChild(viewMenuButton);
         })
-        .catch(error => {
-            console.error("Fetch error:", error);
-            alert("An error occurred while fetching restaurant details.");
-        });
-});
+
+        .catch(error => console.error("Fetch error:", error));
+} else {
+    console.error("No restaurant ID provided in the URL.");
+}

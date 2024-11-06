@@ -4,7 +4,6 @@ import com.example.ChoiGangDeliveryApp.owner.restaurant.dto.RestaurantDto;
 import com.example.ChoiGangDeliveryApp.owner.restaurant.dto.RestaurantOpenDto;
 import com.example.ChoiGangDeliveryApp.owner.restaurant.dto.RestaurantRequestDto;
 import com.example.ChoiGangDeliveryApp.owner.restaurant.dto.RestaurantUpdateDto;
-import com.example.ChoiGangDeliveryApp.owner.restaurant.entity.RestaurantsEntity;
 import com.example.ChoiGangDeliveryApp.user.dto.UserLocationDto;
 import com.example.ChoiGangDeliveryApp.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -68,28 +67,28 @@ public class RestaurantController {
         return ResponseEntity.ok(restaurant);
     }
 
-    // GET ALL RESTAURANTS WITHIN A GIVEN RADIUS
-    @GetMapping("/within-radius")
-    public ResponseEntity<List<RestaurantDto>> getRestaurantsWithinRadius() {
-        UserLocationDto userLocationDto = userService.getUserLocation();
-        List<RestaurantDto> restaurants = restaurantService.getRestaurantsWithinRadius(userLocationDto);
-        return ResponseEntity.ok(restaurants);
-    }
-
     // GET A SPECIFIC RESTAURANT BY ID
     @GetMapping("/{restaurantId}")
     public ResponseEntity<RestaurantDto> getRestaurantById(@PathVariable Long restaurantId) {
         RestaurantDto restaurant = restaurantService.getRestaurantById(restaurantId);
         return ResponseEntity.ok(restaurant);
     }
+    //SEARCH RESTAURANT
+    // GET ALL RESTAURANTS WITHIN A GIVEN RADIUS
+    @GetMapping("/within-radius")
+    public ResponseEntity<List<RestaurantDto>> getRestaurantsWithinRadius() {
+        UserLocationDto userLocationDto = userService.getUserLocation();
+        List<RestaurantDto> restaurants = restaurantService.getRestaurantsWithinRadius();
+        return ResponseEntity.ok(restaurants);
+    }
+
 
     // GET ALL RESTAURANTS WITHIN A GIVEN RADIUS FILTERED BY CUISINE TYPE
     @GetMapping("/within-radius/cuisine")
     public ResponseEntity<List<RestaurantDto>> getRestaurantsWithinRadiusByCuisineType(
             @RequestParam String cuisineType) {
         CuisineType cuisineTypeEnum = CuisineType.valueOf(cuisineType);
-        UserLocationDto userLocationDto = userService.getUserLocation();
-        List<RestaurantDto> restaurants = restaurantService.getRestaurantsWithinRadiusByCuisineType(userLocationDto, cuisineTypeEnum);
+        List<RestaurantDto> restaurants = restaurantService.getRestaurantsWithinRadiusByCuisineType(cuisineTypeEnum);
         return ResponseEntity.ok(restaurants);
     }
 
@@ -97,8 +96,7 @@ public class RestaurantController {
     @GetMapping("/within-radius/menu")
     public ResponseEntity<List<RestaurantDto>> getAllRestaurantsWithin2KmByMenuName(
             @RequestParam String menuName) {
-        UserLocationDto userLocationDto = userService.getUserLocation();
-        List<RestaurantDto> restaurants = restaurantService.getAllRestaurantsWithin2KmByMenuName(userLocationDto, menuName);
+        List<RestaurantDto> restaurants = restaurantService.getAllRestaurantsWithinRadiusByMenuName(menuName);
         return ResponseEntity.ok(restaurants);
     }
 
