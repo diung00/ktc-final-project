@@ -1,28 +1,28 @@
-const jwt = localStorage.getItem("token");
-if (!jwt) {
-    location.href = "/views/login";
-}
+document.addEventListener('DOMContentLoaded', () => {
+    const jwt = localStorage.getItem("token");
+    if (!jwt) {
+        location.href = "/views/login";
+    }
 
-// Cập nhật mật khẩu
-document.getElementById("changePasswordForm").addEventListener("submit", function(event) {
-    event.preventDefault();
+    document.getElementById("changePasswordForm").addEventListener("submit", function(event) {
+        event.preventDefault();
 
-    const currentPassword = document.getElementById("currentPassword").value;
-    const newPassword = document.getElementById("newPassword").value;
+        const currentPassword = document.getElementById("currentPassword").value;
+        const newPassword = document.getElementById("newPassword").value;
 
-    const passwordChangeRequest = {
-        currentPassword: currentPassword,
-        newPassword: newPassword
-    };
+        const passwordChangeRequest = {
+            currentPassword: currentPassword,
+            newPassword: newPassword
+        };
 
-    fetch("/users/change-password", {
-        method: "post",
-        headers: {
-            "Content-Type": "application/json",
-            "authorization": `Bearer ${jwt}`
-        },
-        body: JSON.stringify(passwordChangeRequest)
-    })
+        fetch("/users/change-password", {
+            method: "post",
+            headers: {
+                "Content-Type": "application/json",
+                "authorization": `Bearer ${jwt}`
+            },
+            body: JSON.stringify(passwordChangeRequest)
+        })
         .then(response => {
             if (response.ok) {
                 alert("Password changed successfully!");
@@ -37,6 +37,5 @@ document.getElementById("changePasswordForm").addEventListener("submit", functio
             console.error(e);
             alert(e.message);
         });
+    });
 });
-
-

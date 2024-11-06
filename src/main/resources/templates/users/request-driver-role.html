@@ -2,18 +2,28 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Request driver role</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../static/css/users/request-driver-role.css">
+    <title>Driver License Registration</title>
 </head>
+
+<header>
+    <th:block th:replace="~{header-footer/header}"></th:block>
+</header>
+
 <body>
-<h1>Request driver role</h1>
-
-<form id="driverRequestForm">
-
-    <label for="licenceNumber">License Number: </label>
-    <input type="text" id="licenceNumber"><br>
-
-    <button type="submit">send request</button>
+<h2>Driver License Registration</h2>
+<form id="driver-license-form">
+    <label for="licenseNumber">License Number:</label>
+    <input type="text" id="licenseNumber" name="licenseNumber" required>
+    <button type="submit">Submit</button>
 </form>
+
+<div id="response-message"></div>
+
 <script src="/static/js/users/request-driver-role.js"></script>
+
+<th:block th:replace="~{header-footer/footer}"></th:block>
+
 </body>
 </html>

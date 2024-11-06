@@ -2,18 +2,28 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Request owner role</title>
+  <title>Request Owner Role</title>
+  <link rel="stylesheet" href="../../static/css/users/request-owner-role.css">
 </head>
 <body>
-<h1>Request owner role</h1>
+<header>
+  <th:block th:replace="~{header-footer/header}"></th:block>
+</header>
+
+<h1>Request Owner Role</h1>
 
 <form id="ownerRequestForm">
 
   <label for="businessNumber">Business Number: </label>
-  <input type="text" id="businessNumber"><br>
+  <input type="text" id="businessNumber" required placeholder="Enter your business number"><br>
 
-  <button type="submit">send request</button>
+  <button type="submit">Send Request</button>
 </form>
+
+<footer>
+  <th:block th:replace="~{header-footer/footer}"></th:block>
+</footer>
+
 <script src="/static/js/users/request-owner-role.js"></script>
 </body>
 </html>

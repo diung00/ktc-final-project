@@ -2,13 +2,37 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>driver request status</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Driver Request Status</title>
+    <link rel="stylesheet" href="../../static/css/users/driver-request-status.css">
 </head>
 <body>
-<h3 id="licenseNumber"></h3>
-<h3 id="userRole"></h3>
-<h3 id="status"></h3>
-<h3 id="rejectionReason"></h3>
+<header>
+    <th:block th:replace="~{header-footer/header}"></th:block>
+</header>
+
+<div class="container">
+    <h1>Driver Role Request Status</h1>
+    <div class="status-section">
+        <h2>Request Information</h2>
+        <div class="request-status">
+            <p><strong>Status:</strong> <span id="status"></span></p>
+            <p><strong>Request Date:</strong> <span id="requestDate"></span></p>
+            <p><strong>License Number:</strong> <span id="licenseNumber"></span></p>
+            <p><strong>Additional Info:</strong> <span id="additionalInfo"></span></p>
+        </div>
+    </div>
+    <div class="action-section">
+        <h2>Others Request</h2>
+        <div><a href="/views/request-driver-role">Request Driver Role</a></div>
+        <!--        <div><a href="/views/update-profile">Update Profile</a></div>-->
+    </div>
+</div>
+
+<br>
+
+<th:block th:replace="~{header-footer/footer}"></th:block>
+
 <script src="/static/js/users/driver-request-status.js"></script>
 </body>
 </html>

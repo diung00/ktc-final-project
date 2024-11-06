@@ -6,7 +6,12 @@ if (!jwt) {
 document.getElementById("ownerRequestForm").addEventListener("submit", function(event) {
     event.preventDefault();
 
-    const businessNumber = document.getElementById("businessNumber").value;
+    const businessNumber = document.getElementById("businessNumber").value.trim();
+
+    if (!businessNumber) {
+        alert("Please enter a valid business number.");
+        return;
+    }
 
     fetch(`/users/request-owner-role?businessNumber=${encodeURIComponent(businessNumber)}`, {
         method: "POST",
@@ -15,16 +20,16 @@ document.getElementById("ownerRequestForm").addEventListener("submit", function(
             "Authorization": `Bearer ${jwt}`
         }
     })
-        .then(response => {
-            if (response.ok) {
-                return response.text();
-            } else {
-                throw new Error("Failed to send role request");
-            }
-        })
-        .then(message => alert(message))
-        .catch(e => {
-            console.error(e);
-            alert(e.message);
-        });
+    .then(response => {
+        if (response.ok) {
+            return response.text();
+        } else {
+            throw new Error("Failed to send role request");
+        }
+    })
+    .then(message => alert(message))
+    .catch(e => {
+        console.error(e);
+        alert(e.message);
+    });
 });

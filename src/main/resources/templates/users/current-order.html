@@ -3,12 +3,81 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>order</title>
+  <title>주분 정보</title>
+  <script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=r6pv70yc8h"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
   <style>
-    #map {
+    /* Đặt các quy tắc CSS để căn chỉnh và trang trí cho trang */
+    body {
+      font-family: Arial, sans-serif;
+      color: #333;
+      background-color: #f9f9f9;
+      line-height: 1.6;
+    }
+
+    /* Header */
+    .header {
+      background-color: #c2185b;
+      color: white;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .header a {
+      color: rgb(29, 28, 28);
+      text-decoration: none;
+      margin-left: 15px;
+      font-size: 18px;
+    }
+
+    .header a:hover {
+      text-decoration: underline;
+    }
+
+    .site-name {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    h1 {
+      color: #c2185b;
+      font-size: 28px;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    /* Chi tiết đơn hàng */
+    #order-details {
+      width: 80%;
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 15px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    #order-details p {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    .container {
       width: 100%;
+      max-width: 1200px; /* Bạn có thể điều chỉnh độ rộng tối đa nếu cần */
+      margin: 0 auto; /* Đảm bảo container được căn giữa */
+      padding: 0 15px; /* Padding để tránh phần tử bị dính vào biên */
+    }
+
+    #map {
+      width: 70%;
       height: 400px;
+      margin: 30px auto 0;  /* Căn giữa với khoảng cách trên là 30px */
+      display: block;
+    }
+
+    h3 span.text-muted {
+      color: #777;
     }
   </style>
 </head>
@@ -18,15 +87,16 @@
     <a href="/views" class="site-name">ChoiGangDelivery</a>
     <a href="/views/login" class="login-link" id="logout-link">Logout</a>
     <a href="/views/get-my-profile">My Profile</a>
-
   </div>
-  <h1>Order</h1>
-  <div id="order-details"> </div>
+  <h1>주문 정보</h1>
+
+  <div id="order-details">
+    <!-- Các chi tiết của đơn hàng sẽ được hiển thị ở đây -->
+  </div>
 
   <div id="map"></div>
 </div>
 
-<script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=codtfoiath"></script>
 <script src="/static/js/users/current-order.js"></script>
 </body>
 </html>

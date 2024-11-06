@@ -1,30 +1,40 @@
-const jwt = localStorage.getItem("token");
-if (!jwt) {
-    location.href = "/views/login";
-}
+document.addEventListener('DOMContentLoaded', () => {
+    const jwt = localStorage.getItem("token");
+    if (!jwt) {
+        location.href = "/views/login";
+        return;
+    }
+});
 
-document.getElementById("driverRequestForm").addEventListener("submit", function(event) {
+document.getElementById('request-driver-role-form').addEventListener('submit', function(event) {
     event.preventDefault();
 
-    const licenseNumber = document.getElementById("licenceNumber").value;
+    const licenseNumber = document.getElementById('licenseNumber').value;
 
-    fetch(`/users/request-driver-role?licenseNumber=${encodeURIComponent(licenseNumber)}`, {
-        method: "POST",
+    if (!licenseNumber) {
+        alert("Vui lòng nhập số bằng lái xe.");
+        return;
+    }
+
+    const url = `/request-driver-role?licenseNumber=${encodeURIComponent(licenseNumber)}`;
+
+    fetch(url, {
+        method: 'POST',
         headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${jwt}`
+            'Authorization': `Bearer ${localStorage.getItem('token')}` // Giả sử bạn lưu JWT trong localStorage
         }
     })
-        .then(response => {
-            if (response.ok) {
-                return response.text();
-            } else {
-                throw new Error("Failed to send role request");
-            }
-        })
-        .then(message => alert(message))
-        .catch(e => {
-            console.error(e);
-            alert(e.message);
-        });
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Request failed with status: ' + response.status);
+        }
+        return response.text(); // Nhận phản hồi dạng text
+    })
+    .then(data => {
+        alert(data); // Hiển thị thông báo thành công
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Đã xảy ra lỗi trong khi yêu cầu nâng cấp vai trò tài xế.');
+    });
 });

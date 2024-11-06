@@ -1,0 +1,55 @@
+/* Layout container */
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Title */
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+/* Status section */
+.status-section {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+}
+
+.status-section h2 {
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.request-status {
+    font-size: 16px;
+    color: #555;
+}
+
+.request-status p {
+    margin: 8px 0;
+}
+
+/* Action section */
+.action-section {
+    text-align: center;
+}
+
+.action-section div {
+    margin: 10px 0;
+}
+
+.action-section a {
+    color: #007BFF;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.action-section a:hover {
+    text-decoration: underline;
+}
