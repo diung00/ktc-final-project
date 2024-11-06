@@ -1,93 +1,114 @@
-const jwt = localStorage.getItem("token");
-if (!jwt) {
-    location.href = "/views/login";
+if (typeof jwt === 'undefined') {
+    const jwt = localStorage.getItem("token");
+    if (!jwt) location.href = "/views/login";
 }
 
-    const searchButton = document.getElementById("searchButton");
-    const searchInput = document.getElementById("searchInput");
+// Function to search restaurants by menu name
+document.getElementById("searchButton").addEventListener("click", function() {
+    // Get the menu name from the input field
+    const menuName = document.getElementById("searchInput").value; 
+    if (menuName) {
+        searchRestaurantsByMenuName(menuName);  // Call the function to search restaurants by menu name  
+    }
+});
 
-    const validCuisineTypes = [
-        "KOREAN_FOOD",
-        "JAPANESE_FOOD",          // (일식)
-        "CHINESE_FOOD",           // (중식)
-        "WESTERN_FOOD",           // (양식)
-        "FAST_FOOD",              // (패스트푸드)
-        "CAFE_DESSERT",           // (카페/디저트)
-        "CHICKEN",                // 치킨)
-        "PIZZA",                  // (피자)
-        "ASIAN_FOOD",             // (동남아 음식)
-        "INTERNATIONAL_FOOD"      // 기타 세계 음식
-    ];
-
-    searchButton.addEventListener("click", () => {
-        const searchTerm = searchInput.value.trim(); // Lấy giá trị từ ô input
-
-        if (!searchTerm) {
-            alert("Please enter a search term.");
-            return;
+function searchRestaurantsByMenuName(menuName) {
+    fetch(`/restaurants/within-radius/menu?menuName=${menuName}`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${jwt}` // Use the jwt token for authentication
         }
+    })
+    .then(response => response.json()) // Parse the JSON response
+    .then(data => {
+        displayRestaurants(data); // Display the restaurants in the UI
+    })
+    .catch(error => {
+        console.error('Error:', error); // Handle any errors that occur
+    });
+}
 
-        const isCuisineSearch = validCuisineTypes.some(cuisine => cuisine.toLowerCase() === searchTerm.toLowerCase());
-        const isMenuSearch = !isCuisineSearch;
-
-        let fetchApi;
-
-        if (isMenuSearch) {
-            // Fetch API tìm kiếm theo tên món ăn
-            fetchApi = fetch(`/restaurants/within-radius/menu?menuName=${searchTerm}`, {
-                method: "GET",
-                headers: {
-                    "Authorization": `Bearer ${jwt}`,
-                },
-            });
-        } else if (isCuisineSearch) {
-            // Fetch API tìm kiếm theo loại món ăn
-            fetchApi = fetch(`/restaurants/within-radius/cuisine?cuisineType=${searchTerm}`, {
-                method: "GET",
-                headers: {
-                    "Authorization": `Bearer ${jwt}`,
-                },
-            });
-        } else {
-            alert("유효한 검색어를 입력해주세요 (메뉴 이름 또는 요리 유형)");
-            return;
+// Function to find nearby restaurants
+document.getElementById("findNearbyRestaurantsButton").addEventListener("click", function() {
+    findNearbyRestaurants();  // Call the function to find nearby restaurants
+});
+function findNearbyRestaurants() {
+    fetch(`/restaurants/within-radius`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${jwt}` // Use the jwt token for authentication
         }
-        fetchApi
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error("Network response was not ok");
-                }
-                return response.json();
-            })
-            .then(data => {
-                const restaurantList = document.getElementById("restaurant-list-by-menu");
-                restaurantList.innerHTML = "";  // Xóa kết quả cũ
+    })
+    .then(response => response.json()) // Parse the JSON response
+    .then(data => {
+        displayRestaurants(data); // Display the restaurants in the UI
+    })
+    .catch(error => {
+        console.error('Error:', error); // Handle any errors that occur
+    });
+}
 
-                if (data.length === 0) {
-                    restaurantList.innerHTML = "<p>일치한 결과가 없습니다!</p>";
-                } else {
-                    data.forEach(restaurant => {
-                        const restaurantDiv = document.createElement("div");
-                        restaurantDiv.classList.add("restaurant");
-                        restaurantDiv.innerHTML = `
-                            <h2><a href="/views/get-one-restaurant?id=${restaurant.id}">${restaurant.name}</a></h2>
-                            <p>Address: ${restaurant.address}</p>
-                            <p>Phone: ${restaurant.phone}</p>
-                            <p>Opening Hours: ${restaurant.openingHours}</p>
-                            <p>Cuisine: ${restaurant.cuisineType}</p>
-                            <p>Rating: ${restaurant.rating}</p>
-                            <img src="${restaurant.restImage}" alt="${restaurant.name}" />
-                            <p>${restaurant.description}</p>
-                            <p>Status: ${restaurant.approvalStatus}</p>
-                        `;
-
-                        restaurantList.appendChild(restaurantDiv);
-                    });
-                }
-            })
-            .catch(error => {
-                console.error("Fetch error:", error);
-                alert("An error occurred while fetching restaurant data.");
-            });
+// Function to search restaurants by cuisine type
+document.querySelectorAll(".category-item").forEach(item => {
+    item.addEventListener("click", function() {
+        // Get the cuisine type from the data attribute
+        const cuisineType = item.getAttribute("data-cuisine"); 
+        searchRestaurantsByCuisine(cuisineType); // Call the function to search restaurants by cuisine type
     });
 });
+function searchRestaurantsByCuisine(cuisineType) {
+    fetch(`/restaurants/within-radius/cuisine?cuisineType=${cuisineType}`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${jwt}` // Use the jwt token for authentication
+        }
+    })
+    .then(response => response.json()) // Parse the JSON response
+    .then(data => {
+        displayRestaurants(data); // Display the restaurants in the UI
+    })
+    .catch(error => {
+        console.error('Error:', error); // Handle any errors that occur
+    });
+}
+
+// Function to display the list of restaurants
+function displayRestaurants(restaurants) {
+    const restaurantListContainer = document.querySelector("#restaurant-list-by-menu .restaurant-list"); 
+    restaurantListContainer.innerHTML = ''; // Clear the existing restaurant list
+
+    if (!Array.isArray(restaurants) || restaurants.length === 0) {
+        restaurantListContainer.innerHTML = '<p>No restaurants found</p>'; // Show message if no restaurants found or invalid data
+        return;
+    }
+
+    // Loop through each restaurant and create the HTML elements to display them
+    restaurants.forEach(restaurant => {
+        const restaurantItem = document.createElement('div'); 
+        restaurantItem.classList.add('restaurant-item'); 
+
+        // Create an image element for the restaurant
+        const restaurantImg = document.createElement('div');
+        restaurantImg.classList.add('restaurant-img');
+        const img = document.createElement('img');
+        img.src = restaurant.imageUrl;  // Set the image source
+        img.alt = restaurant.name; // Set the alt text for the image
+        img.style.width = '100px';
+        img.style.height = '100px';
+        img.style.objectFit = 'cover'; // Ensure the image fits within the container
+        restaurantImg.appendChild(img); // Append the image to the restaurant image div
+
+        // Create a container for the restaurant's information
+        const restaurantInfo = document.createElement('div');
+        restaurantInfo.classList.add('restaurant-info');
+        const restaurantName = document.createElement('a');
+        restaurantName.href = `/order/${restaurant.id}`; // Link to the restaurant's order page
+        restaurantName.classList.add('restaurant-name');
+        restaurantName.textContent = restaurant.name; // Set the restaurant's name
+        restaurantInfo.appendChild(restaurantName); // Append the name to the restaurant info div
+    
+        restaurantItem.appendChild(restaurantImg); // Append the image div to the restaurant item
+        restaurantItem.appendChild(restaurantInfo); // Append the info div to the restaurant item
+        restaurantListContainer.appendChild(restaurantItem); // Append the restaurant item to the list container
+    });
+}

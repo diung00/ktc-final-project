@@ -4,85 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ChoiGangDelivery</title>
-    <style>
-        /* common */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            color: #333;
-        }
-
-        button {
-            background-color: #c2185b;
-            color: white;
-            border: 1px solid white;
-            size: 100;
-        }
-
-        /* Search Restaurant by Cuisine type */
-        .search-section {
-            text-align: center;
-            background-image: url('img\search-home.jpg');
-            background-size: cover;
-            background-position: center;
-            padding: 60px 20px;
-            color: white;
-        }
-
-        .search-section input[type="text"] {
-            width: 80%;
-            padding: 10px;
-            font-size: 16px;
-            border: 2px solid #c2185b;
-            border-radius: 5px;
-            background-color: rgba(255, 255, 255, 0.8);
-        }
-
-        .search-section button {
-            padding: 10px 20px;
-            background-color: #c2185b;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .search-section button:hover {
-            background-color: #ff1493;
-        }
-
-        .categories {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .category-item {
-            width: 18%;
-            margin: 10px;
-            text-align: center;
-        }
-
-        .category-item img {
-            width: 100%;
-            height: 80%;
-            border-radius: 10px;
-            transition: transform 0.3s;
-        }
-
-        .category-item img:hover {
-            transform: scale(1.05);
-        }
-
-        .category-item p {
-            font-weight: bold;
-            color: #c2185b;
-            margin-top: 8px;
-        }
-    </style>
+    <link rel="stylesheet" href="/static/css/views.css">
 </head>
 <header>
     <th:block th:replace="~{header-footer/header}"></th:block>
@@ -91,61 +13,74 @@
 
 <!-- Phần tìm kiếm nhà hàng -->
 <div class="search-section">
-    <input type="text" id="searchInput" placeholder="레스토랑을 찾으려면 주소를 입력하세요..."> <!-- Nhập tên món ăn để tìm kiếm -->
+    <input type="text" id="searchInput" placeholder="레스토랑을 검색하려면 요리 이름을 입력하세요!"> <!-- Nhập tên món ăn để tìm kiếm -->
     <button id="searchButton">검색</button> <!-- Tìm kiếm -->
 </div>
-
-
-<div id="restaurant-list-by-menu">
-    <!-- Các nhà hàng sẽ được hiển thị ở đây -->
+<!-- Find nearby restaurant button -->
+<div style="text-align: center; margin-top: 20px;">
+    <button id="findNearbyRestaurantsButton">Find Nearby Restaurants</button>
+</div>
+<div class="categories">
+    <div class="category-row">
+        <div class="category-item" data-cuisine="KOREAN_FOOD">
+            <img src="static/img/images/한식.jpg" alt="한식">
+            <p>한식</p>
+        </div>
+        <div class="category-item" data-cuisine="JAPANESE_FOOD">
+            <img src="static/img/images/일식.jpg" alt="일식">
+            <p>일식</p>
+        </div>
+        <div class="category-item" data-cuisine="CHINESE_FOOD">
+            <img src="static/img/images/중식.jpg" alt="중식">
+            <p>중식</p>
+        </div>
+        <div class="category-item" data-cuisine="WESTERN_FOOD">
+            <img src="static/img/images/양식.jpg" alt="양식">
+            <p>양식</p>
+        </div>
+        <div class="category-item" data-cuisine="FAST_FOOD">
+            <img src="static/img/images/패스트푸드.jpg" alt="패스트푸드">
+            <p>패스트푸드</p>
+        </div>
+    </div>
+    <div class="category-row">
+        <div class="category-item" data-cuisine="CHICKEN">
+            <img src="static/img/images/치킨.jpg" alt="치킨">
+            <p>치킨</p>
+        </div>
+        <div class="category-item" data-cuisine="PIZZA">
+            <img src="static/img/images/피자.jpg" alt="피자">
+            <p>피자</p>
+        </div>
+        <div class="category-item" data-cuisine="ASIAN_FOOD">
+            <img src="static/img/images/동남아 음식.jpg" alt="동남아 음식">
+            <p>동남아 음식</p>
+        </div>
+        <div class="category-item" data-cuisine="CAFE_DESSERT">
+            <img src="static/img/images/카페 - 디저트.jpg" alt="카페/디저트">
+            <p>카페/디저트</p>
+        </div>
+        <div class="category-item" data-cuisine="INTERNATIONAL_FOOD">
+            <img src="static/img/images/기타 세계 음식.jpg" alt="기타 세계 음식">
+            <p>기타 세계 음식</p>
+        </div>
+    </div>
 </div>
 
-<!-- Phần phân loại nhà hàng -->
-<div class="categories">
-    <!-- Mỗi mục nhà hàng -->
-    <div class="category-item">
-        <img src="static/img/images/한식.jpg" alt="한식">
-        <p> 한식 </p>
-    </div>
-    <div class="category-item">
-        <img src="static/img/images/일식.jpg" alt="일식">
-        <p>일식</p>
-    </div>
-    <div class="category-item">
-        <img src="static/img/images/중식.jpg" alt="중식">
-        <p>중식</p>
-    </div>
-    <div class="category-item">
-        <img src="static/img/images/양식.jpg" alt="양식">
-        <p>양식</p>
-    </div>
-    <div class="category-item">
-        <img src="static/img/images/패스트푸드.jpg" alt="패스트푸드">
-        <p>패스트푸드</p>
-    </div>
-    <div class="category-item">
-        <img src="static/img/images/치킨.jpg" alt="치킨">
-        <p>치킨</p>
-    </div>
-    <div class="category-item">
-        <img src="static/img/images/피자.jpg" alt="피자">
-        <p>피자</p>
-    </div>
-    <div class="category-item">
-        <img src="static/img/images/동남아 음식.jpg" alt="동남아 음식">
-        <p>동남아 음식</p>
-    </div>
-    <div class="category-item">
-        <img src="static/img/images/카페 - 디저트.jpg" alt="카페/디저트">
-        <p>카페/디저트</p>
-    </div>
-    <div class="category-item">
-        <img src="static/img/images/기타 세계 음식.jpg" alt="기타 세계 음식">
-        <p>기타 세계 음식</p>
 
+<!-- search result -->
+<div id="restaurant-list-by-menu">
+    <div class="search-results-header">
+        <span>검색 결과</span>
     </div>
+    
+    <!-- restaurant list container -->
+    <div class="restaurant-list">
+        <!-- display restaurants list -->
+    </div>
+</div>
 </div>
 <th:block th:replace="~{header-footer/footer}"></th:block>
-<script src="../../static/js/views.js"></script>
+<script src="/static/js/views.js"></script>
 </body>
 </html>
