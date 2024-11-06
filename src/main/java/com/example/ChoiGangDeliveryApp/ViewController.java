@@ -1,8 +1,10 @@
 package com.example.ChoiGangDeliveryApp;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/views")
@@ -94,11 +96,14 @@ public class ViewController {
 
     //Menu
     @GetMapping("/menu")
-    public String viewMenu() {return "menu/restaurant-menu";}
+    public String viewMenu() {return "menu/view-all-menus";}
     @GetMapping("/restaurant-add-menu")
     public String addMenu() {return "menu/create-menu";}
     @GetMapping("/restaurant-update-menu")
-    public String updateMenu() {return "menu/restaurant-update-menu";}
+    public String updateMenu(@RequestParam("menuId") Long id, Model model) {
+        model.addAttribute("menuId", id);
+        return "menu/update-menu";
+    }
 
     //Admin dashboard
     @GetMapping("/admin")

@@ -4,14 +4,15 @@ document.addEventListener("DOMContentLoaded", async () => {
         location.href = "/views/login";
         return;
     }
-
-    // Lấy menuId từ URL
     const urlParams = new URLSearchParams(window.location.search);
-    const menuId = urlParams.get("id");
+    const menuId = urlParams.get('menuId');
 
-    // Hàm tải thông tin menu hiện tại để hiển thị trên form
+    // Function to load menu data and populate form
     async function loadMenuData() {
         try {
+            console.log("Loading menu with ID:", menuId);
+
+            // Fetch menu data by menuId
             const response = await fetch(`/menus/${menuId}`, {
                 method: "GET",
                 headers: {
@@ -23,6 +24,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             if (!response.ok) throw new Error("Failed to fetch menu data.");
             const menuData = await response.json();
 
+            // Populate form fields with menu data
             document.getElementById("name").value = menuData.name;
             document.getElementById("price").value = menuData.price;
             document.getElementById("description").value = menuData.description || '';
@@ -35,13 +37,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     }
 
-    // Tải dữ liệu menu khi trang được tải
+    // Load menu data when the page loads
     loadMenuData();
 
-    const menuForm = document.getElementById("menu-form");
-    menuForm.addEventListener("submit", (event) => {
-        event.preventDefault();
-
+    // Handle form submission for menu update
+    async function submitMenuUpdate() {
+        // Get values from form inputs
         const name = document.getElementById("name").value;
         const price = parseInt(document.getElementById("price").value, 10);
         const description = document.getElementById("description").value;
@@ -49,8 +50,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         const preparationTime = parseInt(document.getElementById("preparationTime").value, 10);
         const cuisineType = document.getElementById("cuisineType").value;
 
-        // Đối tượng dữ liệu cập nhật menu
-        const menuData = {
+        // Create the menu update data object
+        const menuUpdateDto = {
             name: name,
             price: price,
             description: description,
@@ -58,29 +59,62 @@ document.addEventListener("DOMContentLoaded", async () => {
             preparationTime: preparationTime,
             cuisineType: cuisineType
         };
+        try {
+            // Send PUT request to update menu
+            const response = await fetch(`/menus/update/${menuId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${jwt}`
+                },
+                body: JSON.stringify(menuUpdateDto)
+            });
+            if (response.ok) {
+                const result = await response.text();
+                alert("Menu updated successfully.");
+            } else {
+                const errorData = await response.json();
+                alert(`Error: ${errorData.message || "Failed to update menu information."}`);
+            }
+        } catch (error) {
+            alert(`Error: ${error.message}`);
+        }
+    }
 
-        // Gửi yêu cầu cập nhật
-        fetch(`/menus/update/${menuId}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${jwt}`
-            },
-            body: JSON.stringify(menuData)
-        })
-        .then(response => {
-            if (!response.ok) throw new Error("Failed to update menu.");
-            return response.json();
-        })
-        .then(data => {
-            const responseMessage = document.getElementById("response-message");
-            responseMessage.innerHTML = `<p>Menu updated successfully: ${data.name}</p>`;
-            setTimeout(() => location.href = '/views/restaurant-menu', 2000);
-        })
-        .catch(error => {
-            console.error("Error updating menu:", error);
-            const responseMessage = document.getElementById("response-message");
-            responseMessage.innerHTML = `<p>Error updating menu: ${error.message}</p>`;
-        });
-    });
+    async function submitImageUpdate() {
+        const imageFile = document.getElementById("image").files[0];
+    
+        if (!imageFile) {
+            alert("Please select an image to upload.");
+            return;
+        }
+    
+        const formData = new FormData();
+        formData.append("image", imageFile); 
+    
+        try {
+            const response = await fetch(`/menus/${menuId}/image`, {
+                method: "PUT",
+                headers: {
+                    'Authorization': `Bearer ${jwt}` 
+                },
+                body: formData
+            });
+    
+            if (response.ok) {
+                const updatedMenu = await response.json();
+                alert("Image updated successfully!");
+            } else {
+                const errorData = await response.json();
+                alert("Failed to update image: " + errorData.message);
+            }
+        } catch (error) {
+            console.error("Error updating image:", error);
+            alert("Error updating image.");
+        }
+    }
+    // Attach event listeners to specific buttons
+    document.getElementById("updateMenuButton").addEventListener("click", submitMenuUpdate);
+    document.getElementById("updateImageButton").addEventListener("click", submitImageUpdate);
+    
 });
