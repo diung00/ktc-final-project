@@ -2,17 +2,37 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Upload Profile Image</title>
+  <link rel="stylesheet" href="../../static/css/users/upload-profile-image.css">
 </head>
 <body>
-<h1>Upload Profile Image</h1>
+<header>
+  <th:block th:replace="~{header-footer/header}"></th:block>
+</header>
 
-<form id="uploadProfileImageForm" enctype="multipart/form-data">
-  <label for="image">Select Image:</label>
-  <input type="file" id="image" name="image" accept="image/*" required><br>
+<div class="container">
+  <h1 class="my-3 border-bottom pb-2">Upload Profile Image</h1>
 
-  <button type="submit">Upload Image</button>
-</form>
+  <!-- Image Upload Form -->
+  <div class="mb-3">
+    <form id="imageUploadForm">
+      <label for="image" class="form-label">Select Profile Image</label>
+      <input type="file" id="image" name="image" accept="image/*" class="form-control">
+      <button type="button" onclick="submitImageUpload()" class="btn btn-primary my-2">Upload Image</button>
+    </form>
+  </div>
+
+  <!-- Display uploaded image preview -->
+  <div id="imagePreview" class="mb-3">
+    <img id="previewImg" src="" alt="Image Preview" style="max-width: 100%; display: none;">
+  </div>
+
+  <!-- Success/Error message display -->
+  <div id="message" class="mb-3" style="display: none;"></div>
+</div>
+
+<th:block th:replace="~{header-footer/footer}"></th:block>
 
 <script src="/static/js/users/upload-profile-image.js"></script>
 </body>

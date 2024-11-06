@@ -6,6 +6,10 @@
     <title>Admin Panel</title>
     <link rel="stylesheet" href="../../static/css/login/admin.css">
 </head>
+<header>
+    <th:block th:replace="~{header-footer/header}"></th:block>
+</header>
+
 <body>
 <h1>Admin Panel</h1>
 
@@ -69,6 +73,8 @@
         <tbody></tbody>
     </table>
 </section>
+<th:block th:replace="~{header-footer/footer}"></th:block>
+
 
 <script src="../../static/js/admin/admin.js"></script>
 </body>

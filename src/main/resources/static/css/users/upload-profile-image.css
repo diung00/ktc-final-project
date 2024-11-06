@@ -1,0 +1,45 @@
+/* Style cho ảnh profile */
+h1 {
+    text-align: center; /* Căn giữa tiêu đề */
+    color: #007bff; /* Màu tiêu đề */
+    margin-bottom: 20px; /* Khoảng cách dưới tiêu đề */
+}
+
+.profile-img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%; /* Bo góc để ảnh tròn */
+    object-fit: cover; /* Đảm bảo ảnh vừa với khung */
+    display: block;
+    margin-bottom: 20px;
+}
+
+/* Cải tiến form */
+form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+input[type="file"] {
+    display: inline-block;
+    padding: 10px;
+    width: 100%;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #0056b3;
+}

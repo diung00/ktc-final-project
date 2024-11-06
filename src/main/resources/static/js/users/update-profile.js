@@ -1,67 +1,52 @@
-const jwt = localStorage.getItem("token");
-if (!jwt) {
-    location.href = "/views/login";
-}
-//lấy thông tin user
-fetch("/users/get-my-profile", {
-    method: "get",
-    headers: {
-        "authorization": `Bearer ${jwt}`
-    },
-})
-    .then(response => {
-        if (response.ok) {
-            return response.json();
-        } else {
-            throw new Error("Failed to fetch");
-        }
-    })
-    .then(json => {
-      //  document.getElementById("username").value = json.username;
-        document.getElementById("name").value = json.name;
-        document.getElementById("nickname").value = json.nickname;
-        document.getElementById("age").value = json.age;
-        document.getElementById("email").value = json.email;
-        document.getElementById("phone").value = json.phone;
-        document.getElementById("address").value = json.address;
+document.addEventListener('DOMContentLoaded', () => {
+    const jwt = localStorage.getItem("token");
+    if (!jwt) {
+        location.href = "/views/login";
+        return;
+    }
+});
 
-    })
-    .catch(e => {
-        console.error(e);
-    });
-
-// Cập nhật thông tin user
-document.getElementById("updateForm").addEventListener("submit", function(event) {
+document.getElementById('updateProfileForm').addEventListener('submit', async function (event) {
     event.preventDefault();
 
-    const updatedUser = {
-      //  username: document.getElementById("username").value,
-        name: document.getElementById("name").value,
-        nickname: document.getElementById("nickname").value,
-        age: document.getElementById("age").value,
-        email: document.getElementById("email").value,
-        phone: document.getElementById("phone").value,
-        address: document.getElementById("address").value,
+    const name = document.getElementById('name').value;
+    const nickname = document.getElementById('nickname').value;
+    const age = document.getElementById('age').value;
+//    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
+    const address = document.getElementById('address').value;
+
+    const payload = {
+        name,
+        nickname,
+        age,
+//        email,
+        phone,
+        address
     };
 
-    fetch("/users/update-profile", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "authorization": `Bearer ${jwt}`
-        },
-        body: JSON.stringify(updatedUser)
-    })
-        .then(response => {
-            if (response.ok) {
-                alert("Profile updated successfully!");
-                location.href = "/views/get-my-profile";
-            } else {
-                throw new Error("Failed to update profile");
-            }
-        })
-        .catch(e => {
-            console.error(e);
-            alert(e.message);
+    try {
+        const response = await fetch('/users/update-profile', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${jwt}`
+            },
+            body: JSON.stringify(payload)
         });
+
+        if (response.ok) {
+            const result = await response.json();
+            alert("Profile updated successfully!");
+            location.href = "/views/get-my-profile";
+            console.log("Updated profile data:", result);
+        } else {
+            const errorData = await response.json();
+            alert("Failed to update profile: " + (errorData.message || errorData.error || "Unknown error"));
+            console.error("Error details:", errorData);
+        }
+    } catch (error) {
+        console.error("Unexpected error:", error);
+        alert("An unexpected error occurred. Please try again later.");
+    }
 });
