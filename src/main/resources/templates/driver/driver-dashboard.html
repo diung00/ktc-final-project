@@ -11,16 +11,20 @@
     <header>
         <th:block th:replace="~{header-footer/header}"></th:block>
     </header>
-    
-    <!-- Map container with buttons on top -->
-    <div class="map-container">
-        <div class="map" id="map"></div>
-
-        <!-- Order List Button -->
-        <button id="orderListBtn" class="order-list-button">📋배달리스트</button>
-        <!-- 운행시작 button (available mode) -->
-        <button id="availabilityBtn" class="availability-button" data-status="available">운행하기</button>
+    <div class="style">
+        <div class="phone-wrapper">
+            <!-- Map container with buttons on top -->
+            <div class="map-container">
+                <div class="map" id="map"></div>
+        
+                <!-- Order List Button -->
+                <button id="orderListBtn" class="order-list-button">📋배달리스트</button>
+                <!-- 운행시작 button (available mode) -->
+                <button id="availabilityBtn" class="availability-button" data-status="available">운행하기</button>
+            </div>
+        </div>
     </div>
+    
 
 
     <!-- <th:block th:replace="~{header-footer/footer}"></th:block> -->

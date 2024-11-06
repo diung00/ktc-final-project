@@ -3,6 +3,7 @@ package com.example.ChoiGangDeliveryApp.driver;
 import com.example.ChoiGangDeliveryApp.api.ncpmaps.NaviService;
 import com.example.ChoiGangDeliveryApp.api.ncpmaps.dto.PointDto;
 import com.example.ChoiGangDeliveryApp.driver.dto.DriverDto;
+import com.example.ChoiGangDeliveryApp.driver.dto.DriverLocationDto;
 import com.example.ChoiGangDeliveryApp.driver.entity.DriverEntity;
 import com.example.ChoiGangDeliveryApp.driver.repo.DriverRepository;
 import com.example.ChoiGangDeliveryApp.enums.DriverStatus;
@@ -32,28 +33,50 @@ public class DriverService {
 
     private final SimpMessagingTemplate messagingTemplate;
 
-    // get location of driver by IP
-    public void updateDriverLocation(String ipAddress) {
-        //current driver
+    //update driver location by API geolocation
+    public void updateDriverLocation(double latitude, double longitude) {
         UserEntity currentUser = facade.getCurrentUserEntity();
-
-        //find driver by current user
         DriverEntity driver = driverRepository.findByUser(currentUser)
-                .orElseThrow(() -> new IllegalArgumentException("Driver not found for the current user"));
-        log.info("Driver found: {}", driver);
-        // get location from ipAddress
-        PointDto location = naviService.geoLocation(ipAddress);
-        log.info("Location from IP: " + location);
-
-        //update location
-        driver.setLatitude(location.getLatitude());
-        driver.setLongitude(location.getLongitude());
-
-        //save data
+                .orElseThrow(()->new IllegalArgumentException("Driver not found"));
+        log.info("Driver found : {}", driver);
+        driver.setLatitude(latitude);
+        driver.setLongitude(longitude);
         driverRepository.save(driver);
-        // sent location to clients
-        messagingTemplate.convertAndSend("/topic/driverLocation", new DriverDto(location.getLatitude(), location.getLongitude()));
     }
+
+    //get driver location
+    public DriverLocationDto getDriverLocation(){
+        UserEntity currentUser = facade.getCurrentUserEntity();
+        DriverEntity driver = driverRepository.findByUser(currentUser)
+                .orElseThrow(()->new IllegalArgumentException("Driver not found"));
+        DriverLocationDto dto = new DriverLocationDto();
+        dto.setLatitude(driver.getLatitude());
+        dto.setLongitude(driver.getLongitude());
+        return dto;
+    }
+
+//    // get location of driver by IP
+//    public void updateDriverLocation(String ipAddress) {
+//        //current driver
+//        UserEntity currentUser = facade.getCurrentUserEntity();
+//
+//        //find driver by current user
+//        DriverEntity driver = driverRepository.findByUser(currentUser)
+//                .orElseThrow(() -> new IllegalArgumentException("Driver not found for the current user"));
+//        log.info("Driver found: {}", driver);
+//        // get location from ipAddress
+//        PointDto location = naviService.geoLocation(ipAddress);
+//        log.info("Location from IP: " + location);
+//
+//        //update location
+//        driver.setLatitude(location.getLatitude());
+//        driver.setLongitude(location.getLongitude());
+//
+//        //save data
+//        driverRepository.save(driver);
+//        // sent location to clients
+//        messagingTemplate.convertAndSend("/topic/driverLocation", new DriverDto(location.getLatitude(), location.getLongitude()));
+//    }
     public String getDriverStatus() {
         UserEntity currentUser = facade.getCurrentUserEntity();
         DriverEntity driver = driverRepository.findByUser(currentUser)
@@ -70,25 +93,6 @@ public class DriverService {
         driverRepository.save(driver);
     }
 
-
-    //    // UNAVAILABLE MODE
-//    public void setDriverUnavailable() {
-//        UserEntity currentUser = facade.getCurrentUserEntity();
-//        //find driver
-//        DriverEntity driver = driverRepository.findByUser(currentUser)
-//                .orElseThrow(() -> new RuntimeException("Driver not found"));
-//        driver.setDriverStatus(DriverStatus.UNAVAILABLE);
-//        driverRepository.save(driver);
-//    }
-//
-//    // AVAILABLE MODE
-//    public void setDriverAvailable() {
-//        UserEntity currentUser = facade.getCurrentUserEntity();
-//        DriverEntity driver = driverRepository.findByUser(currentUser)
-//                .orElseThrow(() -> new RuntimeException("Driver not found"));
-//        driver.setDriverStatus(DriverStatus.AVAILABLE);
-//        driverRepository.save(driver);
-//    }
     // VIEW ORDER(CANCELLED, COMPLETED)
     public List<OrderDto> getCompletedAndCancelledOrders(Long driverId) {
         List<OrderStatus> statuses = Arrays.asList(OrderStatus.COMPLETED, OrderStatus.CANCELLED);
