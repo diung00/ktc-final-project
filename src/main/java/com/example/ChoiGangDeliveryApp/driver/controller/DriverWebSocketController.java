@@ -13,8 +13,8 @@ public class DriverWebSocketController {
         this.driverService = driverService;
     }
 
-    @MessageMapping("/driver/location")
-    public void updateDriverLocation(DriverLocationDto driverLocationDto) {
-        driverService.updateDriverLocation(driverLocationDto.getIpAddress());
-    }
+//    @MessageMapping("/driver/location")
+//    public void updateDriverLocation(DriverLocationDto driverLocationDto) {
+//        driverService.updateDriverLocation(driverLocationDto.getIpAddress());
+//    }
 }

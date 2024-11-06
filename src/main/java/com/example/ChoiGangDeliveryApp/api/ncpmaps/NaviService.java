@@ -104,7 +104,6 @@ public class NaviService {
 
         String x = response.getAddresses().get(0).getX();
         String y = response.getAddresses().get(0).getY();
-
         return new PointDto(Double.parseDouble(x), Double.parseDouble(y));
     }
 
