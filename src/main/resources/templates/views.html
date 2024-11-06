@@ -27,7 +27,7 @@
             background-size: cover;
             background-position: center;
             padding: 60px 20px;
-            color: white; 
+            color: white;
         }
 
         .search-section input[type="text"] {
@@ -90,12 +90,15 @@
 <body>
 
 <!-- Phần tìm kiếm nhà hàng -->
-<form id="search-section" class="search-section">
-    <input id="searchInput" type="text" placeholder="Which restaurants are you looking for?">
-    <button type="submit"> Search </button>
-</form>
+<div class="search-section">
+    <input type="text" id="searchInput" placeholder="레스토랑을 찾으려면 주소를 입력하세요..."> <!-- Nhập tên món ăn để tìm kiếm -->
+    <button id="searchButton">검색</button> <!-- Tìm kiếm -->
+</div>
 
-<script src="/static/js/views.js"></script>
+
+<div id="restaurant-list-by-menu">
+    <!-- Các nhà hàng sẽ được hiển thị ở đây -->
+</div>
 
 <!-- Phần phân loại nhà hàng -->
 <div class="categories">
