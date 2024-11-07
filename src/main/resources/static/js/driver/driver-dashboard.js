@@ -229,6 +229,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Redirect to orderList page
     document.getElementById('orderListBtn').addEventListener('click', function() {
-        window.location.href = '/views/driver-orderList';
+        window.location.href = '/views/driver-orders';
     });
 });

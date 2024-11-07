@@ -90,7 +90,7 @@ public class ViewController {
     @GetMapping("/view-menu")
     public String viewMenuForUser(){return "menu/restaurant-menu-for-user";}
 
-    //owner
+    //restaurant
     @GetMapping("/restaurant-management")
     public String restaurantManagement() {return "restaurant/restaurant-management";}
     @GetMapping("/restaurant-update")
@@ -110,6 +110,10 @@ public class ViewController {
         model.addAttribute("menuId", id);
         return "menu/update-menu";
     }
+
+    //order
+    @GetMapping("/driver-orders")
+    public String oderListByDriver() {return "order/orders-driver-view";}
 
     //Admin dashboard
     @GetMapping("/admin")

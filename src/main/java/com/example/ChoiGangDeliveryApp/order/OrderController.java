@@ -33,9 +33,9 @@ public class OrderController {
     //VIEW ALL ORDERS BY RESTAURANT ID FOR DRIVER
 
     //VIEW ALL ORDERS BY DRIVER ID
-    @GetMapping("/driver/{driverId}")
-    public ResponseEntity<List<OrderDto>> viewAllOrdersByDriverId(@PathVariable Long driverId) {
-        List<OrderDto> orders = orderService.viewAllOrderByDriverId(driverId);
+    @GetMapping("/driver")
+    public ResponseEntity<List<OrderDto>> viewAllOrdersByDriverId() {
+        List<OrderDto> orders = orderService.viewAllOrderByDriverId();
         return ResponseEntity.ok(orders);
     }
 

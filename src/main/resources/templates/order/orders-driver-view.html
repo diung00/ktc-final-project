@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Betal List</title>
+    <link rel="stylesheet" href="/static/css/order/orders-driver-view.css">
+</head>
+<body>
+    <header>
+        <th:block th:replace="~{header-footer/header}"></th:block>
+    </header>
+    <div class="container">
+        <h1>배달 리스트</h1>
+        <table id="ordersTable">
+            <thead>
+                <tr>
+                    <th>주문 ID: </th>
+                    <th>사용자 이름 : </th>
+                    <th>배송 주소: </th>
+                    <th>레스토랑 이름: </th>
+                    <th>레스토랑 주소: </th>
+                    <th>주문 날짜: </th>
+                    <th>주문 상태: </th>
+                    <th>예상 도착 시간: </th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Data will be displayed here -->
+            </tbody>
+        </table>
+    </div>
+    <th:block th:replace="~{header-footer/footer}"></th:block>
+    <script src="/static/js/order/orders-driver-view.js"></script>
+</body>
+</html>

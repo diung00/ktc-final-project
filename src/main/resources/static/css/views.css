@@ -108,21 +108,18 @@
     background-color: white;
 }
 
-/* Tiêu đề tìm kiếm kết quả */
 .search-results-header {
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 20px;
     color: #c2185b;
 }
-
-/* Danh sách các nhà hàng */
 .restaurant-list {
     display: flex;
     flex-direction: column;
 }
 
-/* Mỗi nhà hàng sẽ có hình ảnh bên trái và thông tin bên phải */
+/* restaurant name */
 .restaurant-item {
     display: flex;
     margin-bottom: 15px;
@@ -131,22 +128,30 @@
     border-radius: 8px;
 }
 
-/* Hình ảnh nhà hàng */
+/* restaurant image */
 .restaurant-img {
-    flex: 0 0 120px;
+    flex: 0 0 240px;
     margin-right: 15px;
+    width: 240px;
+    height: 120px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .restaurant-img img {
-    width: 100px;
-    height: 100px;
+    width: 100%;
+    height: auto;
+    max-width: 200px;
+    max-height: 100px;
     object-fit: cover;
-    border-radius: 8px;
+    border-radius: 5px;
 }
-
-/* Thông tin nhà hàng */
 .restaurant-info {
-    flex: 1;
+    display: flex; 
+    justify-content: center;
+    align-items: center; 
+    text-align: center;
 }
 
 .restaurant-name {
@@ -154,6 +159,8 @@
     font-weight: bold;
     color: #c2185b;
     text-decoration: none;
+    justify-content: center;
+    align-items: center;
 }
 
 .restaurant-name:hover {
