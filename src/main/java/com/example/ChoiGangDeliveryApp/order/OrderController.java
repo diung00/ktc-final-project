@@ -62,7 +62,7 @@ public class OrderController {
         return ResponseEntity.ok(approvedOrder);
     }
 
-    @PutMapping("/find-driver")
+    @PutMapping("/find-driver/{orderId}")
     public ResponseEntity<OrderDto> getDriver(
             @PathVariable Long orderId
     ){

@@ -55,6 +55,31 @@ function fetchOrders() {
     })
     .catch(error => console.error('Error fetching orders:', error));
 }
+// Fuction to aprrove an order
+function approveOrder(orderId){
+    fetch(`/orders/approve/${orderId}`,{
+        method: 'PUT',
+        headers: {
+            'Authorization': `Bearer ${jwt}`
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            return Promise.reject('Failed to approve order');
+        }
+        return response.json(); 
+    })
+    .then(data => {
+        console.log(data);
+        if (data) {
+            alert('Order was approved!');
+            fetchOrders();
+        } else {
+            alert('Failed to approve order.');
+        }
+    })
+    .catch(error => console.error("Error while approving order:", error));
+}
 
 // Function to find driver for the order
 function findDriver(orderId) {
@@ -64,9 +89,14 @@ function findDriver(orderId) {
             'Authorization': `Bearer ${jwt}`
         }
     })
-    .then(response => response.json())
-    .then(updatedOrder => {
-        alert(`Driver assigned for Order ${updatedOrder.id}.`);
+    .then(response => {
+        if (!response.ok) {
+            return Promise.reject('Failed to find driver');
+        }
+        return response.json(); 
+    })
+    .then(data => {
+        alert(`Driver assigned for Order ${data.id}.`);
         fetchOrders(); // Refresh the orders list
     })
     .catch(error => console.error('Error finding driver:', error));

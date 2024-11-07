@@ -153,7 +153,7 @@ function fetchMenuByRestaurantId(restaurantId) {
                         totalAmount: orderDetails.reduce((total, item) => {
                             const menuItem = menuData.find(m => m.id === item.menuId);
                             return total + (menuItem.price * item.quantity);
-                        }, 0) + 5000, // Tổng cộng
+                        }, 0) + 3000, // Tổng cộng
                         estimatedArrivalTime: new Date(Date.now() + 30 * 60 * 1000).toISOString() // Thời gian giao dự kiến
                     };
 

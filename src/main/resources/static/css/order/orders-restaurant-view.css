@@ -42,10 +42,12 @@ h1 {
     background-color: #c2185b;
     color: white;
     font-weight: bold;
+    text-align: center;
 }
 
 #ordersTable td {
     background-color: #f9f9f9;
+    text-align: center;
 }
 
 #ordersTable td:nth-child(2) {
@@ -56,6 +58,7 @@ h1 {
 #ordersTable .action-buttons {
     display: flex;
     gap: 8px;
+    justify-content: center;
 }
 
 #ordersTable .action-buttons button {
@@ -65,6 +68,7 @@ h1 {
     cursor: pointer;
     color: white;
     font-size: 14px;
+    min-width: 80px;
 }
 
 #ordersTable .approve {
