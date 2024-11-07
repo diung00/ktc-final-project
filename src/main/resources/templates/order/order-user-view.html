@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>주분 정보</title>
+  <script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=r6pv70yc8h"></script>
+  <link rel="stylesheet" href="../../static/css/order/order-user-view.css">
+</head>
+<body>
+  <header>
+    <th:block th:replace="~{header-footer/header}"></th:block>
+  </header>
+  <div class="main-container">
+    <div class="order-container">
+        <div id="orders-container">
+            <h2>My Orders</h2>
+            <div id="orders-list">
+                <!-- Danh sách đơn hàng sẽ được hiển thị ở đây -->
+            </div>
+        </div>
+        <div id="order-details-container">
+            <h2>Order Details</h2>
+            <div id="order-details">
+                <!-- Chi tiết đơn hàng sẽ được hiển thị ở đây -->
+            </div>
+        </div>
+    </div>
+    
+    <div id="map-container">
+        <h2>Navigation</h2>
+        <div id="map" style="width: 100%; height: 400px;">
+            <!-- Bản đồ sẽ được hiển thị ở đây -->
+        </div>
+    </div>
+</div>
+  
+  <th:block th:replace="~{header-footer/footer}"></th:block>
+<script src="/static/js/order/order-user-view.js"></script>
+</body>
+</html>

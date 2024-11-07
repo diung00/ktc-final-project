@@ -1,0 +1,144 @@
+/* Basic page styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+/* Header styling */
+header {
+    background-color: #c2185b;
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+/* Main container */
+.container {
+    display: flex;
+    flex-direction: column; /* Đổi từ hàng ngang sang hàng dọc */
+    justify-content: flex-start;
+    max-width: 1200px;
+    margin: 20px auto;
+    gap: 20px;
+}
+
+/* Image container */
+.image-container {
+    flex: 1;
+    text-align: center;
+}
+
+.image-container img {
+    width: 100%;
+    max-width: 800px; /* Giới hạn kích thước ảnh */
+    border-radius: 8px;
+}
+
+/* Restaurant info container */
+.restaurant-info-container {
+    flex: 1;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.restaurant-info-container h2 {
+    color: #c2185b;
+    margin-top: 0;
+}
+
+.restaurant-info-container p {
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+/* Menu list container */
+.menu-list-container {
+    flex: 1;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.menu-list-container h2 {
+    text-align: center;
+    color: #c2185b;
+    margin-bottom: 20px;
+}
+
+#menu-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#menu-table th, #menu-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+#menu-table th {
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+#menu-table td img {
+    width: 90px;
+    height: auto;
+    border-radius: 4px;
+}
+
+/* Quantity buttons */
+.decrease-quantity, .increase-quantity {
+    background-color: #c2185b;
+    color: white;
+    border: none;
+    padding: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.decrease-quantity:hover, .increase-quantity:hover {
+    background-color: #d81b60;
+}
+
+/* Order button */
+#order-button {
+    display: block;
+    width: 150px;
+    margin: 20px auto;
+    background-color: #c2185b;
+    color: white;
+    font-size: 18px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#order-button:hover {
+    background-color: #d81b60;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .image-container img {
+        width: 100%;
+        max-width: 300px;
+    }
+}

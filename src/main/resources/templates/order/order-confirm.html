@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirm</title>
+    <link rel="stylesheet" href="../../static/css/order/order-confirm.css">
+</head>
+<body>
+    <header>
+        <th:block th:replace="~{header-footer/header}"></th:block>
+    </header>
+
+    <div id="order-details">
+        <h2>주문 정보</h2>
+        <div id="order-summary"></div>
+        <button id="confirm-order" class="btn btn-primary">주문</button>
+    </div>
+
+    <th:block th:replace="~{header-footer/footer}"></th:block>
+    <script src="/static/js/order/order-confirm.js"></script>
+</body>
+</html>

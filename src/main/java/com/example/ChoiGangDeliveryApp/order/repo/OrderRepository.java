@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
-    List<OrderEntity> findByUser(UserEntity user);
 
     List<OrderEntity> findByDriverIdAndOrderStatusIn(Long driverId, List<OrderStatus> statuses);
 
@@ -21,4 +20,6 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
     List<OrderEntity> findByOrderStatus(OrderStatus orderStatus);
 
     List<OrderEntity> findAllByDriverId(Long driverId);
+
+    List<OrderEntity> findAllByUser(UserEntity currentUser);
 }

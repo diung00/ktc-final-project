@@ -1,6 +1,50 @@
-async function fetchCurrentUser() {
-    const jwt = localStorage.getItem("token");
+if (typeof jwt === 'undefined') {
+    jwt = localStorage.getItem("token");
+    if (!jwt) {
+        location.href = "/views/login";
+    }
+}
 
+// Lấy ID từ URL
+const urlParams = new URLSearchParams(window.location.search);
+const restaurantId = urlParams.get("restId");
+
+if (restaurantId) {
+    fetch(`/restaurants/${restaurantId}`, {
+        method: "GET",
+        headers: {
+            "authorization": `Bearer ${jwt}`
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            return response.json();
+        })
+        .then(restaurant => {
+            const restaurantInfoDiv = document.querySelector(".restaurant-info-container");
+            restaurantInfoDiv.innerHTML = `
+            <h2>${restaurant.name}</h2>
+            <p>주소: ${restaurant.address}</p>
+            <p>전화: ${restaurant.phone}</p>
+            <p>영업 시간: ${restaurant.openingHours}</p>
+            <p>평점: ${restaurant.rating}</p>
+            <p>설명: ${restaurant.description}</p>`;
+
+            sessionStorage.setItem('restaurantName', restaurant.name)
+            console.log(restaurant.name);
+
+            const restaurantImageDiv = document.querySelector(".image-container");
+            restaurantImageDiv.innerHTML = `<img src="${restaurant.restImage}" alt="${restaurant.name}" />`;
+        })
+
+        .catch(error => console.error("Fetch error:", error));
+} else {
+    console.error("No restaurant ID provided in the URL.");
+}
+
+async function fetchCurrentUser() {
     const response = await fetch('/users/get-my-profile', {
         method: 'GET',
         headers: {
@@ -45,13 +89,10 @@ function fetchMenuByRestaurantId(restaurantId) {
             menuData.forEach(menu => {
                 const menuRow = document.createElement('tr');
                 menuRow.innerHTML = `
-                    <td>${menu.name}</td>
-                    <td>${menu.price.toFixed(2)}</td>
-                    <td>${menu.description || 'No description available.'}</td>
-                    <td>${menu.menuStatus}</td>
-                    <td>${menu.preparationTime}</td>
-                    <td>${menu.cuisineType}</td>
                     <td><img src="${menu.imagePath}" alt="${menu.name}" style="width: 90px; height: auto;"></td>
+                    <td>${menu.name}</td>
+                    <td>${menu.description || 'No description available.'}</td>
+                    <td>${menu.price.toFixed(0)}</td>
                     <td>
                         <button class="decrease-quantity" data-id="${menu.id}">-</button>
                         <span class="quantity" id="quantity-${menu.id}">0</span>
@@ -117,7 +158,7 @@ function fetchMenuByRestaurantId(restaurantId) {
                     };
 
                     sessionStorage.setItem('orderData', JSON.stringify(orderData));
-                    window.location.href = '/views/order';
+                    window.location.href = '/views/order-confirm';
                 } catch (error) {
                     console.error('Error fetching user data:', error);
                     alert('Failed to fetch user data. Please try again.');
@@ -130,6 +171,4 @@ function fetchMenuByRestaurantId(restaurantId) {
         });
 }
 
-const urlParams = new URLSearchParams(window.location.search);
-const restaurantId = urlParams.get('id');
 fetchMenuByRestaurantId(restaurantId);

@@ -1,0 +1,71 @@
+/* Reset một số mặc định */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Thân trang */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+}
+
+
+/* Order Details Section */
+#order-details {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#order-details h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #c2185b;
+}
+
+#order-summary {
+    margin-bottom: 30px;
+}
+
+#order-summary p {
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+#order-summary p strong {
+    color: #2c3e50;
+}
+
+#confirm-order {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background-color: #c2185b;
+    color: white;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+#confirm-order:hover {
+    background-color: #e13e7f;
+}
+
+#order-summary p {
+    font-size: 16px;
+    color: #e74c3c;
+    text-align: center;
+}
+

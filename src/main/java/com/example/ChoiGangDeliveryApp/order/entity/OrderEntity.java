@@ -29,7 +29,7 @@ public class OrderEntity extends BaseEntity {
     private DriverEntity driver; // driver who is shipping this order
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user")
     private UserEntity user; // ordered customer
 
     private String deliveryAddress;
