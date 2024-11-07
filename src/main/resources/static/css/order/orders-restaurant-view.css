@@ -1,0 +1,103 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #c2185b;
+}
+
+#ordersTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#ordersTable th, #ordersTable td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+#ordersTable th {
+    background-color: #c2185b;
+    color: white;
+    font-weight: bold;
+}
+
+#ordersTable td {
+    background-color: #f9f9f9;
+}
+
+#ordersTable td:nth-child(2) {
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+#ordersTable .action-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+#ordersTable .action-buttons button {
+    padding: 6px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: white;
+    font-size: 14px;
+}
+
+#ordersTable .approve {
+    background-color: #28a745;
+}
+
+#ordersTable .find-driver {
+    background-color: #ffc107;
+}
+
+#ordersTable .cancel {
+    background-color: #dc3545;
+}
+
+#ordersTable .approve:hover {
+    background-color: #218838;
+}
+
+#ordersTable .find-driver:hover {
+    background-color: #e0a800;
+}
+
+#ordersTable .cancel:hover {
+    background-color: #c82333;
+}
+
+#ordersTable .order-info {
+    display: flex;
+    flex-direction: column;
+}
+
+#ordersTable .order-info div {
+    margin-bottom: 5px;
+    font-size: 13px;
+    color: #555;
+}

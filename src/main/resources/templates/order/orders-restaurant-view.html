@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Orders</title>
+    <link rel="stylesheet" href="../../static/css/order/orders-restaurant-view.css">
+</head>
+<body>
+    <header>
+        <th:block th:replace="~{header-footer/header}"></th:block>
+    </header>
+    <div class="container">
+        <h1>Restaurant Orders</h1>
+        <table id="ordersTable">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Order Info</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Orders will be populated here via JavaScript -->
+            </tbody>
+        </table>
+    </div>
+    <th:block th:replace="~{header-footer/footer}"></th:block>
+    <script src="../../static/js/order/orders-restaurant-view.js"></script>
+</body>
+</html>
