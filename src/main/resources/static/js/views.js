@@ -91,13 +91,15 @@ function displayRestaurants(restaurants) {
         const restaurantImg = document.createElement('div');
         restaurantImg.classList.add('restaurant-img');
         const img = document.createElement('img');
-        img.src = restaurant.imageUrl;  // Set the image source
+        img.src = restaurant.restImage;  // Set the image source
         img.alt = restaurant.name; // Set the alt text for the image
         img.style.width = '100px';
         img.style.height = '100px';
         img.style.objectFit = 'cover'; // Ensure the image fits within the container
         restaurantImg.appendChild(img); // Append the image to the restaurant image div
-
+        
+        console.log(img.src);
+        
         // Create a container for the restaurant's information
         const restaurantInfo = document.createElement('div');
         restaurantInfo.classList.add('restaurant-info');
