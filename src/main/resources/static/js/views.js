@@ -104,7 +104,7 @@ function displayRestaurants(restaurants) {
         const restaurantInfo = document.createElement('div');
         restaurantInfo.classList.add('restaurant-info');
         const restaurantName = document.createElement('a');
-        restaurantName.href = `/order/${restaurant.id}`; // Link to the restaurant's order page
+        restaurantName.href = `/views/order-create?restId=${restaurant.id}`; // Link to the restaurant's order page
         restaurantName.classList.add('restaurant-name');
         restaurantName.textContent = restaurant.name; // Set the restaurant's name
         restaurantInfo.appendChild(restaurantName); // Append the name to the restaurant info div

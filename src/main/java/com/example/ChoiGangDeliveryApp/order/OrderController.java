@@ -32,7 +32,14 @@ public class OrderController {
     }
     //VIEW ALL ORDERS BY RESTAURANT ID FOR DRIVER
 
-    //VIEW ALL ORDERS BY DRIVER ID
+    //VIEW ALL ORDERS FOR USER
+    @GetMapping("/my-orders")
+    public ResponseEntity<List<OrderDto>> viewMyOrder() {
+        List<OrderDto> orders = orderService.viewMyOrder();
+        return ResponseEntity.ok(orders);
+    }
+
+    //VIEW ALL ORDERS BY DRIVER
     @GetMapping("/driver")
     public ResponseEntity<List<OrderDto>> viewAllOrdersByDriverId() {
         List<OrderDto> orders = orderService.viewAllOrderByDriverId();

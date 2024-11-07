@@ -76,6 +76,15 @@ public class OrderService {
         return OrderDto.fromEntity(orderRepository.save(orderEntity));
 
     }
+    // view one order by order id
+    @Transactional(readOnly = true)
+    public List<OrderDto> viewMyOrder() {
+        //get current user
+        UserEntity currentUser = authFacade.getCurrentUserEntity();
+        // find order by id
+        List<OrderEntity> orders = orderRepository.findAllByUser(currentUser);
+        return orders.stream().map(OrderDto::fromEntity).collect(Collectors.toList());
+    }
 
     // view one order by order id
     @Transactional(readOnly = true)
@@ -100,7 +109,7 @@ public class OrderService {
 
     //view all orders by restaurant id for driver
 
-    //view all orders by driver id
+    //view all orders by driver
     public List<OrderDto> viewAllOrderByDriverId() {
         //get current user
         UserEntity currentUser = authFacade.getCurrentUserEntity();
