@@ -76,7 +76,7 @@ function fetchMyRestaurantInfo() {
         // View Order
         const viewOrderBtn = document.getElementById('viewOrderBtn');
         viewOrderBtn.addEventListener('click', () => {
-            location.href = `/views/order`; 
+            location.href = `/views/restaurant-orders`; 
         });
 
         // View Menu Button
@@ -195,34 +195,6 @@ function initMap(latitude, longitude) {
     img.onerror = function() {
         console.error('Error loading icon');
     };
-
-    
-    // // Create a polyline variable (if needed) and markers array
-    // let polyline = null;
-    // let markers = [];
-
-    // // Set up the click event listener for the map
-    // naver.maps.Event.addListener(map, 'click', function(e) {
-    //     // Clear existing polyline if necessary
-    //     if (polyline) {
-    //         polyline.setMap(null);
-    //     }
-
-    //     // If there are already two markers, remove them
-    //     if (markers.length === 2) {
-    //         markers.forEach(marker => {
-    //             marker.setMap(null);
-    //         });
-    //         markers.length = 0; // Clear the markers array
-    //     } else {
-    //         // Add a new marker at the clicked position
-    //         const newMarker = new naver.maps.Marker({
-    //             position: e.coord,
-    //             map: map
-    //         });
-    //         markers.push(newMarker); // Add new marker to the array
-    //     }
-    // });
 }
 fetchMyRestaurantInfo();
 

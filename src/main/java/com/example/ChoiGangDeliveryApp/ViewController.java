@@ -115,6 +115,8 @@ public class ViewController {
     @GetMapping("/driver-orders")
     public String oderListByDriver() {return "order/orders-driver-view";}
 
+    @GetMapping("/restaurant-orders")
+    public String orderListByRestaurant() {return "order/orders-restaurant-view";}
     //Admin dashboard
     @GetMapping("/admin")
     public String admin() {return "admin/admin";}

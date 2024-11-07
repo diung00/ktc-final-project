@@ -115,19 +115,15 @@ public class OrderService {
         return orders.stream().map(OrderDto::fromEntity).collect(Collectors.toList());
     }
 
-    //View all orders by restaurant id for owner
+    //View all orders by restaurant for owner
     @Transactional(readOnly = true)
-    public List<OrderDto> viewAllOrders(Long restaurantId) {
+    public List<OrderDto> viewAllOrdersByRestaurant() {
         //get current user
         UserEntity currentUser = authFacade.getCurrentUserEntity();
 
-        // find restaurant by id
-        RestaurantsEntity restaurant = restaurantRepository.findById(restaurantId)
+        // find restaurant
+        RestaurantsEntity restaurant = restaurantRepository.findByOwner(currentUser)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Restaurant not found"));
-        //check owner
-        if (!restaurant.getOwner().equals(currentUser)) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to view orders for this restaurant");
-        }
 
         // Find all orders by restaurant
         List<OrderEntity> orders = orderRepository.findAllByRestaurant(restaurant);
@@ -137,15 +133,14 @@ public class OrderService {
                 .collect(Collectors.toList());
     }
     //Restaurant accept order
-    //nhà hàng nhận đơn
     @Transactional
-    public OrderDto approveOrder(OrderDto dto){
+    public OrderDto approveOrder(Long orderId){
         UserEntity userEntity = authFacade.getCurrentUserEntity();
         if (userEntity.getRestaurant() == null) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You don't have any restaurant");
         }
 
-        OrderEntity orderEntity = orderRepository.findById(dto.getId())
+        OrderEntity orderEntity = orderRepository.findById(orderId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found"));
 
         if (!orderEntity.getRestaurant().equals(userEntity.getRestaurant())) {
@@ -159,30 +154,31 @@ public class OrderService {
         orderEntity.setOrderStatus(OrderStatus.COOKING);
         orderRepository.save(orderEntity);
         webSocketService.sendOrderStatusToUser(orderEntity.getUser().getId().toString(), "Your order has been approved");
-
         return OrderDto.fromEntity(orderEntity);
 
     }
     // assign order to driver base on driver location
     // gắn 1 tài xế cho 1 order
-    private static final double MAX_DISTANCE = 2000; //2000 meters (2 km)
+    private static final double MAX_DISTANCE = 5000; //5000 meters (5 km)
+
     @Transactional
-    public OrderDto getDriver (OrderDto orderDto) {
-
-        UserEntity userEntity = authFacade.getCurrentUserEntity();
-        if (!userEntity.getRole().equals(UserRole.ROLE_DRIVER)) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Only drivers can pick up orders.");
+    public OrderDto findDriver(Long orderId) {
+        UserEntity currentUser = authFacade.getCurrentUserEntity();
+        if (currentUser.getRestaurant() == null) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You don't have any restaurant");
         }
 
-        Optional<OrderEntity> orderOptional = orderRepository.findById(orderDto.getId());
-        if (orderOptional.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found");
-        }
-        OrderEntity order = orderOptional.get();
+        OrderEntity order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found"));
 
-        if (!order.getOrderStatus().equals(OrderStatus.WAITING_FOR_DRIVER)){
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Order is not waiting for a driver.");
+        if (!order.getRestaurant().getOwner().equals(currentUser)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "This order does not belong to your restaurant");
         }
+        if (!order.getOrderStatus().equals(OrderStatus.COOKING)){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Order status must be COOKING.");
+        }
+        order.setOrderStatus(OrderStatus.WAITING_FOR_DRIVER);
+
         //Get restaurant location
         PointDto restaurantLocation = new PointDto(
                 order.getRestaurant().getLatitude(),
@@ -191,7 +187,7 @@ public class OrderService {
 
         // Get the list of drivers that satisfy the condition
         List<DriverEntity> eligibleDrivers = driverRepository.findAll().stream()
-                .filter(driver -> driver.getOrdersCount() < 5)
+                .filter(driver -> driver.getOrdersCount() <= 3)
                 .toList();
         DriverEntity bestDriver = null;
         double closestDistance = Double.MAX_VALUE;
@@ -211,7 +207,7 @@ public class OrderService {
             //send notification to restaurant and customer
             webSocketService.sendOrderStatusToRestaurant(order.getRestaurant().getId().toString(), "The order is ready but there is no driver to deliver it. Delivery times have been extended.");
             webSocketService.sendOrderStatusToUser(order.getUser().getId().toString(), "The order is ready but there is no driver to deliver it. Delivery times have been extended.");
-            return orderDto;
+            return OrderDto.fromEntity(order);
         }
         // Assign driver to order
         order.setDriver(bestDriver);
@@ -226,7 +222,6 @@ public class OrderService {
                 "Your order is being delivered!");
         webSocketService.sendOrderStatusToRestaurant(order.getRestaurant().getId().toString(),
                 "We have found a driver for your order..");
-
         return OrderDto.fromEntity(order);
     }
 

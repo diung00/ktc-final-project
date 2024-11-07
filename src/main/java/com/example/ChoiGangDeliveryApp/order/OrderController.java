@@ -39,30 +39,30 @@ public class OrderController {
         return ResponseEntity.ok(orders);
     }
 
-    // VIEW ALL ORDERS BY RESTAURANT ID FOR OWNER
-    @GetMapping("/restaurant/{restaurantId}")
-    public ResponseEntity<List<OrderDto>> viewAllOrders(@PathVariable Long restaurantId) {
-        List<OrderDto> orders = orderService.viewAllOrders(restaurantId);
+    // VIEW ALL ORDERS BY RESTAURANT FOR OWNER
+    @GetMapping("/restaurant-orders")
+    public ResponseEntity<List<OrderDto>> viewAllOrdersByRestaurant() {
+        List<OrderDto> orders = orderService.viewAllOrdersByRestaurant();
         return ResponseEntity.ok(orders);
     }
+
     // RESTAURANT APPROVE AN ODER
-    @PutMapping("/approve")
+    @PutMapping("/approve/{orderId}")
     public ResponseEntity<OrderDto>  approveOrder(
-            @RequestBody
-            OrderDto orderDto
+            @PathVariable Long orderId
     ){
-        OrderDto approvedOrder = orderService.approveOrder(orderDto);
+        OrderDto approvedOrder = orderService.approveOrder(orderId);
         return ResponseEntity.ok(approvedOrder);
     }
 
-    @PutMapping("/get-driver")
+    @PutMapping("/find-driver")
     public ResponseEntity<OrderDto> getDriver(
-            @RequestBody
-            OrderDto orderDto
+            @PathVariable Long orderId
     ){
-        OrderDto updatedOrder = orderService.getDriver(orderDto);
+        OrderDto updatedOrder = orderService.findDriver(orderId);
         return ResponseEntity.ok(updatedOrder);
     }
+
     //CANCEL AN ORDER
     // CUSTOMER CANCEL AN ORDER
     @PutMapping("/customer/{orderId}/cancel")
