@@ -19,7 +19,7 @@ async function submitImageUpload() {
 
     try {
         // Send the image to the backend
-        const response = await fetch("/upload-profile-image", {
+        const response = await fetch("/users/upload-profile-image", {
             method: "POST",
             headers: {
                 "Authorization": `Bearer ${jwt}`  // Add token to headers

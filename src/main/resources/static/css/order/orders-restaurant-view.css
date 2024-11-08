@@ -1,9 +1,11 @@
+/* Reset CSS */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* General Styling */
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f9;
@@ -27,77 +29,117 @@ h1 {
     color: #c2185b;
 }
 
-#ordersTable {
+/* Layout for Order List and Details */
+.order-layout {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+}
+
+.order-list{
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+/* Order List Styling */
+.order-list table {
     width: 100%;
     border-collapse: collapse;
 }
 
-#ordersTable th, #ordersTable td {
+.order-list th, .order-list td {
     padding: 12px 15px;
     border: 1px solid #ddd;
-    text-align: left;
+    text-align: center;
 }
 
-#ordersTable th {
+.order-list th {
     background-color: #c2185b;
     color: white;
     font-weight: bold;
 }
 
-#ordersTable td {
+.order-list td {
+    cursor: pointer;
     background-color: #f9f9f9;
+    transition: background-color 0.3s;
+}
+.order-list td:hover {
+    background-color: #e1e1e1;
 }
 
-#ordersTable td:nth-child(2) {
-    font-size: 14px;
-    line-height: 1.6;
+/* Order Details Styling */
+.order-details {
+    padding: 20px;
+    background-color: #fafafa;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-#ordersTable .action-buttons {
+.action-buttons {
     display: flex;
-    gap: 8px;
+    gap: 10px;
+    margin-top: 20px;
 }
 
-#ordersTable .action-buttons button {
-    padding: 6px 10px;
+.order-details h2 {
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 1.5em;
+    border-bottom: 2px solid #c2185b;
+    padding-bottom: 5px;
+}
+
+.order-menus table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.order-menus th, .order-menus td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.order-menus th {
+    background-color: #dc1f6b;
+    color: white;
+    font-weight: bold;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.action-buttons button {
+    padding: 10px 15px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     color: white;
     font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.3s;
 }
 
-#ordersTable .approve {
+
+.approve {
     background-color: #28a745;
 }
 
-#ordersTable .find-driver {
+.find-driver {
     background-color: #ffc107;
 }
 
-#ordersTable .cancel {
+.cancel {
     background-color: #dc3545;
 }
-
-#ordersTable .approve:hover {
-    background-color: #218838;
-}
-
-#ordersTable .find-driver:hover {
-    background-color: #e0a800;
-}
-
-#ordersTable .cancel:hover {
-    background-color: #c82333;
-}
-
-#ordersTable .order-info {
-    display: flex;
-    flex-direction: column;
-}
-
-#ordersTable .order-info div {
-    margin-bottom: 5px;
-    font-size: 13px;
-    color: #555;
+.action-buttons button:hover {
+    opacity: 0.9;
 }

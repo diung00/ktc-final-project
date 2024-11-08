@@ -46,7 +46,7 @@ public class OrderEntity extends BaseEntity {
     private double totalMenusPrice; // Sum of (menuPrice * quantity)
 
     @Builder.Default
-    private double shippingFee = 0.0; // depend on each restaurant's  delivery fee policy
+    private double shippingFee = 3000;
     private double totalAmount; // = totalMenusPrice + shippingFee
 
     private LocalDateTime estimatedArrivalTime; // preparationTime of menus in order + betalTime
@@ -71,18 +71,21 @@ public class OrderEntity extends BaseEntity {
     public void addOrderMenu(OrderMenuEntity orderMenu) {
         orderMenus.add(orderMenu);
         orderMenu.setOrder(this);
+        updateOrderTotals();
     }
 
     // Remove an OrderMenu from the order and update the relationship
     public void removeOrderMenu(OrderMenuEntity orderMenu) {
         orderMenus.remove(orderMenu);
         orderMenu.setOrder(null);
+        updateOrderTotals();
     }
 
     // Method to update the total price and total amount after adding or removing an order menu
     public void updateOrderTotals() {
         this.totalMenusPrice = calculateTotalMenusPrice();
         this.totalAmount = calculateTotalAmount();
+        setEstimatedArrivalTime();
     }
 
     // Method to set the estimated arrival time based on the creation time, preparation time, and travel time
@@ -96,8 +99,9 @@ public class OrderEntity extends BaseEntity {
                     return (preparationTime != null) ? preparationTime : defaultPreparationTime;
                 })
                 .sum();
+        LocalDateTime orderCreatedAt = this.getCreatedAt() != null ? this.getCreatedAt() : LocalDateTime.now();
 
-        this.estimatedArrivalTime = this.getCreatedAt()
+        this.estimatedArrivalTime = orderCreatedAt
                 .plusMinutes(totalPreparationTime)
                 .plusMinutes(defaultTravelTime);
     }

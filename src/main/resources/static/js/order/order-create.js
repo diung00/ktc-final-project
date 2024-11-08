@@ -122,7 +122,7 @@ function fetchMenuByRestaurantId(restaurantId) {
                 });
             });
 
-            // Nút Order
+            // Order Button
             document.getElementById('order-button').addEventListener('click', async () => {
                 try {
                     const currentUser = await fetchCurrentUser(); // Lấy thông tin người dùng
@@ -137,13 +137,14 @@ function fetchMenuByRestaurantId(restaurantId) {
                             });
                         }
                     });
+                    const note = document.getElementById('order-note').value;
 
                     // Lưu thông tin đơn hàng vào sessionStorage
                     const orderData = {
                         userId: currentUser.id,
-                        deliveryAddress: currentUser.deliveryAddress,
+                        deliveryAddress: currentUser.address,
                         restaurantId: restaurantId,
-                        orderDate: new Date().toISOString(),
+                        restaurantName: sessionStorage.getItem("restaurantName"),
                         orderStatus: 'Pending',
                         totalMenusPrice: orderDetails.reduce((total, item) => {
                             const menuItem = menuData.find(m => m.id === item.menuId);
@@ -152,10 +153,13 @@ function fetchMenuByRestaurantId(restaurantId) {
                         shippingFee: 3000,
                         totalAmount: orderDetails.reduce((total, item) => {
                             const menuItem = menuData.find(m => m.id === item.menuId);
+
                             return total + (menuItem.price * item.quantity);
-                        }, 0) + 5000, // Tổng cộng
-                        estimatedArrivalTime: new Date(Date.now() + 30 * 60 * 1000).toISOString() // Thời gian giao dự kiến
+                        }, 0) + 3000, // Tổng cộng
+                        note: note,
+                        orderDetails: orderDetails
                     };
+                    console.log("order details", orderDetails)
 
                     sessionStorage.setItem('orderData', JSON.stringify(orderData));
                     window.location.href = '/views/order-confirm';

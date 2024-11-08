@@ -12,22 +12,28 @@ public class OrderMenuDto {
     private Long id;
     private Long orderId;
     private Long menuId;
-    private Long restaurantId;
+    private String menuName;
     private int quantity;
     private double menuPrice;
     private double totalPrice;
+
+    private Long restaurantId;
+    private String restaurantName;
 
 
     public static OrderMenuDto fromEntity(OrderMenuEntity orderMenuEntity) {
         return OrderMenuDto.builder()
                 .id(orderMenuEntity.getId())
                 .orderId(orderMenuEntity.getOrder() != null ? orderMenuEntity.getOrder().getId() : null)
-                .menuId(orderMenuEntity.getMenu() != null ? orderMenuEntity.getMenu().getId() : null)
+                .menuId(orderMenuEntity.getMenu().getId())
+                .menuName(orderMenuEntity.getMenu().getName())
                 .restaurantId(orderMenuEntity.getRestaurant() != null ? orderMenuEntity.getRestaurant().getId() : null)
+                .restaurantName(orderMenuEntity.getRestaurant().getName())
                 .quantity(orderMenuEntity.getQuantity())
                 .menuPrice(orderMenuEntity.getMenuPrice())
                 .totalPrice(orderMenuEntity.getTotalPrice())
                 .build();
     }
+
 
 }
