@@ -8,10 +8,13 @@ import com.example.ChoiGangDeliveryApp.driver.repo.DriverDeclineLogRepository;
 import com.example.ChoiGangDeliveryApp.driver.repo.DriverRepository;
 import com.example.ChoiGangDeliveryApp.enums.OrderStatus;
 import com.example.ChoiGangDeliveryApp.enums.UserRole;
+import com.example.ChoiGangDeliveryApp.order.dto.CreateOrderDto;
 import com.example.ChoiGangDeliveryApp.order.dto.OrderDto;
 import com.example.ChoiGangDeliveryApp.order.entity.OrderEntity;
+import com.example.ChoiGangDeliveryApp.order.entity.OrderMenuEntity;
 import com.example.ChoiGangDeliveryApp.order.repo.OrderMenuRepository;
 import com.example.ChoiGangDeliveryApp.order.repo.OrderRepository;
+import com.example.ChoiGangDeliveryApp.owner.menu.entity.MenuEntity;
 import com.example.ChoiGangDeliveryApp.owner.menu.repo.MenuRepository;
 import com.example.ChoiGangDeliveryApp.owner.restaurant.entity.RestaurantsEntity;
 import com.example.ChoiGangDeliveryApp.owner.restaurant.repo.RestaurantRepository;
@@ -47,7 +50,7 @@ public class OrderService {
     private final DriverDeclineLogRepository declineLogRepository;
 
     //create an order
-    public OrderDto createOrder(OrderDto dto){
+    public OrderDto createOrder(CreateOrderDto dto){
         // current user
         UserEntity currentUser = authFacade.getCurrentUserEntity();
 
@@ -64,13 +67,29 @@ public class OrderService {
                 .user(currentUser)
                 .deliveryAddress(currentUser.getAddress())
                 .restaurant(restaurant)
-                .orderStatus(OrderStatus.PAID)
-                .totalMenusPrice(dto.getTotalMenusPrice())
-                .shippingFee(dto.getShippingFee())
-                .totalAmount(dto.getTotalAmount())
+                .note(dto.getNote())
+                .orderStatus(OrderStatus.PAID) // Set to PAID initially
                 .build();
-        userRepository.save(currentUser);
-        restaurantRepository.save(restaurant);
+
+        List<OrderMenuEntity> orderMenus = dto.getOrderMenus().stream()
+                .map(orderMenuDto -> {
+                    // Retrieve the menu by menuId from the restaurant's menu
+                    MenuEntity menu = menuRepository.findByName(orderMenuDto.getMenuName())
+                            .orElseThrow(() -> new IllegalArgumentException("Menu not found"));
+
+                    // Use the static method to create an OrderMenuEntity
+                    OrderMenuEntity orderMenuEntity = OrderMenuEntity.createOrderMenu(menu, orderMenuDto.getQuantity());
+                    orderMenuEntity.setRestaurant(restaurant); // Set the same restaurant for all order menus
+                    return orderMenuEntity;
+                })
+                .toList();
+        // Add all order menus to the order entity
+        orderMenus.forEach(orderEntity::addOrderMenu);
+        //update orderTotals
+        orderEntity.updateOrderTotals();
+
+        // Save order and order menus
+        orderEntity = orderRepository.save(orderEntity);
         webSocketService.sendOrderStatusToUser(currentUser.getId().toString(),"Your order has been created");
         webSocketService.sendOrderStatusToRestaurant(restaurant.getId().toString(),"New order!!!");
         return OrderDto.fromEntity(orderRepository.save(orderEntity));

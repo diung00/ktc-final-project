@@ -4,16 +4,18 @@ package com.example.ChoiGangDeliveryApp.order.dto;
 import com.example.ChoiGangDeliveryApp.order.entity.OrderEntity;
 import com.example.ChoiGangDeliveryApp.user.entity.UserLocation;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Getter
+@Setter
 public class OrderDto {
     private Long id;
     private Long driverId;
@@ -37,6 +39,8 @@ public class OrderDto {
     @Size(max = 255)
     private String note;
 
+    private List<OrderMenuDto> orderMenus;
+
     public static OrderDto fromEntity(OrderEntity entity) {
         return OrderDto.builder()
                 .id(entity.getId())
@@ -52,12 +56,33 @@ public class OrderDto {
                 .restaurantLongitude(entity.getRestaurant().getLongitude())
                 .restaurantName(entity.getRestaurant().getName())
                 .orderStatus(entity.getOrderStatus().name())
+                .orderDate(entity.getCreatedAt())
                 .totalMenusPrice(entity.getTotalMenusPrice())
                 .shippingFee(entity.getShippingFee())
                 .totalAmount(entity.getTotalAmount())
                 .estimatedArrivalTime(entity.getEstimatedArrivalTime())
                 .note(entity.getNote())
+                .orderMenus(entity.getOrderMenus().stream()
+                .map(OrderMenuDto::fromEntity)
+                .collect(Collectors.toList()))
                 .build();
     }
+    public List<OrderMenuDto> getMenus() {
+        return this.orderMenus;
+    }
+    public Long getMenuId() {
+        if (this.orderMenus != null && !this.orderMenus.isEmpty()) {
+            return this.orderMenus.get(0).getId();
+        }
+        return null;
+    }
+    public int getQuantity() {
+        if (this.orderMenus != null && !this.orderMenus.isEmpty()) {
+            return this.orderMenus.get(0).getQuantity();
+        }
+        return 0;
+    }
+
+
 
 }

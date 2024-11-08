@@ -1,5 +1,6 @@
 package com.example.ChoiGangDeliveryApp.order;
 
+import com.example.ChoiGangDeliveryApp.order.dto.CreateOrderDto;
 import com.example.ChoiGangDeliveryApp.order.dto.OrderDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,9 +19,9 @@ public class OrderController {
     @PostMapping("/create")
     public ResponseEntity<OrderDto> createOrder(
             @RequestBody
-            OrderDto orderDto
+            CreateOrderDto dto
     ) {
-        OrderDto createdOrder = orderService.createOrder(orderDto);
+        OrderDto createdOrder = orderService.createOrder(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdOrder);
     }
 

@@ -1,3 +1,5 @@
+let selectedOrderId = null;
+
 function fetchOrders() {
     const jwt = localStorage.getItem('token');
 
@@ -15,108 +17,122 @@ function fetchOrders() {
     })
     .then(response => response.json())
     .then(orders => {
-        const ordersTableBody = document.getElementById('ordersTable').getElementsByTagName('tbody')[0];
+        const ordersTableBody = document.getElementById('ordersTableBody');
         ordersTableBody.innerHTML = ''; // Clear existing rows
 
+        orders.sort((a, b) => b.id - a.id); // Sort by ID descending
+
         if (orders.length === 0) {
-            // Display message if no orders
-            const noOrderRow = document.createElement('tr');
-            noOrderRow.innerHTML = `
-                <td colspan="3" style="text-align: center; padding: 20px; color: #888;">
-                    No orders here.
-                </td>
-            `;
-            ordersTableBody.appendChild(noOrderRow);
+            ordersTableBody.innerHTML = `<tr><td colspan="2" style="text-align: center;">No orders here.</td></tr>`;
         } else {
             orders.forEach(order => {
                 const row = document.createElement('tr');
-                
                 row.innerHTML = `
                     <td>${order.id}</td>
-                    <td class="order-info">
-                        <div><strong>Restaurant:</strong> ${order.restaurantName}</div>
-                        <div><strong>Customer:</strong> ${order.username}</div>
-                        <div><strong>Delivery Address:</strong> ${order.deliveryAddress}</div>
-                        <div><strong>Total:</strong> $${order.totalAmount.toFixed(2)}</div>
-                        <div><strong>Status:</strong> ${order.orderStatus}</div>
-                        <div><strong>Estimated Arrival:</strong> ${order.estimatedArrivalTime ? new Date(order.estimatedArrivalTime).toLocaleString() : 'N/A'}</div>
-                    </td>
-                    <td class="action-buttons">
-                        <button class="approve" onclick="approveOrder(${order.id})">Approve</button>
-                        <button class="find-driver" onclick="findDriver(${order.id})">Find Driver</button>
-                        <button class="cancel" onclick="cancelOrder(${order.id})">Cancel</button>
-                    </td>
+                    <td>${order.orderStatus}</td>
                 `;
-    
+                row.onclick = () => showOrderDetails(order); // Show details on click
                 ordersTableBody.appendChild(row);
             });
         }
-
     })
     .catch(error => console.error('Error fetching orders:', error));
 }
-// Fuction to aprrove an order
-function approveOrder(orderId){
-    fetch(`/orders/approve/${orderId}`,{
-        method: 'PUT',
-        headers: {
-            'Authorization': `Bearer ${jwt}`
-        }
-    })
-    .then(response => {
-        if (!response.ok) {
-            return Promise.reject('Failed to approve order');
-        }
-        return response.json(); 
-    })
-    .then(data => {
-        console.log(data);
-        if (data) {
-            alert('Order was approved!');
-            fetchOrders();
-        } else {
-            alert('Failed to approve order.');
-        }
-    })
-    .catch(error => console.error("Error while approving order:", error));
+
+function showOrderDetails(order) {
+    selectedOrderId = order.id;
+    const orderInfo = document.getElementById('orderInfo');
+    orderInfo.innerHTML = `
+        <div><strong>Restaurant:</strong> ${order.restaurantName}</div>
+        <div><strong>Customer:</strong> ${order.username}</div>
+        <div><strong>Delivery Address:</strong> ${order.deliveryAddress}</div>
+        <div><strong>Total:</strong> $${order.totalAmount.toFixed(2)}</div>
+        <div><strong>Status:</strong> ${order.orderStatus}</div>
+        <div><strong>Estimated Arrival:</strong> ${order.estimatedArrivalTime ? new Date(order.estimatedArrivalTime).toLocaleString() : 'N/A'}</div>
+    `;
 }
 
-// Function to find driver for the order
-function findDriver(orderId) {
-    fetch(`/orders/find-driver/${orderId}`, {
-        method: 'PUT',
+function approveOrder(orderId) {
+    if (!orderId) {
+        alert('Please select an order to approve.');
+        return;
+    }
+
+    const jwt = localStorage.getItem('token');
+    fetch(`/orders/${orderId}/approve`, {
+        method: 'POST',
         headers: {
             'Authorization': `Bearer ${jwt}`
         }
     })
     .then(response => {
-        if (!response.ok) {
-            return Promise.reject('Failed to find driver');
+        if (response.ok) {
+            alert('Order approved successfully.');
+            fetchOrders(); // Refresh the order list
+            document.getElementById('orderInfo').innerHTML = 'Select an order to view details'; // Clear order details
+        } else {
+            alert('Failed to approve the order.');
         }
-        return response.json(); 
     })
-    .then(data => {
-        alert(`Driver assigned for Order ${data.id}.`);
-        fetchOrders(); // Refresh the orders list
+    .catch(error => console.error('Error approving order:', error));
+}
+
+function findDriver(orderId) {
+    if (!orderId) {
+        alert('Please select an order to find a driver for.');
+        return;
+    }
+
+    const jwt = localStorage.getItem('token');
+    fetch(`/orders/${orderId}/find-driver`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${jwt}`
+        }
+    })
+    .then(response => {
+        if (response.ok) {
+            alert('Driver found successfully.');
+            fetchOrders(); // Refresh the order list
+            document.getElementById('orderInfo').innerHTML = 'Select an order to view details'; // Clear order details
+        } else {
+            alert('Failed to find a driver for the order.');
+        }
     })
     .catch(error => console.error('Error finding driver:', error));
 }
 
-// Function to cancel an order
 function cancelOrder(orderId) {
-    fetch(`/orders/restaurant/${orderId}/cancel`, {
-        method: 'PUT',
+    if (!orderId) {
+        alert('Please select an order to cancel.');
+        return;
+    }
+
+    const jwt = localStorage.getItem('token');
+    fetch(`/orders/${orderId}/cancel`, {
+        method: 'POST',
         headers: {
             'Authorization': `Bearer ${jwt}`
         }
     })
-    .then(response => response.text())
-    .then(message => {
-        alert(message);
-        fetchOrders(); // Refresh the orders list
+    .then(response => {
+        if (response.ok) {
+            alert('Order canceled successfully.');
+            fetchOrders(); // Refresh the order list
+            document.getElementById('orderInfo').innerHTML = 'Select an order to view details'; // Clear order details
+        } else {
+            alert('Failed to cancel the order.');
+        }
     })
     .catch(error => console.error('Error canceling order:', error));
 }
 
-// Initialize the page by fetching the orders
-document.addEventListener('DOMContentLoaded', fetchOrders);
+// Assign button actions on DOMContentLoaded
+document.addEventListener('DOMContentLoaded', () => {
+    fetchOrders();
+
+    // Assign action buttons to functions
+    document.querySelector('.approve').addEventListener('click', () => approveOrder(selectedOrderId));
+    document.querySelector('.find-driver').addEventListener('click', () => findDriver(selectedOrderId));
+    document.querySelector('.cancel').addEventListener('click', () => cancelOrder(selectedOrderId));
+});

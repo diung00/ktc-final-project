@@ -122,7 +122,7 @@ function fetchMenuByRestaurantId(restaurantId) {
                 });
             });
 
-            // Nút Order
+            // Order Button
             document.getElementById('order-button').addEventListener('click', async () => {
                 try {
                     const currentUser = await fetchCurrentUser(); // Lấy thông tin người dùng
@@ -132,7 +132,7 @@ function fetchMenuByRestaurantId(restaurantId) {
                         const quantity = parseInt(document.getElementById(`quantity-${menu.id}`).textContent);
                         if (quantity > 0) {
                             orderDetails.push({
-                                menuId: menu.id,
+                                menuName: menu.name,
                                 quantity: quantity
                             });
                         }
@@ -142,11 +142,9 @@ function fetchMenuByRestaurantId(restaurantId) {
                     const orderData = {
                         userId: currentUser.id,
                         deliveryAddress: currentUser.deliveryAddress,
-                        restaurantId: restaurantId,
-                        orderDate: new Date().toISOString(),
                         orderStatus: 'Pending',
                         totalMenusPrice: orderDetails.reduce((total, item) => {
-                            const menuItem = menuData.find(m => m.id === item.menuId);
+                            const menuItem = menuData.find(m => m.name === item.menuName);
                             return total + (menuItem.price * item.quantity);
                         }, 0),
                         shippingFee: 3000,

@@ -10,21 +10,34 @@
     <header>
         <th:block th:replace="~{header-footer/header}"></th:block>
     </header>
-    <div class="container">
-        <h1>Restaurant Orders</h1>
-        <table id="ordersTable">
-            <thead>
-                <tr>
-                    <th>Order ID</th>
-                    <th>Order Info</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Orders will be populated here via JavaScript -->
-            </tbody>
-        </table>
+    <div class="order-layout">
+        <!-- Left Panel: Order List -->
+        <div class="order-list">
+            <table id="ordersTable">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Order Status</th>
+                    </tr>
+                </thead>
+                <tbody id="ordersTableBody">
+                    <!-- Orders will be populated here via JavaScript -->
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Right Panel: Order Details -->
+        <div class="order-details" id="orderDetails">
+            <h2>Order Details</h2>
+            <div id="orderInfo">Select an order to view details</div>
+            <div class="action-buttons">
+                <button class="approve" onclick="approveOrder(selectedOrderId)">Approve</button>
+                <button class="find-driver" onclick="findDriver(selectedOrderId)">Find Driver</button>
+                <button class="cancel" onclick="cancelOrder(selectedOrderId)">Cancel</button>
+            </div>
+        </div>
     </div>
+</div>
     <th:block th:replace="~{header-footer/footer}"></th:block>
     <script src="../../static/js/order/orders-restaurant-view.js"></script>
 </body>
