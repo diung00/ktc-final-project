@@ -36,6 +36,14 @@ h1 {
     gap: 20px;
 }
 
+.order-list{
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin-top: 20px;
+}
+
 /* Order List Styling */
 .order-list table {
     width: 100%;
@@ -51,11 +59,16 @@ h1 {
 .order-list th {
     background-color: #c2185b;
     color: white;
+    font-weight: bold;
 }
 
 .order-list td {
     cursor: pointer;
     background-color: #f9f9f9;
+    transition: background-color 0.3s;
+}
+.order-list td:hover {
+    background-color: #e1e1e1;
 }
 
 /* Order Details Styling */
@@ -72,15 +85,49 @@ h1 {
     margin-top: 20px;
 }
 
+.order-details h2 {
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 1.5em;
+    border-bottom: 2px solid #c2185b;
+    padding-bottom: 5px;
+}
+
+.order-menus table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.order-menus th, .order-menus td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.order-menus th {
+    background-color: #dc1f6b;
+    color: white;
+    font-weight: bold;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
 .action-buttons button {
-    padding: 8px 12px;
+    padding: 10px 15px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     color: white;
     font-size: 14px;
-    min-width: 80px;
+    font-weight: bold;
+    transition: background-color 0.3s;
 }
+
 
 .approve {
     background-color: #28a745;
@@ -92,4 +139,7 @@ h1 {
 
 .cancel {
     background-color: #dc3545;
+}
+.action-buttons button:hover {
+    opacity: 0.9;
 }

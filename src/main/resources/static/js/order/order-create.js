@@ -132,28 +132,34 @@ function fetchMenuByRestaurantId(restaurantId) {
                         const quantity = parseInt(document.getElementById(`quantity-${menu.id}`).textContent);
                         if (quantity > 0) {
                             orderDetails.push({
-                                menuName: menu.name,
+                                menuId: menu.id,
                                 quantity: quantity
                             });
                         }
                     });
+                    const note = document.getElementById('order-note').value;
 
                     // Lưu thông tin đơn hàng vào sessionStorage
                     const orderData = {
                         userId: currentUser.id,
-                        deliveryAddress: currentUser.deliveryAddress,
+                        deliveryAddress: currentUser.address,
+                        restaurantId: restaurantId,
+                        restaurantName: sessionStorage.getItem("restaurantName"),
                         orderStatus: 'Pending',
                         totalMenusPrice: orderDetails.reduce((total, item) => {
-                            const menuItem = menuData.find(m => m.name === item.menuName);
+                            const menuItem = menuData.find(m => m.id === item.menuId);
                             return total + (menuItem.price * item.quantity);
                         }, 0),
                         shippingFee: 3000,
                         totalAmount: orderDetails.reduce((total, item) => {
                             const menuItem = menuData.find(m => m.id === item.menuId);
+
                             return total + (menuItem.price * item.quantity);
                         }, 0) + 3000, // Tổng cộng
-                        estimatedArrivalTime: new Date(Date.now() + 30 * 60 * 1000).toISOString() // Thời gian giao dự kiến
+                        note: note,
+                        orderDetails: orderDetails
                     };
+                    console.log("order details", orderDetails)
 
                     sessionStorage.setItem('orderData', JSON.stringify(orderData));
                     window.location.href = '/views/order-confirm';

@@ -6,16 +6,23 @@ if (orderData) {
     orderSummary.innerHTML = `
                 <p><strong>User ID:</strong> ${orderData.userId}</p>
                 <p><strong>Delivery Address:</strong> ${orderData.deliveryAddress}</p>
-                <p><strong>Restaurant Id:</strong> ${orderData.restaurantId}</p>
-                <p><strong>Order Date:</strong> ${new Date(orderData.orderDate).toLocaleString()}</p>
+                <p><strong>Restaurant Name:</strong> ${orderData.restaurantName}</p>
                 <p><strong>Order Status:</strong> ${orderData.orderStatus}</p>
                 <p><strong>Total Menu Price:</strong> ${orderData.totalMenusPrice.toFixed(0)} ₩</p>
                 <p><strong>Shipping Fee:</strong> ${orderData.shippingFee.toFixed(0)} ₩</p>
                 <p><strong>Total Amount:</strong> ${orderData.totalAmount.toFixed(0)} ₩</p>
-                <p><strong>Estimated Arrival Time:</strong> ${new Date(orderData.estimatedArrivalTime).toLocaleString()}</p>
+                <p><strong>Note:</strong> ${orderData.note}</p>
             `;
     document.getElementById('confirm-order').addEventListener('click', () => {
-        createOrder(orderData)
+        const orderRequestData = {
+            restaurantId: orderData.restaurantId, // Chỉ gửi restaurantId
+            orderMenus: orderData.orderDetails.map(item => ({
+                menuId: item.menuId, 
+                quantity: item.quantity
+            })),
+            note: orderData.note
+        }
+        createOrder(orderRequestData)
             .then(response => {
 
                 sessionStorage.setItem('orderId', response.id);

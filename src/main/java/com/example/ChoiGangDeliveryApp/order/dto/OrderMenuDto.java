@@ -11,6 +11,7 @@ import lombok.*;
 public class OrderMenuDto {
     private Long id;
     private Long orderId;
+    private Long menuId;
     private String menuName;
     private int quantity;
     private double menuPrice;
@@ -24,6 +25,7 @@ public class OrderMenuDto {
         return OrderMenuDto.builder()
                 .id(orderMenuEntity.getId())
                 .orderId(orderMenuEntity.getOrder() != null ? orderMenuEntity.getOrder().getId() : null)
+                .menuId(orderMenuEntity.getMenu().getId())
                 .menuName(orderMenuEntity.getMenu().getName())
                 .restaurantId(orderMenuEntity.getRestaurant() != null ? orderMenuEntity.getRestaurant().getId() : null)
                 .restaurantName(orderMenuEntity.getRestaurant().getName())

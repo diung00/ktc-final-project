@@ -49,7 +49,19 @@ function showOrderDetails(order) {
         <div><strong>Total:</strong> $${order.totalAmount.toFixed(2)}</div>
         <div><strong>Status:</strong> ${order.orderStatus}</div>
         <div><strong>Estimated Arrival:</strong> ${order.estimatedArrivalTime ? new Date(order.estimatedArrivalTime).toLocaleString() : 'N/A'}</div>
+        <div><strong>Note:</strong> ${order.note || 'N/A'}</div>
     `;
+
+    // Populate order menus details
+    orderMenusBody.innerHTML = ''; 
+    order.orderMenus.forEach(menu => {
+        const menuRow = document.createElement('tr');
+        menuRow.innerHTML = `
+            <td>${menu.menuName}</td>
+            <td>${menu.quantity}</td>
+        `;
+        orderMenusBody.appendChild(menuRow);
+    });
 }
 
 function approveOrder(orderId) {
@@ -59,8 +71,8 @@ function approveOrder(orderId) {
     }
 
     const jwt = localStorage.getItem('token');
-    fetch(`/orders/${orderId}/approve`, {
-        method: 'POST',
+    fetch(`/orders/approve/${orderId}`, {
+        method: 'PUT',
         headers: {
             'Authorization': `Bearer ${jwt}`
         }
@@ -71,7 +83,7 @@ function approveOrder(orderId) {
             fetchOrders(); // Refresh the order list
             document.getElementById('orderInfo').innerHTML = 'Select an order to view details'; // Clear order details
         } else {
-            alert('Failed to approve the order.');
+            throw new Error('Failed to approve the order.');
         }
     })
     .catch(error => console.error('Error approving order:', error));
@@ -84,8 +96,8 @@ function findDriver(orderId) {
     }
 
     const jwt = localStorage.getItem('token');
-    fetch(`/orders/${orderId}/find-driver`, {
-        method: 'POST',
+    fetch(`/orders/find-driver/${orderId}`, {
+        method: 'PUT',
         headers: {
             'Authorization': `Bearer ${jwt}`
         }
@@ -96,7 +108,7 @@ function findDriver(orderId) {
             fetchOrders(); // Refresh the order list
             document.getElementById('orderInfo').innerHTML = 'Select an order to view details'; // Clear order details
         } else {
-            alert('Failed to find a driver for the order.');
+            throw new Error('Failed to find a driver for the order.');
         }
     })
     .catch(error => console.error('Error finding driver:', error));
@@ -109,8 +121,8 @@ function cancelOrder(orderId) {
     }
 
     const jwt = localStorage.getItem('token');
-    fetch(`/orders/${orderId}/cancel`, {
-        method: 'POST',
+    fetch(`/orders/restaurant/${orderId}/cancel`, {
+        method: 'PUT',
         headers: {
             'Authorization': `Bearer ${jwt}`
         }
@@ -121,7 +133,7 @@ function cancelOrder(orderId) {
             fetchOrders(); // Refresh the order list
             document.getElementById('orderInfo').innerHTML = 'Select an order to view details'; // Clear order details
         } else {
-            alert('Failed to cancel the order.');
+            throw new Error('Failed to cancel the order.');
         }
     })
     .catch(error => console.error('Error canceling order:', error));

@@ -67,21 +67,7 @@ public class OrderDto {
                 .collect(Collectors.toList()))
                 .build();
     }
-    public List<OrderMenuDto> getMenus() {
-        return this.orderMenus;
-    }
-    public Long getMenuId() {
-        if (this.orderMenus != null && !this.orderMenus.isEmpty()) {
-            return this.orderMenus.get(0).getId();
-        }
-        return null;
-    }
-    public int getQuantity() {
-        if (this.orderMenus != null && !this.orderMenus.isEmpty()) {
-            return this.orderMenus.get(0).getQuantity();
-        }
-        return 0;
-    }
+
 
 
 

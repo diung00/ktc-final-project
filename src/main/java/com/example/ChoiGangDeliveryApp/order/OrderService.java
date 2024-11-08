@@ -74,7 +74,7 @@ public class OrderService {
         List<OrderMenuEntity> orderMenus = dto.getOrderMenus().stream()
                 .map(orderMenuDto -> {
                     // Retrieve the menu by menuId from the restaurant's menu
-                    MenuEntity menu = menuRepository.findByName(orderMenuDto.getMenuName())
+                    MenuEntity menu = menuRepository.findById(orderMenuDto.getMenuId())
                             .orElseThrow(() -> new IllegalArgumentException("Menu not found"));
 
                     // Use the static method to create an OrderMenuEntity
